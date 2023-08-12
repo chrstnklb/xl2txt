@@ -4,11 +4,15 @@
   "description": "Reads an excel file and saves it as a csv file as configured.",
   "main": "readExcel.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "testcoverage": "jest --coverage"
   },
   "author": "Christian Kliebe @icke",
   "license": "ISC",
   "dependencies": {
     "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "jest": "^29.6.2"
   }
 }

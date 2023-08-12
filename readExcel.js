@@ -2,13 +2,13 @@ const fs = require('fs');
 // import all functions from contentReader.js
 const contentReader = require('./contentReader.js');
 
-
 // 1. Check file consitency
 // 2. Read Information from file
 // 3. Write Information into csv file
 
 let firmennummer = contentReader.readFirmennummer();
 let personalnummer = contentReader.readPersonalnummer();
+console.log('bla ' + personalnummer);
 let lohnart = contentReader.readLohnart();
 let kostenstelle = '';
 let kostentraeger = '';
@@ -38,4 +38,4 @@ let csvData =
     `${betrag};` + '   >>>   ' +
     `${timestamp}`;
 
-fs.writeFileSync('output.csv', csvData); 
+fs.writeFileSync('output/output.csv', csvData); 
