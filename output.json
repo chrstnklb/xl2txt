@@ -1,0 +1,103 @@
+[
+  {
+    "__EMPTY": "Mandanten-Nr.",
+    "TESTFIRMA": 117310
+  },
+  {
+    "__EMPTY": "Zeitraum",
+    "TESTFIRMA": 45108,
+    "__EMPTY_1": "Zeitlohn",
+    "__EMPTY_2": "Feiertag",
+    "__EMPTY_3": "Krank",
+    "__EMPTY_4": "Ü Std",
+    "__EMPTY_5": "U Geld",
+    "__EMPTY_6": "U Tage PLUS",
+    "__EMPTY_7": "Bereitschaft",
+    "__EMPTY_8": "Sonderzahlung",
+    "__EMPTY_9": "Weihnachten"
+  },
+  {
+    "__EMPTY": "Personal-\r\nnummer",
+    "TESTFIRMA": "Name Vorname",
+    "__EMPTY_1": "[LA2000,0]\r\n[ANZSTD]",
+    "__EMPTY_2": "[LA2008,0]\r\n[ANZSTD]",
+    "__EMPTY_3": "[LA2013,0]\r\n[ANZSTD]",
+    "__EMPTY_4": "[LA2106,0]\r\n[ANZSTD]",
+    "__EMPTY_5": "[LA3100,0] [BETRAG]",
+    "__EMPTY_6": "[LA400,0] [ANZTAGE]",
+    "__EMPTY_7": "[LA3004,0] [BETRAG]",
+    "__EMPTY_8": "[LA3009,0] [BETRAG]",
+    "__EMPTY_9": "[LA3200,0] [BETRAG]"
+  },
+  {
+    "__EMPTY": 8,
+    "__EMPTY_1": 152.5,
+    "__EMPTY_5": 142.55,
+    "__EMPTY_6": 5
+  },
+  {
+    "__EMPTY": 11,
+    "__EMPTY_1": 73.5,
+    "__EMPTY_3": 9,
+    "__EMPTY_6": 1
+  },
+  {
+    "__EMPTY": 12,
+    "__EMPTY_6": 6
+  },
+  {
+    "__EMPTY": 15,
+    "__EMPTY_1": 155.4,
+    "__EMPTY_4": 11.25,
+    "__EMPTY_5": 256.59,
+    "__EMPTY_6": 9
+  },
+  {
+    "__EMPTY": 23,
+    "__EMPTY_1": 152.25
+  },
+  {
+    "__EMPTY": 38,
+    "__EMPTY_1": 94.75,
+    "__EMPTY_3": 10,
+    "__EMPTY_6": 4
+  },
+  {
+    "__EMPTY": 43,
+    "__EMPTY_1": 142.1,
+    "__EMPTY_3": 5.5,
+    "__EMPTY_5": 142.55,
+    "__EMPTY_6": 5
+  },
+  {
+    "__EMPTY": 45,
+    "__EMPTY_1": 148.25,
+    "__EMPTY_5": 142.55,
+    "__EMPTY_6": 5
+  },
+  {
+    "__EMPTY": 48,
+    "__EMPTY_1": 98.5
+  },
+  {
+    "__EMPTY": 53,
+    "__EMPTY_6": 2
+  },
+  {
+    "__EMPTY": 54,
+    "__EMPTY_6": 12
+  },
+  {
+    "__EMPTY": 55,
+    "__EMPTY_1": 147,
+    "__EMPTY_5": 142.55,
+    "__EMPTY_6": 5
+  },
+  {
+    "__EMPTY": 56,
+    "__EMPTY_1": 119.9,
+    "__EMPTY_3": 37,
+    "__EMPTY_5": 313.61,
+    "__EMPTY_6": 11
+  }
+]
