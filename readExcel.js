@@ -8,7 +8,6 @@ const contentReader = require('./contentReader.js');
 
 let firmennummer = contentReader.readFirmennummer();
 let personalnummer = contentReader.readPersonalnummer();
-console.log('bla ' + personalnummer);
 let lohnart = contentReader.readLohnart();
 let kostenstelle = '';
 let kostentraeger = '';
