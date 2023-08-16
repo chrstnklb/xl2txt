@@ -1,6 +1,8 @@
 const fs = require('fs');
 const excel = require('./excelUtils.js');
 
+const kostenstelleExists = false;
+
 module.exports = {
     // Nr.:             0
     // Feldbezeichnung: FINUM
@@ -18,6 +20,7 @@ module.exports = {
         }
         return firmennummer;
     },
+
     // Nr.:             1
     // Feldbezeichnung: PERSNR
     // Verwendung:      Personalnummer
@@ -63,6 +66,10 @@ module.exports = {
     // MAX_LENGTH:      8
     // Muss-Feld:       Nein
     // Excel-Zelle:     ???
+    checkKostenstelle: function () {
+        return excel.iterateColumns();
+    }, 
+
 
     // Nr.:             4
     // Feldbezeichnung: KOSTENTR
@@ -71,6 +78,9 @@ module.exports = {
     // MAX_LENGTH:      8
     // Muss-Feld:       Nein
     // Excel-Zelle:     ???
+    checkKostentraeger: function () {
+        return excel.iterateRows();
+    }, 
 
     // Nr.:             5
     // Feldbezeichnung: AbrechnungsTag

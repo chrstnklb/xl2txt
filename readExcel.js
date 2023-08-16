@@ -9,8 +9,10 @@ const contentReader = require('./contentReader.js');
 let firmennummer = contentReader.readFirmennummer();
 let personalnummer = contentReader.readPersonalnummer();
 let lohnart = contentReader.readLohnart();
-let kostenstelle = '';
-let kostentraeger = '';
+// WRong and experimental
+let kostenstelle = contentReader.checkKostenstelle();
+// WRong and experimental
+let kostentraeger = contentReader.checkKostentraeger();
 let abrechnungstag = '';
 let abrechnungszeitraum = contentReader.readAbrechnungsZeitraum();
 let lohnsatz = '';
