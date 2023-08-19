@@ -1,4 +1,4 @@
-const { readCell } = require('./excelUtils');
+const { readCell } = require('./excel');
 
 describe('readCell', () => {
 

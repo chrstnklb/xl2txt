@@ -1,9 +1,8 @@
 const fs = require('fs');
-const excel = require('./excelUtils.js');
-
-const kostenstelleExists = false;
+const excel = require('./excel.js');
 
 module.exports = {
+    
     // Nr.:             0
     // Feldbezeichnung: FINUM
     // Verwendung:      Firmennummer
@@ -46,17 +45,11 @@ module.exports = {
     // MAX_LENGTH:      4
     // Muss-Feld:       Ja
     // Excel-Zelle:     C4
-    readLohnart: function (cellCoordinate = 'C4') {
-        let lohnart = excel.readCell(cellCoordinate, 'number');
-        if (lohnart === undefined) {
-            console.log(`Lohnart (Zelle ${cellCoordinate}) ist leer!`);
-        } else {
-            console.log(`Lohnart: ${lohnart}`);
-            // \d+ -> match one or more digits
-            // [0] -> get the first match
-            lohnart = lohnart.match(/\d+/)[0];
-        }
-        return lohnart;
+    readLohnart: function (cellContent) {
+        // when given this "[LA400,0] [ANZTAGE] i want only 400
+        // \d+ -> match one or more digits
+        // [0] -> get the first match
+        return cellContent.match(/\d+/)[0];
     },
 
     // Nr.:             3
@@ -66,10 +59,6 @@ module.exports = {
     // MAX_LENGTH:      8
     // Muss-Feld:       Nein
     // Excel-Zelle:     ???
-    checkKostenstelle: function () {
-        return excel.iterateColumns();
-    }, 
-
 
     // Nr.:             4
     // Feldbezeichnung: KOSTENTR
@@ -78,9 +67,6 @@ module.exports = {
     // MAX_LENGTH:      8
     // Muss-Feld:       Nein
     // Excel-Zelle:     ???
-    checkKostentraeger: function () {
-        return excel.iterateRows();
-    }, 
 
     // Nr.:             5
     // Feldbezeichnung: AbrechnungsTag
