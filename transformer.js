@@ -12,9 +12,11 @@ const fixedColumns = 2;
 const lohnartRow = 3;
 const dataStartRow = 4;
 
-transformToCSV();
+// transformToCSV(excelPath);
 
-function transformToCSV() {
+function transformToCSV(excelFile) {
+    console.log('transformToCSV');
+    console.log('excelFile: ' + excelFile);
 
     let firmennummer = felder.readFirmennummer(); // 00
     let abrechnungszeitraum = felder.readAbrechnungsZeitraum(); // 06
@@ -74,25 +76,30 @@ function transformToCSV() {
             }
         }
     }
-    writeToFile(allLines);
+    return writeToFile(allLines);
 }
 
 function writeToFile(allLines) {
     // log only the first 3 and the last 3 lines
     let lines = allLines.split('\n');
-    let firstLines = lines.slice(0, 3);
+    let firstLines = lines.slice(0, 2);
     let lastLines = lines.slice(-3);
     console.log(firstLines);
     console.log('...');
     console.log(lastLines);
     timestamp = getActualTimeStamp();
-    fs.writeFile('output/output' + timestamp + '.csv', allLines, function (err) {
+    const targetFilename = 'output/output' + timestamp + '.csv';
+    fs.writeFile(targetFilename, allLines, function (err) {
         if (err) throw err;
         console.log('Saved!');
     });
+    return targetFilename
 }
 
 function getActualTimeStamp() {
     const date = new Date();
     return `${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
 }
+
+exports.transformToCSV = transformToCSV;
+exports.getActualTimeStamp = getActualTimeStamp;

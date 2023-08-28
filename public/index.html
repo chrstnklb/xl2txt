@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script src="./htmx/htmx.min.js"></script>
+    <script src="./client.js"></script>
+    <title>Excel To CSV</title>
+</head>
+
+<body>
+    <h1>Excel To CSV</h1>
+    <div id="drop_zone" ondragleave="dragLeaveHandler(event);" ondragover="dragOverHandler(event);"
+        ondrop="dropHandler(event);">
+        Ziehe deine Excel-Datei hier hinein!
+    </div>
+
+    <form action="/download" hidden id="downloadForm" method="post">
+        <button type="submit">Lade das Ergebnis herunter!</button>
+    </form>
+
+    <form action="/" hidden id="restartForm" method="get">
+        <button type="submit">Von vorne starten!</button>
+    </form>
+</body>
+
+</html>

@@ -33,7 +33,7 @@ module.exports = {
             console.log(`Personalnummer (Zelle ${cellCoordinate}) ist leer!`);
         } else {
             personalnummer = personalnummer.padStart(6, '0');
-            console.log(`Personalnummer: ${personalnummer}`);
+            // console.log(`Personalnummer: ${personalnummer}`);
         }
         return personalnummer;
     },
