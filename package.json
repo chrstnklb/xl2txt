@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "testcoverage": "jest --coverage",
-    "start": "nodemon drophandler.js"
+    "start": "node server.js",
+    "startnodemon": "nodemon drophandler.js"
   },
   "author": "Christian Kliebe @icke",
   "license": "ISC",
