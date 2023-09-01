@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+
 const transformer = require('./transformer.js');
 
 const app = express();
@@ -7,6 +9,11 @@ const port = 3000;
 const url = `http://localhost:${port}`
 
 const { getType }   = require('mime');
+
+// make all the files in 'public' available
+// https://expressjs.com/en/starter/static-files.html
+
+app.use(express.static(path.join(__dirname, 'src' , 'client')))
 
 app.use(express.static(__dirname, {
   setHeaders: (res, path) => {
@@ -18,7 +25,6 @@ app.use(express.static(__dirname, {
 }));
 
 app.post("/upload", initMulterUpload().single('file'), (req, res) => {
-    const path = require('path');
 
     const targetFilename = transformer.transformToCSV("./uploads/" + req.file.filename);
 
