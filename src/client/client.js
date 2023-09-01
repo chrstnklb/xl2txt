@@ -16,8 +16,6 @@ function dropHandler(ev) {
         .then(response => response.json())
         .then(result => {
             transformedFilename = result.fileName;
-            clientLog('transformedFilename:: ' + transformedFilename);
-            // alert('\n\nDatei erfolgreich hochgeladen.\n \nSie können das Ergebnis jetzt herunterladen.');
             displayDownloadButton();
 
         })
@@ -38,7 +36,7 @@ function dragLeaveHandler(ev) {
 }
 
 function prepareDownload(filename) {
-    setDownloadElementsAction('downloadForm', filename);    
+    setDownloadElementsAction('downloadForm', filename);
     displayRestartButton();
 }
 
@@ -51,12 +49,11 @@ function preventFileToOpen(ev) {
 }
 
 function setDownloadElementsAction(id, transformedFilename) {
-        const form = document.getElementById(id);
+    const form = document.getElementById(id);
     const action = form.getAttribute('action');
 
     form.setAttribute('action', action + '?fileName=' + transformedFilename);
 
-    clientLog('action :: ' + form.getAttribute('action'));
 }
 
 function displayDownloadButton() {
@@ -77,6 +74,6 @@ function setBackGroundColor(ev, color) {
 /**************************/
 /*  LOGGING FUNCTIONS     */
 /**************************/
-function clientLog(message, textColor='white') {
+function clientLog(message, textColor = 'white') {
     console.log('%c client :: ' + message, 'color: ' + textColor);
 }

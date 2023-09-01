@@ -15,8 +15,6 @@ const dataStartRow = 4;
 // transformToCSV(excelPath);
 
 function transformToCSV(excelFile) {
-    console.log('transformToCSV');
-    console.log('excelFile: ' + excelFile);
 
     let firmennummer = felder.readFirmennummer(); // 00
     let abrechnungszeitraum = felder.readAbrechnungsZeitraum(); // 06
@@ -89,10 +87,8 @@ function writeToFile(allLines) {
     console.log(lastLines);
     timestamp = getActualTimeStamp();
     const targetFilename = path.join(__dirname, '../exchange/downloads/download-' + timestamp + '.txt');
-        console.log('TFN ' + targetFilename)
         fs.writeFile(targetFilename, allLines, function (err) {
         if (err) throw err;
-        console.log('Saved!');
     });
     return targetFilename
 }

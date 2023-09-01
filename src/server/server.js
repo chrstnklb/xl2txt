@@ -22,30 +22,23 @@ app.use(express.static(__dirname, {
 }));
 
 app.post("/upload", initMulterUpload().single('upload-'), (req, res) => {
-    console.log('up');
-    console.log('req.file.filename: ' + req.file.filename);
+    logServerRouteUpload('filename',  req.file.filename);
+
     const targetFilename = transformer.transformToCSV("./uploads/" + req.file.filename);
 
-    const csvFileName = targetFilename.replace('upload', 'download');
+    const txtFileName = targetFilename.replace('upload', 'download');
 
-    const filePath = path.join(__dirname, csvFileName);
-
-    logServerRouteUpload('csvFileName', csvFileName);
-
-    res.json({ fileName: csvFileName });
-
-    console.log('up ok');
-
+    res.json({ fileName: txtFileName });
+    logServerRouteUpload('txtFileName',  txtFileName);
 });
 
 app.post('/download', function(req, res){
-
-    logServerRouteDownload('req.query.fileName', req.query.fileName);
+    logServerRouteDownload('filename',  req.query.fileName);
 
     const file = req.query.fileName;
-    console.log('file: ' + file)
 
     res.download(file);
+    logServerRouteDownload('file',  file);
 });
 
 app.listen(port, () => {
@@ -65,7 +58,6 @@ function initMulterUpload() {
             },
             filename: function (req, file, cb) {
                 let timestamp = transformer.getActualTimeStamp();
-                console.log('file.fieldname: ' + file.fieldname);
                 cb(null, file.fieldname + timestamp + '.xlsx')
             }
         })
