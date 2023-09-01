@@ -1,13 +1,17 @@
 const xlsx = require('xlsx');
 const path = require('path');
 
-const excelPath = path.join(__dirname, './Erfassungsbeleg TEST.xlsx');
-const workBook = xlsx.readFile(excelPath);
-const workSheet = workBook.Sheets['Personalliste'];
-
 const headerRow = 3;
 
+let workSheet = undefined;
+
 module.exports = {
+
+    initExcelFile: function (excelFile) {
+        const workBook = xlsx.readFile(path.join(__dirname, "../exchange", excelFile));
+        workSheet = workBook.Sheets['Personalliste'];
+        return workSheet;
+    },
 
     readCell: (cellCoordinate, targetFormat) => {
         let result = undefined;

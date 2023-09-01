@@ -1,13 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const xlsx = require('xlsx');
-
 const felder = require('./felder.js');
 
 const excel = require('./excel.js');
-const excelPath = path.join(__dirname, './Erfassungsbeleg TEST.xlsx');
-const workBook = xlsx.readFile(excelPath);
-const workSheet = workBook.Sheets['Personalliste'];
 const fixedColumns = 2;
 const lohnartRow = 3;
 const dataStartRow = 4;
@@ -15,6 +11,8 @@ const dataStartRow = 4;
 // transformToCSV(excelPath);
 
 function transformToCSV(excelFile) {
+
+    let workSheet = excel.initExcelFile(excelFile);
 
     let firmennummer = felder.readFirmennummer(); // 00
     let abrechnungszeitraum = felder.readAbrechnungsZeitraum(); // 06

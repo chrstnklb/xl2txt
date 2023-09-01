@@ -29,7 +29,6 @@ app.post("/upload", initMulterUpload().single('upload-'), (req, res) => {
     const txtFileName = targetFilename.replace('upload', 'download');
 
     res.json({ fileName: txtFileName });
-    logServerRouteUpload('txtFileName',  txtFileName);
 });
 
 app.post('/download', function(req, res){
