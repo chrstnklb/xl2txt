@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 
-const transformer = require('../../transformer.js');
+const transformer = require('./transformer.js');
 
 const app = express();
 
@@ -9,9 +9,6 @@ const port = 3000;
 const url = `http://localhost:${port}`
 
 const { getType }   = require('mime');
-
-// make all the files in 'public' available
-// https://expressjs.com/en/starter/static-files.html
 
 app.use(express.static(path.join(__dirname, '../client')))
 
@@ -24,11 +21,12 @@ app.use(express.static(__dirname, {
   }
 }));
 
-app.post("/upload", initMulterUpload().single('file'), (req, res) => {
+app.post("/upload", initMulterUpload().single('upload-'), (req, res) => {
     console.log('up');
+    console.log('req.file.filename: ' + req.file.filename);
     const targetFilename = transformer.transformToCSV("./uploads/" + req.file.filename);
 
-    const csvFileName = targetFilename.replace('file', 'output').replace('.xlsx', '.csv');
+    const csvFileName = targetFilename.replace('upload', 'download');
 
     const filePath = path.join(__dirname, csvFileName);
 
@@ -63,10 +61,11 @@ function initMulterUpload() {
     return multer({
         storage: multer.diskStorage({
             destination: function (req, file, cb) {
-                cb(null, __dirname + '/uploads')
+                cb(null, path.join(__dirname, '../exchange/uploads/'));
             },
             filename: function (req, file, cb) {
                 let timestamp = transformer.getActualTimeStamp();
+                console.log('file.fieldname: ' + file.fieldname);
                 cb(null, file.fieldname + timestamp + '.xlsx')
             }
         })

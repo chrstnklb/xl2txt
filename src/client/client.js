@@ -7,7 +7,7 @@ function dropHandler(ev) {
 
     const files = ev.dataTransfer.files;
     const formData = new FormData();
-    formData.append('file', files[0]);
+    formData.append('upload-', files[0]);
 
     fetch('/upload', {
         method: 'POST',

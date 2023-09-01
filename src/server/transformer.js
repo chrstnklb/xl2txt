@@ -5,7 +5,7 @@ const xlsx = require('xlsx');
 const felder = require('./felder.js');
 
 const excel = require('./excel.js');
-const excelPath = path.join(__dirname, 'docs/Test/Erfassungsbeleg TEST.xlsx');
+const excelPath = path.join(__dirname, './Erfassungsbeleg TEST.xlsx');
 const workBook = xlsx.readFile(excelPath);
 const workSheet = workBook.Sheets['Personalliste'];
 const fixedColumns = 2;
@@ -88,7 +88,7 @@ function writeToFile(allLines) {
     console.log('...');
     console.log(lastLines);
     timestamp = getActualTimeStamp();
-    const targetFilename = path.join(__dirname, 'output/output' + timestamp + '.csv');
+    const targetFilename = path.join(__dirname, '../exchange/downloads/download-' + timestamp + '.txt');
         console.log('TFN ' + targetFilename)
         fs.writeFile(targetFilename, allLines, function (err) {
         if (err) throw err;

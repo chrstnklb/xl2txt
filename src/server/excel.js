@@ -1,7 +1,7 @@
 const xlsx = require('xlsx');
 const path = require('path');
 
-const excelPath = path.join(__dirname, 'docs/Test/Erfassungsbeleg TEST.xlsx');
+const excelPath = path.join(__dirname, './Erfassungsbeleg TEST.xlsx');
 const workBook = xlsx.readFile(excelPath);
 const workSheet = workBook.Sheets['Personalliste'];
 
