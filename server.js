@@ -1,45 +1,48 @@
 const express = require('express');
-const transformer = require('./transformer.js');
+const transformer = require('./transformer3.js');
 
 const app = express();
 
 const port = 3000;
 const url = `http://localhost:${port}`
 
-app.use(express.static('public'));
+const { getType }   = require('mime');
 
-app.get('/', (req, res) => {
-    serverLog('index');
-    res.sendFile(__dirname + '/index.html');
-});
+app.use(express.static(__dirname, {
+  setHeaders: (res, path) => {
+    const type = getType(path);
+    if (type === 'application/javascript' || type === 'text/css') {
+      res.setHeader('Content-Type', type);
+    }
+  }
+}));
 
 app.post("/upload", initMulterUpload().single('file'), (req, res) => {
     const path = require('path');
-    
-    serverRouteUploadLog('');
 
     const targetFilename = transformer.transformToCSV("./uploads/" + req.file.filename);
-    serverRouteUploadLog(`targetFilename :: ${targetFilename}`);
 
     const csvFileName = targetFilename.replace('file', 'output').replace('.xlsx', '.csv');
 
     const filePath = path.join(__dirname, csvFileName);
-    serverRouteUploadLog(`filePath :: ${csvFileName}`);
+
+    serverRouteUploadLog('csvFileName', csvFileName);
 
     res.json({ fileName: csvFileName });
+
+    console.log('up ok');
 
 });
 
 app.post('/download', function(req, res){
 
-    serverRouteDownloadLog('');
-    serverRouteDownloadLog(`req.query.fileName :: ${req.query.fileName}`);
+    serverRouteDownloadLog('req.query.fileName', req.query.fileName);
 
-    const file = `${__dirname}/${req.query.fileName}`;
-    serverRouteDownloadLog(`req.query.fileName :: ${req.query.fileName}`);
+    const file = req.query.fileName;
+    console.log('file: ' + file)
 
     res.download(file);
-  });
+});
 
 app.listen(port, () => {
     serverLog(`listening at ${url}`);
@@ -69,17 +72,17 @@ function initMulterUpload() {
 /**************************/
 
 function serverRouteUploadLog(describer, value) {
-    serverRouteLog(`upload :: ${describer} :: ${value}`);
+    serverRouteLog(`upload:${describer}:${value}`);
 }
 
 function serverRouteDownloadLog(describer, value) {
-    serverRouteLog(`download :: ${describer} :: ${value}`);
+    serverRouteLog(`download:${describer}:${value}`);
 }
 
 function serverLog(message) {
-    console.log(`server :: ${message}`);
+    console.log(`server:${message}`);
 }
 
 function serverRouteLog(route) {
-    serverLog(`route :: ${route}`);
+    serverLog(`route:${route}`);
 }

@@ -88,8 +88,9 @@ function writeToFile(allLines) {
     console.log('...');
     console.log(lastLines);
     timestamp = getActualTimeStamp();
-    const targetFilename = 'output/output' + timestamp + '.csv';
-    fs.writeFile(targetFilename, allLines, function (err) {
+    const targetFilename = path.join(__dirname, 'output/output' + timestamp + '.csv');
+        console.log('TFN ' + targetFilename)
+        fs.writeFile(targetFilename, allLines, function (err) {
         if (err) throw err;
         console.log('Saved!');
     });
