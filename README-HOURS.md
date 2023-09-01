@@ -4,16 +4,19 @@
 
 ## Demnächst
 
-+ Server code in server ordner
-+ Client code in client ordner
-+ Pfad für upload zu server anpassen
-+ Pfad für download aus upload entnehmen
 + Heruntergeladene Datei vom Server löschen
 + https, verschlüsselte Kommunikation
 + log erstellen mit metadaten über die transformationen
 + Tests prüfen und ggf. korrigieren
 
 ## 2023-MM-DD Wochentag, Dauer: X:YZ || A:BC
+
+## 2023-09-01 Freitag, Dauer: 2:45 || 24:00
++ Server code in server ordner
++ Client code in client ordner
++ Pfad für upload zu server anpassen
++ Pfad für download aus upload entnehmen
++ Extraktion der dummy xlsx
 
 ## 2023-09-01 Freitag, Dauer: 2:00 || 21:15
 + Fix einiger Routen
