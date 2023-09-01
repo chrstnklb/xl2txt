@@ -26,7 +26,7 @@ app.post("/upload", initMulterUpload().single('file'), (req, res) => {
 
     const filePath = path.join(__dirname, csvFileName);
 
-    serverRouteUploadLog('csvFileName', csvFileName);
+    logServerRouteUpload('csvFileName', csvFileName);
 
     res.json({ fileName: csvFileName });
 
@@ -36,7 +36,7 @@ app.post("/upload", initMulterUpload().single('file'), (req, res) => {
 
 app.post('/download', function(req, res){
 
-    serverRouteDownloadLog('req.query.fileName', req.query.fileName);
+    logServerRouteDownload('req.query.fileName', req.query.fileName);
 
     const file = req.query.fileName;
     console.log('file: ' + file)
@@ -45,7 +45,7 @@ app.post('/download', function(req, res){
 });
 
 app.listen(port, () => {
-    serverLog(`listening at ${url}`);
+    logServer(`listening at ${url}`);
 });
 
 /**************************/
@@ -71,18 +71,18 @@ function initMulterUpload() {
 /*  LOGGING FUNCTIONS     */
 /**************************/
 
-function serverRouteUploadLog(describer, value) {
-    serverRouteLog(`upload:${describer}:${value}`);
+function logServerRouteUpload(describer, value) {
+    logServerRoute(`upload:${describer}:${value}`);
 }
 
-function serverRouteDownloadLog(describer, value) {
-    serverRouteLog(`download:${describer}:${value}`);
+function logServerRouteDownload(describer, value) {
+    logServerRoute(`download:${describer}:${value}`);
 }
 
-function serverLog(message) {
+function logServer(message) {
     console.log(`server:${message}`);
 }
 
-function serverRouteLog(route) {
-    serverLog(`route:${route}`);
+function logServerRoute(route) {
+    logServer(`route:${route}`);
 }
