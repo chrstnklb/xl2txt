@@ -25,6 +25,9 @@ app.post("/upload", initMulterUpload().single('upload-'), (req, res) => {
     logServerRouteUpload('filename',  req.file.filename);
 
     const targetFilename = transformer.transformToCSV("./uploads/" + req.file.filename);
+    console.log("./uploads/" + req.file.filename);
+
+    deleteFile(path.join(__dirname, "../exchange/uploads/" , req.file.filename));
 
     const txtFileName = targetFilename.replace('upload', 'download');
 
@@ -37,6 +40,10 @@ app.post('/download', function(req, res){
     const file = req.query.fileName;
 
     res.download(file);
+    res.on('finish', () => {
+        deleteFile(file);
+    });
+
     logServerRouteDownload('file',  file);
 });
 
@@ -47,6 +54,15 @@ app.listen(port, () => {
 /**************************/
 /*  HELPER FUNCTIONS      */
 /**************************/
+
+async function deleteFile(filename) {
+    const fs = require('fs');
+
+    await fs.unlink(filename, (err) => {
+        if (err) throw err;
+        logServerRouteUpload( 'deleted', filename);
+    });
+}
 
 function initMulterUpload() {
     const multer = require('multer');

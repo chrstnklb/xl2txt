@@ -8,9 +8,15 @@ const fixedColumns = 2;
 const lohnartRow = 3;
 const dataStartRow = 4;
 
-// transformToCSV(excelPath);
-
 function transformToCSV(excelFile) {
+
+    let statistics = {
+        'timestamp': '',
+        'colCount': 0,
+        'rowCount': 0,
+        'calculation-time-in-ms': 0,
+    };
+    let start = new Date().getTime();
 
     let workSheet = excel.initExcelFile(excelFile);
 
@@ -21,9 +27,11 @@ function transformToCSV(excelFile) {
 
     // iterate over all rows
     let rowCount = excel.getRowCount();
+    statistics.rowCount = rowCount;
     for (let row = dataStartRow + 1; row <= rowCount; row++) {
         let personalnummer = felder.readPersonalnummer(cellCoordinate = ('A' + row)); // 01
         let colCount = excel.getColCount();
+        statistics.colCount = colCount;
         for (let col = fixedColumns; col < colCount; col++) {
             let lohnart = '';
             let kostenstelle = '';
@@ -72,6 +80,18 @@ function transformToCSV(excelFile) {
             }
         }
     }
+
+    statistics.timestamp = getActualTimeStampYYYYMMDDhhmmss();
+
+    let end = new Date().getTime();
+    statistics['calculation-time-in-ms'] = end - start;
+    console.log(statistics);
+    // write statistics to file for later analysis in folder server / statistics
+    fs.writeFile(path.join(__dirname, 'statistics/statistic-' + statistics.timestamp + '.json'), JSON.stringify(statistics), function (err) {
+        if (err) throw err;
+    });
+
+
     return writeToFile(allLines);
 }
 
@@ -83,18 +103,29 @@ function writeToFile(allLines) {
     console.log(firstLines);
     console.log('...');
     console.log(lastLines);
-    timestamp = getActualTimeStamp();
+    timestamp = getActualTimeStampHHMMSS();
     const targetFilename = path.join(__dirname, '../exchange/downloads/download-' + timestamp + '.txt');
-        fs.writeFile(targetFilename, allLines, function (err) {
+    fs.writeFile(targetFilename, allLines, function (err) {
         if (err) throw err;
     });
     return targetFilename
 }
 
-function getActualTimeStamp() {
-    const date = new Date();
-    return `${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
+function getActualTimeStampHHMMSS() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    return `${hours}-${minutes}-${seconds}`;
+}
+
+function getActualTimeStampYYYYMMDDhhmmss() {
+    const now = new Date();
+    const year = now.getFullYear().toString().padStart(4, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}-` + getActualTimeStampHHMMSS();
 }
 
 exports.transformToCSV = transformToCSV;
-exports.getActualTimeStamp = getActualTimeStamp;
+exports.getActualTimeStamp = getActualTimeStampHHMMSS;

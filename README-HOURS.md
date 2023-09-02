@@ -4,14 +4,17 @@
 
 ## Demnächst
 
-+ Heruntergeladene Datei vom Server löschen
 + https, verschlüsselte Kommunikation
-+ log erstellen mit metadaten über die transformationen
 + Tests prüfen und ggf. korrigieren
++ alle nicht endpoints aus server.js entfernen
 
 ## 2023-MM-DD Wochentag, Dauer: X:YZ || A:BC
 
-## 2023-09-01 Freitag, Dauer: 2:45 || 24:00
+## 2023-09-01 Freitag, Dauer: 3:30 || 24:45
+
++ log erstellen mit metadaten über die transformationen
++ Heruntergeladene Datei vom Server löschen
++ Hochgeladene Datei vom Server löschen
 + Server code in server ordner
 + Client code in client ordner
 + Pfad für upload zu server anpassen
