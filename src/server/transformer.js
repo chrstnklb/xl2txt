@@ -1,11 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 const xlsx = require('xlsx');
-const felder = require('./felder.js');
-const time = require('./utils/time.js');
-const file = require('./utils/file.js');
 
 const excel = require('./excel.js');
+const felder = require('./felder.js');
+const file = require('./utils/file.js');
+const time = require('./utils/time.js');
+
+const TARGET_FILENAME = "Imp_lbw.txt";
+
 const fixedColumns = 2;
 const lohnartRow = 3;
 const dataStartRow = 4;
@@ -88,12 +91,25 @@ function transformToCSV(excelFile) {
 
     let end = new Date().getTime();
     statistics['calculation-time-in-ms'] = end - start;
-    console.log(statistics);
-    fs.writeFile(path.join(__dirname, 'statistics/statistic-' + statistics.timestamp + '.json'), JSON.stringify(statistics), function (err) {
-        if (err) throw err;
-    });
 
-    return file.writeToFile(allLines);
+    writeStatistics(statistics);
+    return writeCSVFile(allLines);    
+}
+
+function writeCSVFile(content) {
+    
+    timestamp = time.getActualTimeStampYYYYMMDDhhmmss();
+    const folder = path.join(__dirname, '../../src/exchange/downloads/' + timestamp);
+    
+    return file.writeToFile(folder, TARGET_FILENAME, content);
+}
+
+function writeStatistics(statistics) {
+    let statFolder = path.join(__dirname, 'statistics/');
+    let statFilename = 'statistic-' + statistics.timestamp + '.json';
+    let statData = JSON.stringify(statistics);
+
+    file.writeToFile(statFolder, statFilename, statData);
 }
 
 exports.transformToCSV = transformToCSV;
