@@ -2,11 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const xlsx = require('xlsx');
 const felder = require('./felder.js');
+const time = require('./utils/time.js');
+const file = require('./utils/file.js');
 
 const excel = require('./excel.js');
 const fixedColumns = 2;
 const lohnartRow = 3;
 const dataStartRow = 4;
+let timestamp = '';
 
 function transformToCSV(excelFile) {
 
@@ -81,51 +84,17 @@ function transformToCSV(excelFile) {
         }
     }
 
-    statistics.timestamp = getActualTimeStampYYYYMMDDhhmmss();
+    statistics.timestamp = time.getActualTimeStampYYYYMMDDhhmmss();
 
     let end = new Date().getTime();
     statistics['calculation-time-in-ms'] = end - start;
     console.log(statistics);
-    // write statistics to file for later analysis in folder server / statistics
     fs.writeFile(path.join(__dirname, 'statistics/statistic-' + statistics.timestamp + '.json'), JSON.stringify(statistics), function (err) {
         if (err) throw err;
     });
 
-
-    return writeToFile(allLines);
-}
-
-function writeToFile(allLines) {
-    // log only the first 3 and the last 3 lines
-    let lines = allLines.split('\n');
-    let firstLines = lines.slice(0, 2);
-    let lastLines = lines.slice(-3);
-    console.log(firstLines);
-    console.log('...');
-    console.log(lastLines);
-    timestamp = getActualTimeStampHHMMSS();
-    const targetFilename = path.join(__dirname, '../exchange/downloads/download-' + timestamp + '.txt');
-    fs.writeFile(targetFilename, allLines, function (err) {
-        if (err) throw err;
-    });
-    return targetFilename
-}
-
-function getActualTimeStampHHMMSS() {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const seconds = now.getSeconds().toString().padStart(2, '0');
-    return `${hours}-${minutes}-${seconds}`;
-}
-
-function getActualTimeStampYYYYMMDDhhmmss() {
-    const now = new Date();
-    const year = now.getFullYear().toString().padStart(4, '0');
-    const month = (now.getMonth() + 1).toString().padStart(2, '0');
-    const day = now.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}-` + getActualTimeStampHHMMSS();
+    return file.writeToFile(allLines);
 }
 
 exports.transformToCSV = transformToCSV;
-exports.getActualTimeStamp = getActualTimeStampHHMMSS;
+exports.timestamp = this.timestamp;

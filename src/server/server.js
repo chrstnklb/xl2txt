@@ -72,7 +72,7 @@ function initMulterUpload() {
                 cb(null, path.join(__dirname, '../exchange/uploads/'));
             },
             filename: function (req, file, cb) {
-                let timestamp = transformer.getActualTimeStamp();
+                let timestamp = transformer.timestamp;
                 cb(null, file.fieldname + timestamp + '.xlsx')
             }
         })
