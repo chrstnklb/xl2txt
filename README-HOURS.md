@@ -14,11 +14,12 @@
 
 
 
-## 2023-09-03 Sonntag, Dauer: 2:00 || 26:45
+## 2023-09-03 Sonntag, Dauer: 3:00 || 27:45
 
 + refactoring logs, time, filehandler
 + lösche download folder, nicht nur die datei
 + lösche excel sofort nach verarbeitung
++ deploy all new changes
 
 ## 2023-09-01 Freitag, Dauer: 3:30 || 24:45
 

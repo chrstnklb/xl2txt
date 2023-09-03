@@ -4,7 +4,8 @@
 
 1. Log into the EC2 Instance
 2. Git pull
-3. Restart pm2 using ```pm2 restart 0```
+3. Restart pm2 using
+    - ```pm2 restart 0```
 4. OR: Setup new pm2 instance, if server path or name was changed (See chapter pm2)
 
 # pm2
@@ -12,25 +13,18 @@ After installing everything on an AWS EC2 instance for example, use the followin
 https://levelup.gitconnected.com/deploying-a-node-app-on-amazon-ec2-d2fb9a6757eb
 
 1. Install pm2 by running the following command
-
-    ```npm install -g pm2```
-
+    - ```npm install -g pm2```
 2. Set up pm2 to start the server automatically on server restart.
-
-    ```pm2 start server.js```
-
-    ```pm2 save```
-
-    ```pm2 startup```
-
+    - ```pm2 start server.js```
+    - ```pm2 save```
+    - ```pm2 startup```
 3. Note that after running the pm2 startup command we get a command starting with “sudo”.
 4. Copy that command from sudo till the end of the next line and paste it in the terminal and press enter.
 Now your node server is running and is set to start automatically whenever you restart the EC2 instance.
 
-## Commands:
-
-```pm2 list```
-
-```pm2 describe 0```
-
-```pm2 monit 0```
+## Commands: [➡️ pm2 website](https://www.npmjs.com/package/pm2)
+More usefull commands:
+- ```pm2 list```
+- ```pm2 describe 0```
+- ```pm2 monit 0```
+- ```pm2 delete <id>```
