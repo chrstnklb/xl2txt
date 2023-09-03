@@ -7,7 +7,7 @@ function dropHandler(ev) {
 
     const files = ev.dataTransfer.files;
     const formData = new FormData();
-    formData.append('upload-', files[0]);
+    formData.append('upload', files[0]);
 
     fetch('/upload', {
         method: 'POST',
@@ -17,7 +17,6 @@ function dropHandler(ev) {
         .then(result => {
             transformedFilename = result.fileName;
             displayDownloadButton();
-
         })
         .then(() => { prepareDownload(transformedFilename); })
         .catch(error => { console.error('Error:', error); });

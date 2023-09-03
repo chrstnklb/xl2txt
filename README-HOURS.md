@@ -7,8 +7,18 @@
 + https, verschlüsselte Kommunikation
 + Tests prüfen und ggf. korrigieren
 + alle nicht endpoints aus server.js entfernen
++ timstamp generierung und nutzung prüfen
++ timestamp auf ms erweitern
 
 ## 2023-MM-DD Wochentag, Dauer: X:YZ || A:BC
+
+
+
+## 2023-09-03 Sonntag, Dauer: 1:30 || 26:15
+
++ refactoring logs, time, filehandler
++ lösche download folder, nicht nur die datei
++ lösche excel sofort nach verarbeitung
 
 ## 2023-09-01 Freitag, Dauer: 3:30 || 24:45
 

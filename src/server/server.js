@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 
 const transformer = require('./transformer.js');
+const fileHandler = require('./utils/fileHandler.js');
+const logs = require('./utils/logs.js');
 
 const app = express();
 
@@ -21,48 +23,34 @@ app.use(express.static(__dirname, {
   }
 }));
 
-app.post("/upload", initMulterUpload().single('upload-'), (req, res) => {
-    logServerRouteUpload('filename',  req.file.filename);
+app.post("/upload", initMulterUpload().single('upload'), (req, res) => {
+    logs.logServerRouteUpload('filename',  req.file.filename);
 
     const targetFilename = transformer.transformToCSV("./uploads/" + req.file.filename);
-    console.log("./uploads/" + req.file.filename);
-
-    deleteFile(path.join(__dirname, "../exchange/uploads/" , req.file.filename));
-
     const txtFileName = targetFilename.replace('upload', 'download');
-
     res.json({ fileName: txtFileName });
 });
 
 app.post('/download', function(req, res){
-    logServerRouteDownload('filename',  req.query.fileName);
+    logs.logServerRouteDownload('filename',  req.query.fileName);
 
     const file = req.query.fileName;
 
     res.download(file);
     res.on('finish', () => {
-        deleteFile(file);
+        fileHandler.deleteDirectoryOfFile(path.dirname(file));
     });
 
-    logServerRouteDownload('file',  file);
+    logs.logServerRouteDownload('file',  file);
 });
 
 app.listen(port, () => {
-    logServer(`listening at ${url}`);
+    logs.logServer(`listening at ${url}`);
 });
 
 /**************************/
 /*  HELPER FUNCTIONS      */
 /**************************/
-
-async function deleteFile(filename) {
-    const fs = require('fs');
-
-    await fs.unlink(filename, (err) => {
-        if (err) throw err;
-        logServerRouteUpload( 'deleted', filename);
-    });
-}
 
 function initMulterUpload() {
     const multer = require('multer');
@@ -72,29 +60,8 @@ function initMulterUpload() {
                 cb(null, path.join(__dirname, '../exchange/uploads/'));
             },
             filename: function (req, file, cb) {
-                let timestamp = transformer.timestamp;
-                cb(null, file.fieldname + timestamp + '.xlsx')
+                cb(null, file.fieldname + '.xlsx')
             }
         })
     });
-}
-
-/**************************/
-/*  LOGGING FUNCTIONS     */
-/**************************/
-
-function logServerRouteUpload(describer, value) {
-    logServerRoute(`upload:${describer}:${value}`);
-}
-
-function logServerRouteDownload(describer, value) {
-    logServerRoute(`download:${describer}:${value}`);
-}
-
-function logServer(message) {
-    console.log(`server:${message}`);
-}
-
-function logServerRoute(route) {
-    logServer(`route:${route}`);
 }
