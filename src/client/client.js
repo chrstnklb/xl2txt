@@ -9,16 +9,11 @@ function dropHandler(ev) {
     const formData = new FormData();
     formData.append('upload', files[0]);
 
-    fetch('/upload', {
-        method: 'POST',
-        body: formData
-    })
+    fetch('/upload', { method: 'POST', body: formData })
         .then(response => response.json())
-        .then(result => {
-            transformedFilename = result.fileName;
-            displayDownloadButton();
-        })
+        .then(result => { transformedFilename = result.fileName; })
         .then(() => { prepareDownload(transformedFilename); })
+        .then(() => { displayDownloadButton(); })
         .catch(error => { console.error('Error:', error); });
 }
 
