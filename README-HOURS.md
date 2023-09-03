@@ -14,7 +14,7 @@
 
 
 
-## 2023-09-03 Sonntag, Dauer: 1:30 || 26:15
+## 2023-09-03 Sonntag, Dauer: 2:00 || 26:45
 
 + refactoring logs, time, filehandler
 + lösche download folder, nicht nur die datei

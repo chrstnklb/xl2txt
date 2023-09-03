@@ -1,5 +1,6 @@
 const fs = require('fs');
 const excel = require('./excel.js');
+const logs = require('./utils/logs.js');
 
 module.exports = {
     
@@ -15,7 +16,7 @@ module.exports = {
         if (firmennummer === undefined) {
             console.log(`Firmennummer (Zelle ${cellCoordinate}) ist leer!`);
         } else {
-            console.log(`Firmennummer: ${firmennummer}`);
+            logs.logAttribute('Firmennummer', firmennummer);
         }
         return firmennummer;
     },
@@ -92,7 +93,7 @@ module.exports = {
             const month = abrechnungsZeitraum.m.toString().padStart(2, '0');
             const year = abrechnungsZeitraum.y.toString();
             abrechnungsZeitraum = day + '.' + month + '.' + year;
-            console.log(`Abrechnungszeitraum: ${abrechnungsZeitraum}`);
+            logs.logAttribute('Abrechnungszeitraum', abrechnungsZeitraum);
         }
         return abrechnungsZeitraum;
     },

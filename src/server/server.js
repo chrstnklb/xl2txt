@@ -45,7 +45,7 @@ app.post('/download', function(req, res){
 });
 
 app.listen(port, () => {
-    logs.logServer(`listening at ${url}`);
+    logs.logAttribute('listening at', url);
 });
 
 /**************************/

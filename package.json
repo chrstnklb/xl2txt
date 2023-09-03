@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest",
     "testcoverage": "jest --coverage",
-    "start": "node server.js",
-    "startnodemon": "nodemon server.js"
+    "start": "node src/server/server.js",
+    "startnodemon": "nodemon src/server/server.js"
   },
   "author": "Christian Kliebe @icke",
   "license": "ISC",
