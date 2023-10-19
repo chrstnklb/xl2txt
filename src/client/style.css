@@ -1,8 +1,36 @@
 body {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   /* background-color: lightgray; */
 }
+
+.area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#start-area {
+  background-color: aqua;
+}
+
+#feedback-area {
+  background-color:bisque;
+}
+
+#roadmap-area {
+  background-color:cadetblue;
+}
+
+#kontakt-area {
+  background-color:coral;
+}
+
+#impressum-area {
+  background-color:slateblue;
+}
+
 
 .btn-group {
 text-align: center;
