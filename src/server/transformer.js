@@ -55,8 +55,17 @@ function transformToCSV(excelFile) {
                 let cellCoordinate = xlsx.utils.encode_col(col) + (lohnartRow + 1);
                 let headerCellContent = workSheet[cellCoordinate].v;
 
-                let feld = excel.readCell(cellCoordinate = (xlsx.utils.encode_col(col) + row), 'number');
-                feld = feld.toFixed(2).toString().replace('.', ',');
+                let feldCoordinate = xlsx.utils.encode_col(col) + (row);
+                // console.log(feldCoordinate);
+                let feld = excel.readCell(feldCoordinate, 'number');
+                // create try catch block
+                try {
+                    feld = feld.toFixed(2).toString().replace('.', ',');
+                } catch (error) {
+                    console.log(`Feld ${feldCoordinate} konnte nicht in ein String umgewandelt werden. \n\tError: ${error}`);
+                    // console.log(`Feld ${feldCoordinate} wird als leerer String gespeichert.`);
+                    // feld = '';
+                }
 
                 lohnart = felder.readLohnart(headerCellContent); // 02
 

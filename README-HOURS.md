@@ -4,14 +4,33 @@
 
 ## Demnächst
 
-+ https, verschlüsselte Kommunikation
-+ Tests prüfen und ggf. korrigieren
-+ alle nicht endpoints aus server.js entfernen
-+ timstamp generierung und nutzung prüfen
-+ timestamp auf ms erweitern
+- ⭐ Präzise Fehlermeldung, welches Feld ein Problem verursachte
+- ⭐ Https, verschlüsselte Kommunikation
+- ⭐ Login erstellen
+    - ⭐ Login mittels select
+    - ⭐ Passwörter je Filiale hinterlegen
+- 🐞 Excel erstellen, dass Fehler provuzieren müsste
+- 🐞 timstamp generierung und nutzung prüfen
+- 🐞 timestamp auf ms erweitern
+- 🔍 Tests prüfen und ggf. korrigieren
+- 🔍 Tests erstellen, mit denen ich spezifische Felder in Excel ändern und testen kann
+- 🛠️ alle nicht endpoints aus server.js entfernen
+- 🛠️ dotenv für pfade einführen
 
-## 2023-MM-DD Wochentag, Dauer: X:YZ || A:BC
+# Legende und Helferlein
 
+Template:
+2023-MM-DD Wochentag, Dauer: X:YZ || A:BC
+
+🐞 Bugfix
+🔍 Tests
+🛠️ Refactoring
+⭐ Feature
+
+## 2023-09-04 Dienstag, Dauer: X:YZ || A:BC
+0915
++ ⭐ Beim Download wird der Browser getriggert nach dem Speicherort zu fragen
++ ⭐ Excel erstellen, dass alle Felder gefüllt hat
 
 
 ## 2023-09-03 Sonntag, Dauer: 3:00 || 27:45
