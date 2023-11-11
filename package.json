@@ -7,7 +7,7 @@
     "test": "jest",
     "testcoverage": "jest --coverage",
     "start": "node src/server/server.js",
-    "startnodemon": "nodemon src/server/server.js"
+    "nodemon": "nodemon src/server/server.js"
   },
   "author": "Christian Kliebe @icke",
   "license": "ISC",

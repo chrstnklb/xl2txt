@@ -1,56 +1,12 @@
-body {
-  width: 100%;
-  margin: 0 auto;
-  /* background-color: lightgray; */
-}
 
-.area {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+/* Individual area background colors */
+#area-start { background-color: #14908E; }
+#area-feedback { background-color: #37BFAE; }
+#area-roadmap { background-color: #B7AA67; }
+#area-kontakt { background-color: #B2735B; }
+#area-impressum { background-color: #CB524F; }
 
-#start-area {
-  background-color: aqua;
-}
-
-#feedback-area {
-  background-color:bisque;
-}
-
-#roadmap-area {
-  background-color:cadetblue;
-}
-
-#kontakt-area {
-  background-color:coral;
-}
-
-#impressum-area {
-  background-color:slateblue;
-}
-
-
-.btn-group {
-text-align: center;
-}
-
-
-h1 {
-  text-align: center;
-}
-
-header {
-  background-color: white;
-  color: white;
-  padding: 8px;
-}
-
-p{
-  text-align: center;
-}
-
+/* Styles for drop zone */
 #drop_zone {
   align-items: center;
   background-color: rgb(255, 255, 118);
@@ -62,9 +18,105 @@ p{
   padding: 8px;
 }
 
-.svg-triangle path {
-  stroke-width: 20;
-  stroke: lightskyblue;
-  stroke-linejoin: round;
-  stroke-linecap:round;
+
+/* Common styles for all areas */
+.area {
+  display: flex;
+  flex-direction: column; /* Align children vertically */
+  align-items: center; /* Center children horizontally */
+  height: 1000px; /* Adjust height as necessary */
 }
+
+.area h1 {
+  margin-top: 20px; /* Adjust as necessary */
+  width: 100%;
+  text-align: center;
+}
+
+/* Container styles */
+.container {
+  background-color: white;
+  width: 512px;
+  height: 512px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  text-align: center;
+  margin-top: 100px;
+}
+
+/* Logo styles */
+.logo {
+  padding: 10px;
+}
+
+.logo img {
+  height: 128px; /* Adjust as necessary */
+}
+
+/* Drag area styles */
+.drag-area {
+  align-items: center;
+  border: 2px dashed #888;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  height: 270px;
+  margin-top: 20px;
+}
+
+.drag-area:hover {
+  background-color: #f8f8f8;
+}
+
+
+
+/* Position the button group vertically centered on the left side of the page */
+.btn-group {
+  position: fixed;
+  top: 50%; /* Start at the vertical center of the page */
+  left: 20px; /* Space from the left edge of the page */
+  transform: translateY(-50%); /* Shift upwards by half its own height to center */
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  align-items: flex-start; /* Align buttons to the left */
+  z-index: 1000;
+}
+
+/* Styling for individual text-like buttons */
+.btn-group .btn {
+  background-color: transparent; /* Make button background transparent */
+  color: black; /* Initial color of text */
+  border: none; /* Remove border */
+  margin-bottom: 10px;
+  font-size: 18px; /* Increase font size */
+  transition: background-color 0.3s ease, font-size 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Remove margin on the last button */
+.btn-group .btn:last-child {
+  margin-bottom: 0;
+}
+
+/* Change background color and font size on hover to match the area's color */
+.btn-group .btn:hover {
+  font-size: 22px; /* Increase font size on hover */
+  padding: 3px 5px; /* Add some padding to make the background visible */
+}
+
+/* Specific hover styles for each button based on the area it jumps to */
+/* .btn-group #btnradio1:hover { background-color: #14908E; } /* Match area-start color */
+/* .btn-group #btnradio2:hover { background-color: #37BFAE; } /* Match area-feedback color */
+/* .btn-group #btnradio3:hover { background-color: #B7AA67; } /* Match area-roadmap color */
+/* .btn-group #btnradio4:hover { background-color: #B2735B; } /* Match area-kontakt color */
+/* .btn-group #btnradio5:hover { background-color: #CB524F; } /* Match area-impressum color */
+
+
+.btn-group #btnradio1:hover { background-color: #14908E; } /* Match area-start color */
+.btn-group #btnradio3:hover { background-color: #37BFAE; } /* Match area-roadmap color */
+.btn-group #btnradio4:hover { background-color: #B7AA67; } /* Match area-kontakt color */
+
+

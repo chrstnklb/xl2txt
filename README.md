@@ -28,3 +28,15 @@ More usefull commands:
 - ```pm2 describe 0```
 - ```pm2 monit 0```
 - ```pm2 delete <id>```
+
+## Color palette
+
+<div style="background-color:#14908E; width:150px; height:50px; display:inline-block;">#14908E</div>
+
+<div style="background-color:#37BFAE; width:150px; height:50px; display:inline-block;">#37BFAE</div>
+
+<div style="background-color:#B7AA67; width:150px; height:50px; display:inline-block;">#B7AA67</div>
+
+<div style="background-color:#B2735B; width:150px; height:50px; display:inline-block;">#B2735B</div>
+
+<div style="background-color:#CB524F; width:150px; height:50px; display:inline-block;">#CB524F</div>

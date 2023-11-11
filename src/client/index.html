@@ -16,55 +16,50 @@
     <title>Excel To Txt</title>
 </head>
 
-<body class="bg-secondary-subtle">
+<body class="bg-secondary-subtle"> 
 
-    <p></p>
-    <h1>Excel To Txt</h1>
+    <!-- <p></p> -->
+    <!-- <h1>Excel To Txt</h1> -->
     <div class="text-center">
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" disabled="btnradio" id="btnradio1" autocomplete="off" checked>
-            <label class="btn btn-outline-primary" for="btnradio1">Start</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio2" onclick="jumpTo('feedback')">Feedback</label>
+            <input type="radio" class=" btn-check" name="btnradio" id="btnradio1">
+            <label class="btn btn-outline-primary" onclick="jumpTo('start')">Start</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-            <label class="btn btn-outline-primary" for="roadmap" onclick="jumpTo('roadmap')">Roadmap</label>
+            <!-- <input type="radio" class="btn-check" name="btnradio" id="btnradio2">
+            <label class="btn btn-outline-primary" onclick="jumpTo('feedback')">Feedback</label> -->
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-            <label class="btn btn-outline-primary" for="kontakt" onclick="jumpTo('kontakt')">Kontakt</label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio3">
+            <label class="btn btn-outline-primary" onclick="jumpTo('roadmap')">Roadmap</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio3" onclick="jumpTo('impressum')">Impressum</label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio4">
+            <label class="btn btn-outline-primary" onclick="jumpTo('kontakt')">Kontakt</label>
 
+            <!-- <input type="radio" class="btn-check" name="btnradio" id="btnradio5">
+            <label class="btn btn-outline-primary" onclick="jumpTo('impressum')">Impressum</label> -->
         </div>
-
-
     </div>
 
-    <!-- <header class="d-flex justify-content-between align-items-center py-3" style="background-color: lightgray;">
-        <svg class="svg-triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="35" height="35">
-            <path d="M 10,50 90,10 90,90 Z" fill="lightskyblue" transform="scale(1, 1)" />
-            <text x="21" y="61" font-size="32" fill="white" transform="scale(1, 1)">XLSX</text>
-            <text x="76" y="36" font-size="32" fill="white" transform="scale(1, 1)">T</text>
-            <text x="76" y="87" font-size="32" fill="white" transform="scale(1, 1)">T</text>
-        </svg>
-    </header> -->
+    <div class="area" id="area-start">
 
-    <div class="area" id="start-area">
-        <div class="text-center">
+        <h1 id="start"></h1>
 
-            <p></p>
-            <p class="bg-secondary-subtle btn btn-outline-light text-black border-3 rounded-2 align-content-center">
-                Importiere die standartisierte Excel-Datei
-                und erhalte die Text-Datei.
-            </p>
+        <div class="container">
+            <div class="logo">
+                <img src="logo-black-small.png" alt="relog logo">
+            </div>
+            <div>
+                <h2>Excel zu Txt wandeln</h2>
+                <div class="drag-area">
+                    Ziehe deine Excel-Datei hier hinein!
+                </div>
+            </div>
         </div>
-
+        <!-- 
         <div id="drop_zone" ondragleave="dragLeaveHandler(event);" ondragover="dragOverHandler(event);"
             ondrop="dropHandler(event);">
             Ziehe deine Excel-Datei hier hinein!
-        </div>
+        </div> -->
 
         <form action="/download" hidden id="downloadForm" method="post">
             <button type="submit">Lade das Ergebnis herunter!</button>
@@ -74,64 +69,72 @@
             <button type="submit">Von vorne starten!</button>
         </form>
     </div>
-    
+
     <!-- Feedback -->
 
-    <div class="area" id="feedback-area">
-        <div class="text-center" style="height: 300px;">
+    <!-- <div class="area" id="area-feedback">
+        <div class="text-center">
             <h1 id="feedback">Feedback</h1>
-            <input type="text" name="feedback" id="feedback-input">
-            <button>Send Feedback</button>
+            <h2>Bald möglich!</h2>
+            <h3>Sende Feedback an die Entwickler!</h2>
         </div>
-    </div>
+    </div> -->
 
 
     <!-- Roadmap -->
-    <div class="area" id="roadmap-area">
+    <div class="area" id="area-roadmap">
 
-    <div class="text-center" style="height: 300px;">
-        <h1 id="roadmap">Roadmap</h1>
-        <ol>
-            <li>Erstens</li>
-            <li>Zweitens</li>
-            <li>Drittens</li>
-        </ol>
+        <div class="text-center">
+            <h1 id="roadmap">Roadmap</h1>
+            <ul>
+                <li>Ladeanmiation eingebunden.</li>
+                <li>Demnächst - Unterstützung des neuen Excel Formates.</li>
+                <li>2023-11-11 Binde Logo und Unternehmensfarben ein.</li>
+            </ul>
+        </div>
     </div>
-</div>
 
 
     <!-- Kontakt -->
-    <div class="area" id="kontakt-area">
+    <div class="area" id="area-kontakt">
 
-    <div class="text-center" style="height: 300px;">
-        <h1 id="kontakt">Kontakt</h1>
-        <div>
-            Author: Christian Kliebe<br>
-            Mail: chrstnklb@gmail.com<br>
-            Mobile: +49 123 456 789<br>
+        <div class="text-center">
+            <h1 id="kontakt">Kontakt</h1>
+            <div>
+                Author: Christian Kliebe<br>
+                Mail: chrstnklb@gmail.com<br>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- Impressum -->
-    <div class="area" id="impressum-area">
+    <!-- <div class="area" id="area-impressum">
 
-    <div class="area" class="text-center" style="height: 300px;">
-        <h1 id="impressum">Impressum</h1>
-        <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, velit vel bibendum bibendum, sapien
-            sapien bibendum elit, vel bibendum sapien sapien vel elit. Sed vel sapien vel sapien bibendum bibendum. Sed
-            vel sapien sapien. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel
-            sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum
-            bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel sapien
-            sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum.
-            Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien
-            bibendum bibendum.
+        <div class="area" class="text-center">
+            <h1 id="impressum">Impressum</h1>
+            <h2>Bald erhältlich!</h2>
+            <div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, velit vel bibendum bibendum,
+                sapien
+                sapien bibendum elit, vel bibendum sapien sapien vel elit. Sed vel sapien vel sapien bibendum bibendum.
+                Sed
+                vel sapien sapien. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed
+                vel
+                sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum
+                bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel
+                sapien
+                sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum
+                bibendum.
+                Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien
+                bibendum bibendum.
 
-            This is just placeholder text used in the design and typesetting industry. It has no real meaning, but is
-            often used to fill space where text is needed.
+                This is just placeholder text used in the design and typesetting industry. It has no real meaning, but
+                is
+                often used to fill space where text is needed.
+            </div>
         </div>
-    </div>
+    </div> -->
+
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-..."
