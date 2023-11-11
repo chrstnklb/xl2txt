@@ -1,3 +1,4 @@
+const { Alert } = require("bootstrap");
 
 function dropHandler(ev) {
     let transformedFilename = '';
@@ -62,6 +63,11 @@ function displayRestartButton() {
 
 function setBackGroundColor(ev, color) {
     ev.target.style.backgroundColor = color;
+}
+
+function jumpTo(target) {
+    var kontaktHeader = document.getElementById(target)
+    kontaktHeader.scrollIntoView({ behavior: 'smooth' })
 }
 
 

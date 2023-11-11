@@ -1,18 +1,70 @@
+body {
+  width: 100%;
+  margin: 0 auto;
+  /* background-color: lightgray; */
+}
+
+.area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#start-area {
+  background-color: aqua;
+}
+
+#feedback-area {
+  background-color:bisque;
+}
+
+#roadmap-area {
+  background-color:cadetblue;
+}
+
+#kontakt-area {
+  background-color:coral;
+}
+
+#impressum-area {
+  background-color:slateblue;
+}
+
+
+.btn-group {
+text-align: center;
+}
+
+
+h1 {
+  text-align: center;
+}
+
+header {
+  background-color: white;
+  color: white;
+  padding: 8px;
+}
+
+p{
+  text-align: center;
+}
+
 #drop_zone {
   align-items: center;
-  background-color: yellow;
+  background-color: rgb(255, 255, 118);
   border: #999 5px dashed;
   display: flex;
   font-size: 18px;
   justify-content: center;
-  height: 200px;
+  height: 500px;
   padding: 8px;
-  width: 290px;
 }
 
-button {
-  font-size: 18px;
-  margin-top: 10px;
-  padding: 8px;
-  width: 316px;
+.svg-triangle path {
+  stroke-width: 20;
+  stroke: lightskyblue;
+  stroke-linejoin: round;
+  stroke-linecap:round;
 }
