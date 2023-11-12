@@ -8,6 +8,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
         integrity="sha384-..." crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./style.css">
+
+
+
+    <link rel="stylesheet" type="text/css" href="./navigation.css">
+    <!-- <link rel="stylesheet" type="text/css" href="./areas.css">
+    <link rel="stylesheet" type="text/css" href="./buttons.css">
+    <link rel="stylesheet" type="text/css" href="./common.css"> -->
+
+
+
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-..."
         crossorigin="anonymous"></script>
@@ -18,132 +28,18 @@
 
 <body class="bg-secondary-subtle">
 
-    <!-- <p></p> -->
-    <!-- <h1>Excel To Txt</h1> -->
-    <div class="text-center">
-        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 
-            <input type="radio" class=" btn-check" name="btnradio" id="btnradio1">
-            <label class="btn btn-outline-primary" onclick="jumpTo('start')">Start</label>
+    <div id="header-content-navigation"></div>
 
-            <!-- <input type="radio" class="btn-check" name="btnradio" id="btnradio2">
-            <label class="btn btn-outline-primary" onclick="jumpTo('feedback')">Feedback</label> -->
-
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio3">
-            <label class="btn btn-outline-primary" onclick="jumpTo('roadmap')">Roadmap</label>
-
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio4">
-            <label class="btn btn-outline-primary" onclick="jumpTo('kontakt')">Kontakt</label>
-
-            <!-- <input type="radio" class="btn-check" name="btnradio" id="btnradio5">
-            <label class="btn btn-outline-primary" onclick="jumpTo('impressum')">Impressum</label> -->
-        </div>
-    </div>
-
-    <div class="area" id="area-start">
-
-        <h1 id="start"></h1>
-
-        <div class="container">
-            <div class="logo">
-                <img src="logo-black-small.png" alt="relog logo">
-            </div>
-            <div>
-                <p></p>
-                <h2>Wandel die Excel-Datei zu Txt um!</h2>
-                <div class="drag-area" id="drop_zone" ondragleave="dragLeaveHandler(event);"
-                    ondragover="dragOverHandler(event);" ondrop="dropHandler(event);">
-                    <h2 id="drop-zone-text"> Ziehe die Datei hier hinein!</h2>
-                </div>
-
-                <!-- Buttons Container -->
-                <div class="buttons-container">
-                    
-                    <form action="/" hidden id="restartForm" method="get">
-                        <button type="submit" class="action-button action-button-left">🔁 Von vorne starten!</button>
-                    </form>
-                    <form action="/download" hidden id="downloadForm" method="post">
-                        <button type="submit" class="action-button action-button-right">⬇️ Lade das Ergebnis herunter!</button>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Feedback -->
-
-    <!-- <div class="area" id="area-feedback">
-        <div class="text-center">
-            <h1 id="feedback">Feedback</h1>
-            <h2>Bald möglich!</h2>
-            <h3>Sende Feedback an die Entwickler!</h2>
-        </div>
-    </div> -->
+    <div id="main-content-start"></div>
+    <div id="main-content-roadmap"></div>
+    <div id="main-content-contact"></div>
+    <!-- <div id="main-content-feedback"></div> -->
+    <!-- <div id="main-content-impressum"></div> -->
 
 
-    <!-- Roadmap -->
-    <div class="area" id="area-roadmap">
-
-        <div class="text-center">
-            <h1 id="roadmap">Roadmap</h1>
-                <br>
-                <h2 id="planned">Demnächst</h2>
-                <br>Ladeanmiation eingebunden.
-                <br>Unterstützung des neuen Excel Formates.
-                <br>Option für direkten Download
-                <br>Option für Durchsuchen
-                <br>Informationen über verarbeitete Informationen
-                <br>Erläuterung bei Fehlern in Excel-Datei
-                <br>
-                <br>
-                <h2 id="done">Implementiert</h2>
-                2023-11-11 Binde Logo und Unternehmensfarben ein.
-        </div>
-    </div>
-
-
-    <!-- Kontakt -->
-    <div class="area" id="area-kontakt">
-
-        <div class="text-center">
-            <h1 id="kontakt">Kontakt</h1>
-            <div>
-                Author: Christian Kliebe<br>
-                Mail: chrstnklb@gmail.com<br>
-            </div>
-        </div>
-    </div>
-
-    <!-- Impressum -->
-    <!-- <div class="area" id="area-impressum">
-
-        <div class="area" class="text-center">
-            <h1 id="impressum">Impressum</h1>
-            <h2>Bald erhältlich!</h2>
-            <div>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, velit vel bibendum bibendum,
-                sapien
-                sapien bibendum elit, vel bibendum sapien sapien vel elit. Sed vel sapien vel sapien bibendum bibendum.
-                Sed
-                vel sapien sapien. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed
-                vel
-                sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum
-                bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel
-                sapien
-                sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum
-                bibendum.
-                Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien bibendum bibendum. Sed vel sapien sapien
-                bibendum bibendum.
-
-                This is just placeholder text used in the design and typesetting industry. It has no real meaning, but
-                is
-                often used to fill space where text is needed.
-            </div>
-        </div>
-    </div> -->
-
+    <!-- JavaScript to Load Components -->
+    <script src="./main.js"></script>
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-..."

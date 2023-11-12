@@ -2,8 +2,8 @@
 
 # Deployment
 
-1. Log into the EC2 Instance
-2. Git pull
+1. Log into (Connect) the EC2 Instance
+2. Go into project folder and Git pull
 3. Restart pm2 using
     - ```pm2 restart 0```
 4. OR: Setup new pm2 instance, if server path or name was changed (See chapter pm2)
@@ -33,7 +33,7 @@ More usefull commands:
 
 <div style="background-color:#14908E; width:150px; height:50px; display:inline-block;">#14908E</div>
 
-<div style="background-color:#37BFAE; width:150px; height:50px; display:inline-block;">#37BFAE</div>
+<div style="background-color:#37BFAE; width:150px; height:50px; display:inline-block;">##039996</div>
 
 <div style="background-color:#B7AA67; width:150px; height:50px; display:inline-block;">#B7AA67</div>
 

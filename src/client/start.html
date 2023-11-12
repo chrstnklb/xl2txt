@@ -1,0 +1,31 @@
+<div class="area" id="area-start">
+
+    <h1 id="start"></h1>
+
+    <div class="container">
+        <div class="logo">
+            <img src="logo-black-small.png" alt="relog logo">
+        </div>
+        <div>
+            <p></p>
+            <h2>Wandel die Excel-Datei zu Txt um!</h2>
+            <div class="drag-area" id="drop_zone" ondragleave="dragLeaveHandler(event);"
+                ondragover="dragOverHandler(event);" ondrop="dropHandler(event);">
+                <h2 id="drop-zone-text"> Ziehe die Datei hier hinein!</h2>
+            </div>
+
+            <!-- Buttons Container -->
+            <div class="buttons-container">
+                
+                <form action="/" hidden id="restartForm" method="get">
+                    <button type="submit" class="action-button action-button-left">🔁 Von vorne starten!</button>
+                </form>
+                <form action="/download" hidden id="downloadForm" method="post">
+                    <button type="submit" class="action-button action-button-right">⬇️ Lade das Ergebnis herunter!</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
