@@ -1,34 +1,36 @@
-
 /* Individual area background colors */
-#area-start { background-color: #14908E; }
+#area-start {
+  background-color: #14908E;
+}
+
+#area-roadmap {
+  background-color: #37BFAE;
+}
+
+#area-kontakt {
+  background-color: #B7AA67;
+}
+
+/* #area-start { background-color: #14908E; }
 #area-feedback { background-color: #37BFAE; }
 #area-roadmap { background-color: #B7AA67; }
 #area-kontakt { background-color: #B2735B; }
-#area-impressum { background-color: #CB524F; }
-
-/* Styles for drop zone */
-#drop_zone {
-  align-items: center;
-  background-color: rgb(255, 255, 118);
-  border: #999 5px dashed;
-  display: flex;
-  font-size: 18px;
-  justify-content: center;
-  height: 500px;
-  padding: 8px;
-}
-
+#area-impressum { background-color: #CB524F; } */
 
 /* Common styles for all areas */
 .area {
   display: flex;
-  flex-direction: column; /* Align children vertically */
-  align-items: center; /* Center children horizontally */
-  height: 1000px; /* Adjust height as necessary */
+  flex-direction: column;
+  /* Align children vertically */
+  align-items: center;
+  /* Center children horizontally */
+  height: 1000px;
+  /* Adjust height as necessary */
 }
 
 .area h1 {
-  margin-top: 20px; /* Adjust as necessary */
+  margin-top: 20px;
+  /* Adjust as necessary */
   width: 100%;
   text-align: center;
 }
@@ -36,11 +38,11 @@
 /* Container styles */
 .container {
   background-color: white;
-  width: 512px;
-  height: 512px;
+  width: 666px;
+  height: 666px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* padding: 20px; */
   text-align: center;
   margin-top: 100px;
 }
@@ -51,23 +53,27 @@
 }
 
 .logo img {
-  height: 128px; /* Adjust as necessary */
+  height: 192px;
+  /* Adjust as necessary */
 }
 
 /* Drag area styles */
 .drag-area {
   align-items: center;
-  border: 2px dashed #888;
+  border: 3px dashed #14908E;
+  border-radius: 10px;
+  background-color: yellow;
+  opacity: 50%;
   cursor: pointer;
   display: flex;
   justify-content: center;
   padding: 30px;
-  height: 270px;
+  height: 368px;
   margin-top: 20px;
 }
 
 .drag-area:hover {
-  background-color: #f8f8f8;
+  background-color: #14908E;
 }
 
 
@@ -75,25 +81,34 @@
 /* Position the button group vertically centered on the left side of the page */
 .btn-group {
   position: fixed;
-  top: 50%; /* Start at the vertical center of the page */
-  left: 20px; /* Space from the left edge of the page */
-  transform: translateY(-50%); /* Shift upwards by half its own height to center */
+  top: 50%;
+  /* Start at the vertical center of the page */
+  left: 20px;
+  /* Space from the left edge of the page */
+  transform: translateY(-50%);
+  /* Shift upwards by half its own height to center */
   display: flex;
   flex-direction: column;
   text-align: center;
 
-  align-items: flex-start; /* Align buttons to the left */
+  align-items: flex-start;
+  /* Align buttons to the left */
   z-index: 1000;
 }
 
 /* Styling for individual text-like buttons */
 .btn-group .btn {
-  background-color: transparent; /* Make button background transparent */
-  color: black; /* Initial color of text */
-  border: none; /* Remove border */
+  background-color: transparent;
+  /* Make button background transparent */
+  color: black;
+  /* Initial color of text */
+  border: none;
+  /* Remove border */
   margin-bottom: 10px;
-  font-size: 18px; /* Increase font size */
-  transition: background-color 0.3s ease, font-size 0.3s ease; /* Smooth transition for hover effect */
+  font-size: 18px;
+  /* Increase font size */
+  transition: background-color 0.3s ease, font-size 0.3s ease;
+  /* Smooth transition for hover effect */
 }
 
 /* Remove margin on the last button */
@@ -103,8 +118,10 @@
 
 /* Change background color and font size on hover to match the area's color */
 .btn-group .btn:hover {
-  font-size: 22px; /* Increase font size on hover */
-  padding: 3px 5px; /* Add some padding to make the background visible */
+  font-size: 22px;
+  /* Increase font size on hover */
+  padding: 3px 5px;
+  /* Add some padding to make the background visible */
 }
 
 /* Specific hover styles for each button based on the area it jumps to */
@@ -115,8 +132,65 @@
 /* .btn-group #btnradio5:hover { background-color: #CB524F; } /* Match area-impressum color */
 
 
-.btn-group #btnradio1:hover { background-color: #14908E; } /* Match area-start color */
-.btn-group #btnradio3:hover { background-color: #37BFAE; } /* Match area-roadmap color */
-.btn-group #btnradio4:hover { background-color: #B7AA67; } /* Match area-kontakt color */
+h2 {
+  color: #37BFAE;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
 
 
+
+/* Container for the buttons */
+.buttons-container {
+  display: flex;
+  justify-content: space-evenly;
+  /* This will place an equal space between the buttons */
+  box-sizing: border-box;
+  /* Include padding in the width calculation */
+  width: 666px;
+  margin-left: -12px;  
+  margin-top: 10px;
+  /* display: none; */
+}
+
+/* Styles for the action buttons */
+.action-button {
+  background-color: white;
+  border-radius: 10px;
+  border-style: none;
+  flex: 1;
+  /* This will make the buttons expand equally to fill the parent container */
+  padding: 10px;
+
+  /* padding-left: 10px; */
+  /* margin: 50 0px; */
+  width: 100%;
+  margin-top: 15px;
+  /* Adjust margin for spacing between buttons */
+  /* Add any additional styling you want for the buttons */
+}
+
+.action-button-left {
+  margin-right: 5px;
+  width: 328px;
+}
+
+.action-button-right {
+  width: 328px;
+  margin-left: 5px;
+  /* padding-left: 10px; */
+}
+
+/* Ensure that the buttons are visible */
+#downloadForm {
+  width: 333px !important;
+}
+
+#restartForm {
+  width: 333px !important;
+}
+
+#planned, #done {
+  color: black;
+}

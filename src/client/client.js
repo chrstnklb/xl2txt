@@ -1,4 +1,7 @@
-const { Alert } = require("bootstrap");
+const DRAG_OVER_COLOR = '#14908E';
+const DRAG_LEAVE_COLOR = 'yellow';
+const DRAG_OVER_OPACITY = 0.5;
+
 
 function dropHandler(ev) {
     let transformedFilename = '';
@@ -13,21 +16,35 @@ function dropHandler(ev) {
     fetch('/upload', { method: 'POST', body: formData })
         .then(response => response.json())
         .then(result => { transformedFilename = result.fileName; })
+        .then(() => { setDropAreaText('🎉 Prima 🎉'); })
         .then(() => { prepareDownload(transformedFilename); })
         .then(() => { displayDownloadButton(); })
         .catch(error => { console.error('Error:', error); });
 }
 
 function dragOverHandler(ev) {
-    clientLog("file in drop zone", "yellow");
+    clientLog("file in drop zone", DRAG_OVER_COLOR);
     preventFileToOpen(ev);
-    setBackGroundColor(ev, "green");
+    setBackGroundColor(ev, DRAG_OVER_COLOR);
+    setBackGroundColorOpacity(ev, 1);
+    setDropAreaText('Lass los!');
+}
+
+function setDropAreaText(text) {
+    const dropAreaText = document.getElementById('drop-zone-text');
+    dropAreaText.innerHTML = text;
 }
 
 function dragLeaveHandler(ev) {
-    clientLog("file left drop zone", "red");
+    clientLog("file left drop zone", DRAG_LEAVE_COLOR);
     preventFileToOpen(ev);
-    setBackGroundColor(ev, "yellow");
+    setBackGroundColor(ev, DRAG_LEAVE_COLOR);
+    setBackGroundColorOpacity(ev, 0.5);
+    setDropAreaText('Ziehe die Datei hier hinein!');
+}
+
+function setBackGroundColorOpacity(ev, opacity) {
+    ev.target.style.opacity = opacity;
 }
 
 function prepareDownload(filename) {
@@ -53,12 +70,12 @@ function setDownloadElementsAction(id, transformedFilename) {
 
 function displayDownloadButton() {
     const downloadButton = document.getElementById('downloadForm');
-    downloadButton.style.display = 'block';
+    downloadButton.hidden = false;
 }
 
 function displayRestartButton() {
     const restartButton = document.getElementById('restartForm');
-    restartButton.style.display = 'block';
+    restartButton.hidden = false;
 }
 
 function setBackGroundColor(ev, color) {

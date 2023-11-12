@@ -16,7 +16,7 @@
     <title>Excel To Txt</title>
 </head>
 
-<body class="bg-secondary-subtle"> 
+<body class="bg-secondary-subtle">
 
     <!-- <p></p> -->
     <!-- <h1>Excel To Txt</h1> -->
@@ -49,25 +49,27 @@
                 <img src="logo-black-small.png" alt="relog logo">
             </div>
             <div>
-                <h2>Excel zu Txt wandeln</h2>
-                <div class="drag-area">
-                    Ziehe deine Excel-Datei hier hinein!
+                <p></p>
+                <h2>Wandel die Excel-Datei zu Txt um!</h2>
+                <div class="drag-area" id="drop_zone" ondragleave="dragLeaveHandler(event);"
+                    ondragover="dragOverHandler(event);" ondrop="dropHandler(event);">
+                    <h2 id="drop-zone-text"> Ziehe die Datei hier hinein!</h2>
                 </div>
+
+                <!-- Buttons Container -->
+                <div class="buttons-container">
+                    
+                    <form action="/" hidden id="restartForm" method="get">
+                        <button type="submit" class="action-button action-button-left">🔁 Von vorne starten!</button>
+                    </form>
+                    <form action="/download" hidden id="downloadForm" method="post">
+                        <button type="submit" class="action-button action-button-right">⬇️ Lade das Ergebnis herunter!</button>
+                    </form>
+                </div>
+
             </div>
         </div>
-        <!-- 
-        <div id="drop_zone" ondragleave="dragLeaveHandler(event);" ondragover="dragOverHandler(event);"
-            ondrop="dropHandler(event);">
-            Ziehe deine Excel-Datei hier hinein!
-        </div> -->
 
-        <form action="/download" hidden id="downloadForm" method="post">
-            <button type="submit">Lade das Ergebnis herunter!</button>
-        </form>
-
-        <form action="/" hidden id="restartForm" method="get">
-            <button type="submit">Von vorne starten!</button>
-        </form>
     </div>
 
     <!-- Feedback -->
@@ -86,11 +88,18 @@
 
         <div class="text-center">
             <h1 id="roadmap">Roadmap</h1>
-            <ul>
-                <li>Ladeanmiation eingebunden.</li>
-                <li>Demnächst - Unterstützung des neuen Excel Formates.</li>
-                <li>2023-11-11 Binde Logo und Unternehmensfarben ein.</li>
-            </ul>
+                <br>
+                <h2 id="planned">Demnächst</h2>
+                <br>Ladeanmiation eingebunden.
+                <br>Unterstützung des neuen Excel Formates.
+                <br>Option für direkten Download
+                <br>Option für Durchsuchen
+                <br>Informationen über verarbeitete Informationen
+                <br>Erläuterung bei Fehlern in Excel-Datei
+                <br>
+                <br>
+                <h2 id="done">Implementiert</h2>
+                2023-11-11 Binde Logo und Unternehmensfarben ein.
         </div>
     </div>
 
