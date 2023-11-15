@@ -146,3 +146,7 @@ h2 {
 #planned, #done {
   color: black;
 }
+
+#drop-zone-text {
+  pointer-events: none;
+}

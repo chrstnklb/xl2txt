@@ -5,7 +5,7 @@ const DRAG_OVER_OPACITY = 0.5;
 
 function dropHandler(ev) {
     let transformedFilename = '';
-    clientLog("file dropped", "green");
+    clientLog("file dropped");
 
     preventFileToOpen(ev);
 
@@ -19,7 +19,15 @@ function dropHandler(ev) {
         .then(() => { setDropAreaText('🎉 Prima 🎉'); })
         .then(() => { prepareDownload(transformedFilename); })
         .then(() => { displayDownloadButton(); })
+        .then(() => { displayRestartButton(); })
         .catch(error => { console.error('Error:', error); });
+}
+
+function deactivateUpluadArea() {
+    const dropArea = document.getElementById('drop-zone');
+    dropArea.style.pointerEvents = 'none';
+    dropArea.style.opacity = 0.5;
+    
 }
 
 function dragOverHandler(ev) {
@@ -31,8 +39,8 @@ function dragOverHandler(ev) {
 }
 
 function setDropAreaText(text) {
-    const dropAreaText = document.getElementById('drop-zone-text');
-    dropAreaText.innerHTML = text;
+    const dropZoneText = document.getElementById('drop-zone-text');
+    dropZoneText.innerHTML = text;
 }
 
 function dragLeaveHandler(ev) {
@@ -49,7 +57,6 @@ function setBackGroundColorOpacity(ev, opacity) {
 
 function prepareDownload(filename) {
     setDownloadElementsAction('downloadForm', filename);
-    displayRestartButton();
 }
 
 /**************************/
@@ -62,9 +69,11 @@ function preventFileToOpen(ev) {
 
 function setDownloadElementsAction(id, transformedFilename) {
     const form = document.getElementById(id);
-    const action = form.getAttribute('action');
+    let action = "";
 
-    form.setAttribute('action', action + '?fileName=' + transformedFilename);
+    form.setAttribute('action', "/download" + '?fileName=' + transformedFilename);
+
+    console.log('filename', transformedFilename);
 
 }
 
