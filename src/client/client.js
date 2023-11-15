@@ -15,11 +15,19 @@ function dropHandler(ev) {
 
     fetch('/upload', { method: 'POST', body: formData })
         .then(response => response.json())
-        .then(result => { transformedFilename = result.fileName; })
-        .then(() => { setDropAreaText('🎉 Prima 🎉'); })
+        .then(result => {
+            transformedFilename = result.fileName;
+            console.log('Upload date:', result);
+            setDropAreaText(
+                'Hochgeladene Datei ' + result.uploadedFileName + 
+                ' wurde transformiert zu ' + result.downloadFileName);
+
+        })
+        // .then(() => { setDropAreaText('🎉 Prima 🎉'); })
         .then(() => { prepareDownload(transformedFilename); })
         .then(() => { displayDownloadButton(); })
         .then(() => { displayRestartButton(); })
+        // read the response body and console.log it
         .catch(error => { console.error('Error:', error); });
 }
 
@@ -27,7 +35,7 @@ function deactivateUpluadArea() {
     const dropArea = document.getElementById('drop-zone');
     dropArea.style.pointerEvents = 'none';
     dropArea.style.opacity = 0.5;
-    
+
 }
 
 function dragOverHandler(ev) {
@@ -72,8 +80,6 @@ function setDownloadElementsAction(id, transformedFilename) {
     let action = "";
 
     form.setAttribute('action', "/download" + '?fileName=' + transformedFilename);
-
-    console.log('filename', transformedFilename);
 
 }
 

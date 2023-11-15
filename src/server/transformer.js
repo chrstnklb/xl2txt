@@ -6,6 +6,7 @@ const excel = require('./excel.js');
 const felder = require('./felder.js');
 const fileHandler = require('./utils/fileHandler.js');
 const time = require('./utils/time.js');
+const exp = require('constants');
 
 const TARGET_FILENAME = "Imp_lbw.txt";
 
@@ -22,6 +23,7 @@ function transformToCSV(excelFile) {
         'rowCount': 0,
         'calculation-time-in-ms': 0,
     };
+
     let start = new Date().getTime();
 
     let workSheet = excel.initExcelFile(excelFile);
@@ -125,3 +127,4 @@ function writeStatistics(statistics) {
 
 exports.transformToCSV = transformToCSV;
 exports.timestamp = this.timestamp;
+exports.TARGET_FILENAME = TARGET_FILENAME;

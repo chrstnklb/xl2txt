@@ -10,29 +10,33 @@ const app = express();
 const port = 3000;
 const url = `http://localhost:${port}`
 
-const { getType }   = require('mime');
+const { getType } = require('mime');
 
 app.use(express.static(path.join(__dirname, '../client')))
 
 app.use(express.static(__dirname, {
-  setHeaders: (res, path) => {
-    const type = getType(path);
-    if (type === 'application/javascript' || type === 'text/css') {
-      res.setHeader('Content-Type', type);
+    setHeaders: (res, path) => {
+        const type = getType(path);
+        if (type === 'application/javascript' || type === 'text/css') {
+            res.setHeader('Content-Type', type);
+        }
     }
-  }
 }));
 
 app.post("/upload", initMulterUpload().single('upload'), (req, res) => {
-    logs.logServerRouteUpload('filename',  req.file.filename);
+    logs.logServerRouteUpload('filename', req.file.filename);
 
     const targetFilename = transformer.transformToCSV("./uploads/" + req.file.filename);
     const txtFileName = targetFilename.replace('upload', 'download');
-    res.json({ fileName: txtFileName });
+    res.json({
+        fileName: txtFileName,
+        uploadedFileName: req.file.filename,
+        downloadFileName: transformer.TARGET_FILENAME,
+    });
 });
 
-app.post('/download', function(req, res){
-    logs.logServerRouteDownload('filename',  req.query.fileName);
+app.post('/download', function (req, res) {
+    logs.logServerRouteDownload('filename', req.query.fileName);
 
     const file = req.query.fileName;
 
@@ -41,7 +45,7 @@ app.post('/download', function(req, res){
         fileHandler.deleteDirectoryOfFile(path.dirname(file));
     });
 
-    logs.logServerRouteDownload('file',  file);
+    logs.logServerRouteDownload('file', file);
 });
 
 app.listen(port, () => {
