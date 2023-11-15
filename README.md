@@ -2,7 +2,7 @@
 
 # Deployment
 
-1. Log into (Connect) the EC2 Instance
+1. Log into (Connect) the [EC2 Instance](https://eu-central-1.console.aws.amazon.com/ec2/home?region=eu-central-1#Instances:sort=platform-details)
 2. Go into project folder and Git pull
 3. Restart pm2 using
     - ```pm2 restart 0```
