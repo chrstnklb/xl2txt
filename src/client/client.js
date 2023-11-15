@@ -18,11 +18,12 @@ function dropHandler(ev) {
         .then(result => {
             transformedFilename = result.fileName;
             console.log('Upload date:', result);
-            setDropAreaText(
-                'Hochgeladene Datei ' + result.uploadedFileName + 
-                ' wurde transformiert zu ' + result.downloadFileName);
-
         })
+        //     setDropAreaText(
+        //         'Hochgeladene Datei ' + result.uploadedFileName + 
+        //         ' wurde transformiert zu ' + result.downloadFileName);
+
+        // })
         // .then(() => { setDropAreaText('🎉 Prima 🎉'); })
         .then(() => { prepareDownload(transformedFilename); })
         .then(() => { displayDownloadButton(); })
