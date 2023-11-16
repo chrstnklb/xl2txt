@@ -1,9 +1,10 @@
 const fs = require('fs');
 const excel = require('./excel.js');
 const logs = require('./utils/logs.js');
+const ErrorList = require('./error.js');
 
 module.exports = {
-    
+
     // Nr.:             0
     // Feldbezeichnung: FINUM
     // Verwendung:      Firmennummer
@@ -14,7 +15,9 @@ module.exports = {
     readFirmennummer: function (cellCoordinate = 'B2') {
         let firmennummer = excel.readCell(cellCoordinate, 'number');
         if (firmennummer === undefined) {
-            console.log(`Firmennummer (Zelle ${cellCoordinate}) ist leer!`);
+            ErrorList.addError(
+                `Die Mandantennummer wurde erwartet. ` +
+                `Doch die Zelle '${cellCoordinate}' ist leer!`);
         } else {
             logs.logAttribute('Firmennummer', firmennummer);
         }
@@ -23,18 +26,23 @@ module.exports = {
 
     // Nr.:             1
     // Feldbezeichnung: PERSNR
-    // Verwendung:      Personalnummer
+    // Verwendung:      Personalnummer  
     // TYP:             NUMBER
     // MAX_LENGTH:      8
     // Muss-Feld:       Ja
     // Excel-Zelle:     A5
-    readPersonalnummer: function (cellCoordinate = 'A5') {
+    readPersonalnummer: function (cellCoordinate) {
         let personalnummer = excel.readCell(cellCoordinate, 'string');
         if (personalnummer === undefined) {
-            console.log(`Personalnummer (Zelle ${cellCoordinate}) ist leer!`);
+            ErrorList.addError(
+                `Die Personalnummer wurde erwartet. ` +
+                `Doch die Zelle '${cellCoordinate}' ist leer!`);
+        } else if (personalnummer === "A4" && personalnummer !== "Personalnummer") {
+            ErrorList.addError(
+                `Die Personalnummer wurde erwartet. ` +
+                `Doch die Zelle '${cellCoordinate}' beinhaltet ${personalnummer}!`);
         } else {
             personalnummer = personalnummer.padStart(6, '0');
-            // console.log(`Personalnummer: ${personalnummer}`);
         }
         return personalnummer;
     },
@@ -86,13 +94,26 @@ module.exports = {
     // Excel-Zelle:     B3
     readAbrechnungsZeitraum: function (cellCoordinate = 'B3') {
         let abrechnungsZeitraum = excel.readCell(cellCoordinate, 'date');
+
         if (abrechnungsZeitraum === undefined) {
-            console.log(`Abrechnungszeitraum (Zelle ${cellCoordinate}) ist leer!`);
+            ErrorList.addError(
+                `Der Abrechnungszeitraum wird im Format DD.MM.JJJJ erwartet. ` +
+                `Doch die Zelle '${cellCoordinate}' ist leer!`);
         } else {
             const day = abrechnungsZeitraum.d.toString().padStart(2, '0');
             const month = abrechnungsZeitraum.m.toString().padStart(2, '0');
             const year = abrechnungsZeitraum.y.toString();
             abrechnungsZeitraum = day + '.' + month + '.' + year;
+
+            if (!/^01\.\d{2}\.20\d{2}$/.test(abrechnungsZeitraum)) {
+                console.log(abrechnungsZeitraum);
+
+                ErrorList.addError(
+                    `Der Abrechnungszeitraum wird im Format 01.MM.20JJ erwartet. ` +
+                    `Doch die Zelle '${cellCoordinate}' beinhaltet ${JSON.stringify(excel.readCell(cellCoordinate, 'string'))}!`
+                );
+            }
+
             logs.logAttribute('Abrechnungszeitraum', abrechnungsZeitraum);
         }
         return abrechnungsZeitraum;

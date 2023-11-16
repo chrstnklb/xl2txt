@@ -18,6 +18,14 @@ function dropHandler(ev) {
         .then(result => {
             transformedFilename = result.fileName;
             console.log('Upload date:', result);
+            if (result.errorList.length > 0) {
+                let alertMessage = 'Es sind Fehler aufgetreten: \n\n';
+                result.errorList.forEach(error => {
+                    alertMessage += error.description + "\n\n";
+                });
+                alert(alertMessage);
+                console.log(alertMessage);
+            }
         })
         //     setDropAreaText(
         //         'Hochgeladene Datei ' + result.uploadedFileName + 
