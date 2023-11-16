@@ -1,23 +1,13 @@
-
-/**
- * @typedef {Object} ExcelCell
- * @property {string} sheetName - The name of the sheet where the error occurred.
- * @property {string} cellAddress - The address of the cell where the error occurred.
- */
-
 /**
  * Represents a custom error with a description and an Excel cell.
- * @extends Error
  */
-class CustomError extends Error {
+class CustomError {
     /**
      * Creates a new CustomError instance.
-     * @param {string} description - The description of the error.
-     * @param {ExcelCell} excelCell - The Excel cell where the error occurred.
+     * @param {string} description - Description of the error.
      */
-    constructor(description, excelCell) {
-        super(description);
-        this.excelCell = excelCell;
+    constructor(description) {
+        this.description = description;
     }
 }
 
@@ -35,11 +25,11 @@ class ErrorList {
 
     /**
      * Adds a new error to the list.
-     * @param {string} description - The description of the error.
-     * @param {ExcelCell} excelCell - The Excel cell where the error occurred.
-     */
-    addError(description, excelCell) {
-        const error = new CustomError(description, excelCell);
+     * @param {string} description - Description of the error.
+    */
+    addError(description) {
+        const error = new CustomError(description);
+        console.log(error.description);
         this.errors.push(error);
     }
 

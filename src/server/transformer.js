@@ -30,6 +30,7 @@ function transformToCSV(excelFile) {
 
     let firmennummer = felder.readFirmennummer(); // 00
     let abrechnungszeitraum = felder.readAbrechnungsZeitraum(); // 06
+    let personalnummer = felder.readPersonalnummer('A4'); // 01
 
     let allLines = "";
 
@@ -63,15 +64,11 @@ function transformToCSV(excelFile) {
                 let headerCellContent = workSheet[cellCoordinate].v;
 
                 let feldCoordinate = xlsx.utils.encode_col(col) + (row);
-                // console.log(feldCoordinate);
                 let feld = excel.readCell(feldCoordinate, 'number');
-                // create try catch block
                 try {
                     feld = feld.toFixed(2).toString().replace('.', ',');
                 } catch (error) {
-                    console.log(`Feld ${feldCoordinate} konnte nicht in ein String umgewandelt werden. \n\tError: ${error}`);
-                    // console.log(`Feld ${feldCoordinate} wird als leerer String gespeichert.`);
-                    // feld = '';
+                    console.log(error);
                 }
 
                 lohnart = felder.readLohnart(headerCellContent); // 02

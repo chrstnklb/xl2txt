@@ -148,9 +148,6 @@ h2 {
 }
 
 
-
-
-
 /* Container for the buttons */
 .buttons-container {
   display: flex;
@@ -158,9 +155,9 @@ h2 {
   /* This will place an equal space between the buttons */
   box-sizing: border-box;
   /* Include padding in the width calculation */
-  width: 666px;
-  margin-left: -12px;
-  margin-top: 10px;
+  width: 100%;
+  /* margin-left: -12px; */
+  margin-top: 16px;
   /* display: none; */
 }
 
@@ -171,34 +168,43 @@ h2 {
   border-style: none;
   flex: 1;
   /* This will make the buttons expand equally to fill the parent container */
-  padding: 10px;
+  /* padding: 10px; */
 
-  /* padding-left: 10px; */
-  /* margin: 50 0px; */
   width: 100%;
-  margin-top: 15px;
+  /* margin-top: 15px; */
   /* Adjust margin for spacing between buttons */
   /* Add any additional styling you want for the buttons */
+  font-size: x-large;
 }
 
 .action-button-left {
   margin-right: 5px;
-  width: 328px;
+  width: 100%;
 }
 
 .action-button-right {
-  width: 328px;
-  margin-left: 5px;
-  /* padding-left: 10px; */
+  width: 100%;
+}
+
+.auto-download-button {
+  width: 100%;
 }
 
 /* Ensure that the buttons are visible */
-#downloadForm {
-  width: 333px !important;
-}
 
 #restartForm {
-  width: 333px !important;
+  padding-right: 8px;
+  width: 50% !important;
+}
+
+#downloadForm {
+  padding-left: 8px;
+  width: 50% !important;
+}
+
+#autoDownloadForm {
+  padding-right: 8px;
+  width: 30% !important;
 }
 
 #planned,

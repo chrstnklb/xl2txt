@@ -5,6 +5,8 @@ const transformer = require('./transformer.js');
 const fileHandler = require('./utils/fileHandler.js');
 const logs = require('./utils/logs.js');
 
+const ErrorList = require('./error.js');
+
 const app = express();
 
 const port = 3000;
@@ -32,6 +34,7 @@ app.post("/upload", initMulterUpload().single('upload'), (req, res) => {
         fileName: txtFileName,
         uploadedFileName: req.file.filename,
         downloadFileName: transformer.TARGET_FILENAME,
+        errorList: ErrorList.errors
     });
 });
 
