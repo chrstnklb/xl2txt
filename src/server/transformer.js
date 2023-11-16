@@ -36,11 +36,15 @@ function transformToCSV(excelFile) {
     // iterate over all rows
     let rowCount = excel.getRowCount();
     statistics.rowCount = rowCount;
+
     for (let row = dataStartRow + 1; row <= rowCount; row++) {
+        
         let personalnummer = felder.readPersonalnummer(cellCoordinate = ('A' + row)); // 01
         let colCount = excel.getColCount();
         statistics.colCount = colCount;
+
         for (let col = fixedColumns; col < colCount; col++) {
+
             let lohnart = '';
             let kostenstelle = '';
             let kostentraeger = '';
@@ -52,6 +56,7 @@ function transformToCSV(excelFile) {
             let betrag = '';
             let cellCoordinate = xlsx.utils.encode_col(col) + row;
             let cell = workSheet[cellCoordinate];
+
             if (cell !== undefined) {
 
                 let cellCoordinate = xlsx.utils.encode_col(col) + (lohnartRow + 1);
