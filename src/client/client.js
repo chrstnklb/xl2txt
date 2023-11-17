@@ -25,6 +25,10 @@ function dropHandler(ev) {
                 });
                 alert(alertMessage);
                 console.log(alertMessage);
+            } else {
+                prepareDownload(transformedFilename);
+                displayDownloadButton()
+                displayRestartButton();
             }
         })
         //     setDropAreaText(
@@ -33,9 +37,9 @@ function dropHandler(ev) {
 
         // })
         // .then(() => { setDropAreaText('🎉 Prima 🎉'); })
-        .then(() => { prepareDownload(transformedFilename); })
-        .then(() => { displayDownloadButton(); })
-        .then(() => { displayRestartButton(); })
+        // .then(() => {  })
+        // .then(() => { displayDownloadButton(); })
+        // .then(() => { displayRestartButton(); })
         // read the response body and console.log it
         .catch(error => { console.error('Error:', error); });
 }
