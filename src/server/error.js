@@ -34,6 +34,13 @@ class ErrorList {
     }
 
     /**
+     * Clears the list of errors.
+     */
+    clearErrors() {
+        this.errors = [];
+    }
+
+    /**
      * Returns the singleton instance of ErrorList.
      * @returns {ErrorList} The singleton instance of ErrorList.
      */

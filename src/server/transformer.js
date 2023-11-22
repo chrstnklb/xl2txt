@@ -39,6 +39,7 @@ function transformToCSV(excelFile) {
     // iterate over all rows
     let lastDataRow = excel.getNumberOfLastDataRow();
     statistics.rowCount = lastDataRow;
+    console.log('lastDataRow: ' + lastDataRow);
 
     for (let row = dataStartRow + 1; row <= lastDataRow; row++) {
         

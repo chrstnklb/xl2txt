@@ -18,8 +18,6 @@ module.exports = {
             ErrorList.addError(
                 `Die Mandantennummer wurde erwartet. ` +
                 `Doch die Zelle '${cellCoordinate}' ist leer!`);
-        } else {
-            logs.logAttribute('Firmennummer', firmennummer);
         }
         return firmennummer;
     },
@@ -33,6 +31,12 @@ module.exports = {
     // Excel-Zelle:     A5
     readPersonalnummer: function (cellCoordinate) {
         let personalnummer = excel.readCell(cellCoordinate, 'string');
+        // Remove - from Personalnummer if it exists and also linebreaks
+        if (personalnummer !== undefined) {
+
+            personalnummer = personalnummer.replace(/(\r\n|\n|\r)/gm, "");
+            personalnummer = personalnummer.replace('-', '');
+        }
         if (personalnummer === undefined) {
             ErrorList.addError(
                 `Die Personalnummer wurde erwartet. ` +
@@ -116,8 +120,6 @@ module.exports = {
                     `Doch die Zelle '${cellCoordinate}' beinhaltet ${JSON.stringify(excel.readCell(cellCoordinate, 'string'))}!`
                 );
             }
-
-            logs.logAttribute('Abrechnungszeitraum', abrechnungsZeitraum);
         }
         return abrechnungsZeitraum;
     },

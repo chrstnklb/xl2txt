@@ -34,7 +34,6 @@ app.post("/upload", initMulterUpload().single('upload'), (req, res) => {
     // end timer
     const end = new Date().getTime();
     const time = end - start;
-    logs.logAttribute('calculation-time-in-ms', time);
     const txtFileName = targetFilename.replace('upload', 'download');
     res.json({
         fileName: txtFileName,
@@ -43,6 +42,7 @@ app.post("/upload", initMulterUpload().single('upload'), (req, res) => {
         errorList: ErrorList.errors,
         calculationTimeInMs: time
     });
+    ErrorList.clearErrors();
 });
 
 app.post('/download', function (req, res) {

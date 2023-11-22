@@ -48,8 +48,7 @@ module.exports = {
         while (workSheet['A' + actualRow] !== undefined) {
             actualRow++;
         }
-        console.log("actualRow: " + actualRow--);
-        return actualRow--;
+        return actualRow - 1;
     },
 
     iterateColumns: function () {
