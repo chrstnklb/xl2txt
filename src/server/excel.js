@@ -2,25 +2,17 @@ const xlsx = require('xlsx');
 const path = require('path');
 const ErrorList = require('./error.js');
 
-const headerRow = 3;
+const HEADER_ROW = 3;
+const ROW_OF_FIRST_PERSONALNUMMER = 5;
 
 let workSheet = undefined;
-
-const FIRST_SHEET_NAME = 'Personalliste';
 
 module.exports = {
 
     initExcelFile: function (excelFile) {
         const workBook = xlsx.readFile(path.join(__dirname, "../exchange", excelFile));
         let actualFirstSheetName = workBook.SheetNames[0];
-        if (actualFirstSheetName !== FIRST_SHEET_NAME) {
-            workSheet = workBook.Sheets[actualFirstSheetName];
-            ErrorList.addError(
-                `Erwartete erste Arbeitsmappe heißt nicht wie erwartet '${FIRST_SHEET_NAME}', ` +
-                `sondern '${actualFirstSheetName}'.`);
-        } else {
-            workSheet = workBook.Sheets[FIRST_SHEET_NAME];
-        }
+        workSheet = workBook.Sheets[actualFirstSheetName];
         return workSheet;
     },
 
@@ -50,22 +42,26 @@ module.exports = {
         return colCount;
     },
 
-    getRowCount: function () {
-        const range = xlsx.utils.decode_range(workSheet['!ref']);
-        const rowCount = range.e.r - range.s.r + 1;
-        return rowCount;
+    getNumberOfLastDataRow: function () {
+        let rowCountStart = ROW_OF_FIRST_PERSONALNUMMER;
+        let actualRow = rowCountStart;
+        while (workSheet['A' + actualRow] !== undefined) {
+            actualRow++;
+        }
+        console.log("actualRow: " + actualRow--);
+        return actualRow--;
     },
 
     iterateColumns: function () {
         let cols = this.getColCount();
         for (let i = fixedColumns - 1; i < cols; i++) {
-            let cell = workSheet[xlsx.utils.encode_col(i) + headerRow];
+            let cell = workSheet[xlsx.utils.encode_col(i) + HEADER_ROW];
         }
     },
 
     iterateRows: function () {
-        let rows = this.getRowCount();
-        for (let i = headerRow; i < rows; i++) {
+        let rows = this.getNumberOfLastDataRow();
+        for (let i = HEADER_ROW; i < rows; i++) {
             let cell = workSheet['A' + i];
         }
     },

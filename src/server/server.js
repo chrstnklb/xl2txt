@@ -28,13 +28,20 @@ app.use(express.static(__dirname, {
 app.post("/upload", initMulterUpload().single('upload'), (req, res) => {
     logs.logServerRouteUpload('filename', req.file.filename);
 
+    // start timer
+    const start = new Date().getTime();
     const targetFilename = transformer.transformToCSV("./uploads/" + req.file.filename);
+    // end timer
+    const end = new Date().getTime();
+    const time = end - start;
+    logs.logAttribute('calculation-time-in-ms', time);
     const txtFileName = targetFilename.replace('upload', 'download');
     res.json({
         fileName: txtFileName,
         uploadedFileName: req.file.filename,
         downloadFileName: transformer.TARGET_FILENAME,
-        errorList: ErrorList.errors
+        errorList: ErrorList.errors,
+        calculationTimeInMs: time
     });
 });
 

@@ -30,15 +30,17 @@ function transformToCSV(excelFile) {
 
     let firmennummer = felder.readFirmennummer(); // 00
     let abrechnungszeitraum = felder.readAbrechnungsZeitraum(); // 06
-    let personalnummer = felder.readPersonalnummer('A4'); // 01
+    /*Check for error in header*/
+    felder.readPersonalnummer(cellCoordinate = 'A4'); // 01
+
 
     let allLines = "";
 
     // iterate over all rows
-    let rowCount = excel.getRowCount();
-    statistics.rowCount = rowCount;
+    let lastDataRow = excel.getNumberOfLastDataRow();
+    statistics.rowCount = lastDataRow;
 
-    for (let row = dataStartRow + 1; row <= rowCount; row++) {
+    for (let row = dataStartRow + 1; row <= lastDataRow; row++) {
         
         let personalnummer = felder.readPersonalnummer(cellCoordinate = ('A' + row)); // 01
         let colCount = excel.getColCount();

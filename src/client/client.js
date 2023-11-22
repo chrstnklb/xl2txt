@@ -25,6 +25,7 @@ function dropHandler(ev) {
                 });
                 alert(alertMessage);
                 console.log(alertMessage);
+                console.log(result.calculationTimeInMs);
             } else {
                 prepareDownload(transformedFilename);
                 displayDownloadButton()

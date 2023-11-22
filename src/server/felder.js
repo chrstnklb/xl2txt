@@ -37,10 +37,13 @@ module.exports = {
             ErrorList.addError(
                 `Die Personalnummer wurde erwartet. ` +
                 `Doch die Zelle '${cellCoordinate}' ist leer!`);
-        } else if (personalnummer === "A4" && personalnummer !== "Personalnummer") {
+        } else if (cellCoordinate === "A4" && personalnummer !== "Personalnummer") {
             ErrorList.addError(
-                `Die Personalnummer wurde erwartet. ` +
-                `Doch die Zelle '${cellCoordinate}' beinhaltet ${personalnummer}!`);
+                `In Zell 'A4' wurde 'Personalnummer' erwartet. ` +
+                `Doch die Zelle beinhaltet ${personalnummer}!`);
+        } else if (String(personalnummer).toLowerCase() === "neu") {
+            ErrorList.addError(
+                `Die Zelle '${cellCoordinate}' beinhaltet ${personalnummer}!`);
         } else {
             personalnummer = personalnummer.padStart(6, '0');
         }
