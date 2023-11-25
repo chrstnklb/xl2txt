@@ -9,7 +9,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="logo-black-small.png" rel="icon">
     <link type="text/css" href="./style.css" rel="stylesheet">
-    <link type="text/css" href="./navigation.css" rel="stylesheet">
     <title>Relog Lohn Konverter</title>
 </head>
 
@@ -27,10 +26,10 @@
 
     <!-------------------------------------------------- Start -------------------------------------------------->
 
-    <h1 id="start" style="background-color: #14908E;"></h1>
-    <div class="grid-container" style="background-color: #14908E;">
-        <div class="grid-item" style="background-color: #14908E;"></div>
-        <div class="grid-item" style="background-color: #14908E;">
+    <h1 id="start"></h1>
+    <div class="grid-container" id="start-container">
+        <div class="grid-item"></div>
+        <div class="grid-item">
             <div class="container" id="logo-container">
                 <div class="logo">
                     <img src="logo-black-small.png" alt="relog logo">
@@ -41,9 +40,9 @@
                 </div>
             </div>
         </div>
-        <div class="grid-item" style="background-color: #14908E;"></div>
-        <div class="grid-item" style="background-color: #14908E;"></div>
-        <div class="grid-item" style="background-color: #14908E;">
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item">
             <div class="area" id="area-start">
                                 
                 <div class="container" id="dnd-container"> 
@@ -67,10 +66,10 @@
 
             </div>
         </div>
-        <div class="grid-item" style="background-color: #14908E;"></div>
-        <div class="grid-item" style="background-color: #14908E;"></div>
-        <div class="grid-item" style="background-color: #14908E;">
-            <div class="container position-relative" id="stepper-container" style="height: 290px;">
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item">
+            <div class="container position-relative" id="stepper-container">
                 <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
                     Neu
                   </span>
@@ -79,9 +78,9 @@
 
                 <div class="btn-group-vertical">
 
-                    <form style="display: flex; align-items: center;">
+                    <form id="stepper-form-select">
                         <button class="btn btn-success" disabled> 1 </button>
-                        <input class="form-control" id="stepper-button-select" type="file" style="margin-left: 8px;">
+                        <input class="form-control" id="stepper-button-select" type="file">
                     </form>
 
                     <form id="stepper-form-convert" action="/upload" hidden method="post">
@@ -105,96 +104,93 @@
                 </div>
             </div>
         </div>    
-        <div class="grid-item" style="background-color: #14908E;"></div>
+        <div class="grid-item"></div>
     </div>
 
     <!-------------------------------------------------- Roadmap -------------------------------------------------->
 
     <div class="area" id="area-roadmap">
-        <style>
-            div#area-roadmap ul,
-            div#area-roadmap li {
-                text-align: left;
-                font-size: large;
-            }
-
-            div#area-roadmap h2,
-            div#area-roadmap h3 {
-                text-align: left;
-                /* Setzt den Text der Liste auf linksbündig */
-            }
-        </style>
-
         <div class="text-center">
             <br>
             <h1 id="roadmap">Roadmap</h1>
 
-            <h2 id="done">Neueste Anpassungen </h2>
-            <br>
-            <h3>2023-11-24</h3>
+            <h3>2023-11-25</h3>
             <br>
             <ul>
-                <li> 🐞 Uplaod-Button eingefügt.</li>
+                <li> ⚒️ Refactoring in Hinsicht auf Kalendarium Funktionern.</li>
             </ul>
+            <br>
 
-            <details>
-                <summary> 2023-11-22 </summary>
+            <h3> 2023-11-24 </h3>
+            <br>
+            <ul>
+                <li> ⭐ Roadmap schlichter gestaltet.</li>
+                <li> ⭐ Neue Upload-Funktion hinzugefügt.</li>
+                <li> ⭐ Menuband korrigiert und schlichter gestaltet.</li>
+                <li> ⚒️ Strukturen im html und css vereinfacht.</li>
+            </ul>
+            <br>
+
+            <h3> 2023-11-22 </h3>
+            <br>
+            <ul>
+                <li> 🐞 Bugfix: Einige Fehlerbehandlungen wurden entschärft.</li>
+                <li> 🐞 Bugfix: Anhäufungen von Fehlermeldungen von verschiedenen Uploads behoben.</li>
+                <li>
+                    ⚒️ Dauer der Verarbeitung wird an Client gesendent, Vorbereitung zur Anzeige der Information.
+                </li>
+                <li> ⭐ Kontakt-Adress zum Entwickler geändert.</li>
+            </ul>
+            <br>
+
+            <h3> 2023-11-16 </h3>
+            <br>
+            <ul>
+                <li> 🐞 Bugfix: Hintergrundfarbe des Start Bereichs wure nicht korrekt dargestellt.</li>
+                <li> ⭐ Behandle Fehler 1 "Datum ist falsch" abfangen (IST: August Soll: 01.08.203)</li>
+                <li> ⭐ Behandle Fehler 2 "Fehlende Personalnummer" abfangen ( Neue Mitarbeiter ohne Personalnummer)
+                </li>
+                <li> ⭐ Behandle Fehler 3 "Mandantennummer fehlt" abfangen (Mandantennummer fehlt)</li>
+                <li> ⭐ Behandle Fehler 4 "Format der Zahlen-Zellen prüfen" abfangen (Text im Feld wo nur zahlen
+                    reinkommen)
+                </li>
+                <li> ⭐ Behandle Fehler 5 "Soll: Personalnummer Ist: Mitarbeiternummer" abfangen (Soll:
+                    Personalnummer
+                    Ist:
+                    Mitarbeiternummer)</li>
                 <br>
-                <ul>
-                    <li> 🐞 Bugfix: Einige Fehlerbehandlungen wurden entschärft.</li>
-                    <li> 🐞 Bugfix: Anhäufungen von Fehlermeldungen von verschiedenen Uploads behoben.</li>
-                    <li> ⚒️ Dauer der Verarbeitung wird an Client gesendent, Vorbereitung zur Anzeige der Information.
-                    </li><li> ⭐ Kontakt-Adress zum Entwickler geändert.</li>
-                </ul>
-            </details>
-            <details>
-                <summary> 2023-11-16 </summary>
-                <br>
-                <ul>
-                    <li> 🐞 Bugfix: Hintergrundfarbe des Start Bereichs wure nicht korrekt dargestellt.</li>
-                    <li> ⭐ Behandle Fehler 1 "Datum ist falsch" abfangen (IST: August Soll: 01.08.203)</li>
-                    <li> ⭐ Behandle Fehler 2 "Fehlende Personalnummer" abfangen ( Neue Mitarbeiter ohne Personalnummer)
-                    </li>
-                    <li> ⭐ Behandle Fehler 3 "Mandantennummer fehlt" abfangen (Mandantennummer fehlt)</li>
-                    <li> ⭐ Behandle Fehler 4 "Format der Zahlen-Zellen prüfen" abfangen (Text im Feld wo nur zahlen
-                        reinkommen)
-                    </li>
-                    <li> ⭐ Behandle Fehler 5 "Soll: Personalnummer Ist: Mitarbeiternummer" abfangen (Soll:
-                        Personalnummer
-                        Ist:
-                        Mitarbeiternummer)</li>
-                    <br>
-                    <li> ⭐ Erstes Feedback vom Server in Upload-Fläche als Text dargestellt.</li>
-                    <li> ⭐ Umbenennung des des Website Titels: "Wandel die Excel …" zu "Relog Lohn Konverter"</li>
-                    <li> ⭐ Umbenennung unter dem Logo: "Wandel die Excel …" zu "Relog Lohn Konverter"</li>
-                    <li> ⭐ Umbenennung: "Ziehe die Datei…." zu " Drag and Drop"</li>
-                </ul>
-            </details>
-            <details>
-                <summary>2023-11-15</summary>
-                <br>
-                <ul>
-                    <li> 🐞 Bugfix: "Mehrfaches 'Hovern' über die Upload-Fläche führte zu Darstellungsproblemen."</li>
-                    <li> 🐞 Bugfix: "Mehrfaches Hochladen hintereinander ohne Aktualisierung der Seite führte zu
-                        Fehlermeldung."
-                    </li>
-                    <li> ⭐ Roadmap-Ansicht übersichtlicher gestaltet.</li>
-                    <li> ⭐ Schärfere Darstellung des relog Logos.</li>
-                    <li> ⭐ Favicon mit relog Logo eingebunden.</li>
-                    <li> ⚒️ Website-Bereiche werden nun dynamisch geladen und sind als einzelne Komponenten
-                        implementiert.
-                    </li>
-                </ul>
-            </details>
-            <details>
-                <br>
-                <summary> 2023-11-11 </summary>
-                <ul>
-                    <li>
-                        ⭐ Binde Logo und Unternehmensfarben ein.
-                    </li>
-                </ul>
-            </details>
+                <li> ⭐ Erstes Feedback vom Server in Upload-Fläche als Text dargestellt.</li>
+                <li> ⭐ Umbenennung des des Website Titels: "Wandel die Excel …" zu "Relog Lohn Konverter"</li>
+                <li> ⭐ Umbenennung unter dem Logo: "Wandel die Excel …" zu "Relog Lohn Konverter"</li>
+                <li> ⭐ Umbenennung: "Ziehe die Datei…." zu " Drag and Drop"</li>
+            </ul>
+            <br>
+
+            <h3>2023-11-15</h3>
+            <br>
+            <ul>
+                <li> 🐞 Bugfix: "Mehrfaches 'Hovern' über die Upload-Fläche führte zu Darstellungsproblemen."</li>
+                <li> 🐞 Bugfix: "Mehrfaches Hochladen hintereinander ohne Aktualisierung der Seite führte zu
+                    Fehlermeldung."
+                </li>
+                <li> ⭐ Roadmap-Ansicht übersichtlicher gestaltet.</li>
+                <li> ⭐ Schärfere Darstellung des relog Logos.</li>
+                <li> ⭐ Favicon mit relog Logo eingebunden.</li>
+                <li> ⚒️ Website-Bereiche werden nun dynamisch geladen und sind als einzelne Komponenten
+                    implementiert.
+                </li>
+            </ul>
+            <br>
+
+            <h3> 2023-11-11 </h3>
+            <ul>
+                <li>
+                    ⭐ Binde Logo und Unternehmensfarben ein.
+                </li>
+            </ul>
+            <br>
+
+            
         </div>
     </div>
 
@@ -206,15 +202,20 @@
             <br>
             <h1 id="kontakt">Kontakt</h1>
             <br>
+            <br>
+            <br>
+
             <div>
-                <h2 style="color: black;">
-                    ✒️ Author: Christian Kliebe<br>
-                </h2>
+                <h1 class="h1">✒️</h1>
+                <h2 class="h2">Autor</h2>
+                <h3 class="h3"> Christian Kliebe<br></h3>
 
-                <h2 style="color: black;">
+                <br><br>
 
-                    ✉️ Mail: <a href="mailto:christian.kliebe@outlook.com">christian.kliebe@outlook.com</a><br>
-                </h2>
+                <h1 class="h1">✉️</h1>
+                <h2 class="h2">Mail</h2>
+                <h3 class="h3"><a href="mailto:christian.kliebe@outlook.com">christian.kliebe@outlook.com</a><br></h3>
+
 
             </div>
         </div>

@@ -1,3 +1,5 @@
+/************************ ELEMENTS ************************/
+
 body{
   background-color: #14908E;
 }
@@ -9,19 +11,11 @@ h2 {
   margin-bottom: 10px;
 }
 
-#area-start {
-  background-color: #14908E;
-  /* height: 1000px; */
+ul {
+  list-style-type: none;
 }
 
-#area-roadmap {
-  background-color: #37BFAE;
-}
-
-#area-contact {
-  background-color: #B7AA67;
-  height: 1000px;
-}
+/*********************** CLASSES ************************/
 
 .area {
   display: flex;
@@ -36,37 +30,22 @@ h2 {
   text-align: center;
 }
 
+.badge {
+  transform: rotate(10deg);
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-evenly;
+  box-sizing: border-box;
+  margin: 5px;
+}
+
 .container {
   background-color: white;
   width: 100%;
   border-radius: 10px;
   text-align: center;
-}
-
-#stepper-container {
-  width: 100%;
-  height: 300px;
-  /* margin-top: 20px; */
-  margin-bottom: 256px;
-  padding-top: 32px;
-}
-
-.badge {
-  transform: rotate(10deg);
-}
-
-#logo-container {
-  /* margin-top: 20px; */
-  height: 300px;
-  border-radius: 10px;
-}
-
-.logo {
-  padding: 10px;
-}
-
-.logo img {
-  height: 192px;
 }
 
 .drag-area {
@@ -95,67 +74,68 @@ h2 {
 }
 
 .grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
   padding: 10px;
   font-size: 30px;
   text-align: center;
   width: 100%;
 }
 
-.file-handler-container {
-  grid-template-columns: 100%;
-  height: 100%;
-}
-
-#download-container {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
+.logo {
   padding: 10px;
-  width: 100%;
 }
 
+.logo img {
+  height: 192px;
+}
 
-/* Container for the buttons */
-.buttons-container {
+/************************ IDS ************************/
+
+#area-start {
+  background-color: #14908E;
+}
+
+#start-container{
+  background-color: #14908E;
+}
+
+#area-roadmap {
+  background-color: #37BFAE;
+}
+
+#area-roadmap div#area-roadmap ul, div#area-roadmap li {
+    text-align: left;
+    font-size: large;
+}
+
+#area-roadmap, div#area-roadmap h3 {
+    text-align: left;
+}
+
+#area-contact {
+  background-color: #B7AA67;
+  height: 1000px;
+}
+
+#stepper-container {
+  width: 100%;
+  height: 290px;
+  margin-bottom: 256px;
+  padding-top: 32px;
+}
+
+#stepper-button-select{
+  margin-left: 8px;
+}
+
+#stepper-form-select{
+  align-items: center;
   display: flex;
-  justify-content: space-evenly;
-  /* This will place an equal space between the buttons */
-  box-sizing: border-box;
-  /* Include padding in the width calculation */
-  width: 100%;
-  /* margin-left: -12px; */
-  /* margin-top: 16px; */
-  /* display: none; */
 }
 
-/* Styles for the action buttons */
-.action-button {
-  background-color: white;
+#logo-container {
+  height: 300px;
   border-radius: 10px;
-  border-style: none;
-  flex: 1;
-  /* This will make the buttons expand equally to fill the parent container */
-  /* padding: 10px; */
-
-  width: 100%;
-  /* margin-top: 15px; */
-  /* Adjust margin for spacing between buttons */
-  /* Add any additional styling you want for the buttons */
-  font-size: x-large;
 }
-
-.action-button-left {
-  margin-right: 5px;
-  width: 100%;
-}
-
-.action-button-right {
-  width: 100%;
-}
-
-
-/* Ensure that the buttons are visible */
 
 #restartForm {
   padding-right: 8px;
@@ -167,16 +147,6 @@ h2 {
   width: 50% !important;
 }
 
-#autoDownloadForm {
-  padding-right: 8px;
-  width: 30% !important;
-}
-
-#planned,
-#done {
-  color: black;
-}
-
 #drop-zone-text {
   pointer-events: none;
 }
@@ -185,3 +155,23 @@ h2 {
   width: 100%;
   margin-bottom: 15px;
 }
+
+
+/* Position the button group vertically centered on the left side of the page */
+#navigation-group-button {
+  position: fixed;
+  top: 50%;
+  /* Start at the vertical center of the page */
+  left: 20px;
+  /* Space from the left edge of the page */
+  transform: translateY(-50%);
+  /* Shift upwards by half its own height to center */
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  align-items: flex-start;
+  /* Align buttons to the left */
+  z-index: 1000;
+}
+

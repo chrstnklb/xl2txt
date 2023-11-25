@@ -79,7 +79,7 @@ function dragOverHandler(ev) {
     preventFileToOpen(ev);
     setBackGroundColor(ev, DRAG_OVER_COLOR);
     setBackGroundColorOpacity(ev, 1);
-    setDropAreaText('Lass los!');
+    setDropAreaText('Verarbeitet!');
 }
 
 function dropHandler(ev) {
