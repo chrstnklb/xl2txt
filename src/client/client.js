@@ -59,8 +59,20 @@ function initPage() {
     });
 }
 
+toggleButton.addEventListener('click', () => {
+    
+    var element = document.querySelector('.hidden-element');
+    var element2 = document.querySelector('.hidden-element-visible');
+    
+    element.classList.remove('hidden-element');
+    element.classList.add('hidden-element-visible');
+    element.hidden = false;
+    
+    element2.classList.remove('hidden-element-visible');
+    element2.classList.add('hidden-element');
+    element2.hidden = true;
 
-
+});
 
 function dragOverHandler(ev) {
     clientLog("file in drop zone", DRAG_OVER_COLOR);

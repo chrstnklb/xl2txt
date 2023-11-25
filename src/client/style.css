@@ -6,11 +6,12 @@ h2 {
   color: #37BFAE;
   font-size: xx-large;
   font-weight: 700;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
 }
 
 #area-start {
   background-color: #14908E;
+  /* height: 1000px; */
 }
 
 #area-roadmap {
@@ -19,6 +20,7 @@ h2 {
 
 #area-contact {
   background-color: #B7AA67;
+  height: 1000px;
 }
 
 .area {
@@ -26,14 +28,6 @@ h2 {
   flex-direction: column;
   /* Align children vertically */
   align-items: center;
-}
-
-#area-start {
-  height: 1000px;
-}
-
-#area-contact {
-  height: 1000px;
 }
 
 .area h1 {
@@ -49,18 +43,23 @@ h2 {
   text-align: center;
 }
 
+#stepper-container {
+  width: 100%;
+  height: 300px;
+  /* margin-top: 20px; */
+  margin-bottom: 256px;
+  padding-top: 32px;
+}
+
+.badge {
+  transform: rotate(10deg);
+}
+
 #logo-container {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   height: 300px;
   border-radius: 10px;
 }
-
-
-#options-container {
-  width: 100%;
-  height: 300px;
-}
-
 
 .logo {
   padding: 10px;
@@ -80,7 +79,7 @@ h2 {
   display: flex;
   justify-content: center;
   padding: 30px;
-  height: 368px;
+  height: 250px;
   margin: 20px 5px 20px 5px;
 }
 
@@ -90,7 +89,7 @@ h2 {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 30% 40% 30%;
+  grid-template-columns: 35% 30% 35%;
   background-color: #2196F3;
   padding: 10px;
 }
@@ -101,11 +100,6 @@ h2 {
   font-size: 30px;
   text-align: center;
   width: 100%;
-}
-
-#options-container {
-  height: 61px;
-  margin: 0px 5px 20px 0px;
 }
 
 .file-handler-container {
@@ -121,32 +115,6 @@ h2 {
   width: 100%;
 }
 
-.upload-title {
-  grid-column: 1;
-  grid-row: 1;
-  display: flex;
-  align-items: center;
-  flex-grow: 0;
-  width: 64px;
-}
-
-.upload-button {
-  grid-column: 2;
-  grid-row: 1;
-  display: flex;
-  font-size: x-large;
-  justify-content: flex-end;
-  /* Aligns button to the start of the div */
-  border-radius: 5px;
-  width: 100%;
-}
-
-#upload-button {
-
-  border-radius: 10px;
-  border: 2px solid #000000;
-}
-
 
 /* Container for the buttons */
 .buttons-container {
@@ -157,7 +125,7 @@ h2 {
   /* Include padding in the width calculation */
   width: 100%;
   /* margin-left: -12px; */
-  margin-top: 16px;
+  /* margin-top: 16px; */
   /* display: none; */
 }
 
@@ -186,9 +154,6 @@ h2 {
   width: 100%;
 }
 
-.auto-download-button {
-  width: 100%;
-}
 
 /* Ensure that the buttons are visible */
 
@@ -214,4 +179,9 @@ h2 {
 
 #drop-zone-text {
   pointer-events: none;
+}
+
+#dnd-button-restart, #dnd-button-save{
+  width: 100%;
+  margin-bottom: 15px;
 }

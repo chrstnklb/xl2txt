@@ -1,6 +1,6 @@
 
 /* Position the button group vertically centered on the left side of the page */
-.btn-group {
+#navigation-group-button {
     position: fixed;
     top: 50%;
     /* Start at the vertical center of the page */
@@ -16,32 +16,5 @@
     /* Align buttons to the left */
     z-index: 1000;
   }
-  
-  /* Styling for individual text-like buttons */
-  .btn-group .btn {
-    background-color: transparent;
-    /* Make button background transparent */
-    color: black;
-    /* Initial color of text */
-    border: none;
-    /* Remove border */
-    margin-bottom: 10px;
-    font-size: 18px;
-    /* Increase font size */
-    transition: background-color 0.3s ease, font-size 0.3s ease;
-    /* Smooth transition for hover effect */
-  }
-  
-  /* Remove margin on the last button */
-  .btn-group .btn:last-child {
-    margin-bottom: 0;
-  }
-  
-  /* Change background color and font size on hover to match the area's color */
-  .btn-group .btn:hover {
-    font-size: 22px;
-    /* Increase font size on hover */
-    padding: 3px 5px;
-    /* Add some padding to make the background visible */
-  }
+
   
