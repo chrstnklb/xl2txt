@@ -1,10 +1,6 @@
 const DRAG_OVER_COLOR = '#14908E';
 const DRAG_LEAVE_COLOR = 'yellow';
 
-// window.onload = function () {
-//     initPage();
-// };
-
 document.addEventListener('DOMContentLoaded', function () {
     initPage();
 });
@@ -23,7 +19,6 @@ function initPage() {
     const stepperFormConvert = document.getElementById('stepper-form-convert');
 
     const stepperButtonSave = document.getElementById('stepper-button-save');
-    const stepperFormSave = document.getElementById('stepper-form-save');
 
     const stepperButtonRestart = document.getElementById('stepper-button-restart');
     const stepperFormRestart = document.getElementById('stepper-form-restart');
@@ -58,21 +53,6 @@ function initPage() {
         location.reload();
     });
 }
-
-toggleButton.addEventListener('click', () => {
-    
-    var element = document.querySelector('.hidden-element');
-    var element2 = document.querySelector('.hidden-element-visible');
-    
-    element.classList.remove('hidden-element');
-    element.classList.add('hidden-element-visible');
-    element.hidden = false;
-    
-    element2.classList.remove('hidden-element-visible');
-    element2.classList.add('hidden-element');
-    element2.hidden = true;
-
-});
 
 function dragOverHandler(ev) {
     clientLog("file in drop zone", DRAG_OVER_COLOR);
@@ -154,11 +134,4 @@ function setBackGroundColor(ev, color) {
 function jumpTo(target) {
     var kontaktHeader = document.getElementById(target)
     kontaktHeader.scrollIntoView({ behavior: 'smooth' })
-}
-
-/**************************/
-/*  LOGGING FUNCTIONS     */
-/**************************/
-function clientLog(message, textColor = 'white') {
-    console.log('%c client :: ' + message, 'color: ' + textColor);
 }

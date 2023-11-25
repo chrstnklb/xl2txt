@@ -6,7 +6,6 @@ const excel = require('./excel.js');
 const felder = require('./felder.js');
 const fileHandler = require('./utils/fileHandler.js');
 const time = require('./utils/time.js');
-const exp = require('constants');
 
 const TARGET_FILENAME = "Imp_lbw.txt";
 
