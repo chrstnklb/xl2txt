@@ -43,6 +43,7 @@ function fetchUploadStepper(formData) {
                 console.log(result.calculationTimeInMs);
             } else {
                 const form = document.getElementById("stepper-form-save");
+                // TODO: make it get request
                 form.setAttribute('action', "/download" + '?fileName=' + transformedFilename);
                 const stepperFormSave = document.getElementById('stepper-form-save');
                 stepperFormSave.hidden = false;

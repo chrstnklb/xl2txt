@@ -15,10 +15,11 @@ const FIXED_COLUMNS = 2;
 const LOHNART_ROW = 3;
 const DATA_START_ROW = 5;
 let timestamp = '';
+let metric = undefined;
 
 function transformToCSV(excelFile) {
 
-    let metric = new Metric();
+    metric = new Metric();
     Timer.startTimer();
 
     let workSheet = excel.initExcelFile(excelFile);
@@ -28,18 +29,14 @@ function transformToCSV(excelFile) {
     /*Check for error in header*/
     felder.readPersonalnummer(cellCoordinate = 'A4'); // 01
 
-
     let allLines = "";
 
     // iterate over all rows
     let lastDataRow = excel.getNumberOfLastDataRow();
 
-    metric.setRowCount(lastDataRow-DATA_START_ROW);
-    console.log('lastDataRow: ' + lastDataRow);
+    metric.setRowCount(lastDataRow - DATA_START_ROW);
 
-    let counter = 0;
     for (let row = DATA_START_ROW; row <= lastDataRow; row++) {
-        console.log('counter: ' + counter++);
 
         let personalnummer = felder.readPersonalnummer(cellCoordinate = ('A' + row)); // 01
         let colCount = excel.getColCount();
@@ -47,69 +44,66 @@ function transformToCSV(excelFile) {
 
         for (let col = FIXED_COLUMNS; col < colCount; col++) {
 
-            let lohnart = '';
-            let kostenstelle = '';
-            let kostentraeger = '';
-            let abrechnungstag = '';
-            let lohnsatz = '';
-            let prozentsatz = '';
-            let anzahlTage = '';
-            let anzahlStunden = '';
-            let betrag = '';
-            let cellCoordinate = xlsx.utils.encode_col(col) + row;
-            let cell = workSheet[cellCoordinate];
+            let cellCoordinate = getCellCoordinate(col, row);
 
-            if (cell !== undefined) {
-
-                let cellCoordinate = xlsx.utils.encode_col(col) + (LOHNART_ROW + 1);
-                let headerCellContent = workSheet[cellCoordinate].v;
-
-                let feldCoordinate = xlsx.utils.encode_col(col) + (row);
-                let feld = excel.readCell(feldCoordinate, 'number');
-                try {
-                    feld = feld.toFixed(2).toString().replace('.', ',');
-                } catch (error) {
-                    console.log(error);
-                }
-
-                lohnart = felder.readLohnart(headerCellContent); // 02
-
-                if (headerCellContent.includes('KOSTENST')) anzahlStunden = feld; // 03
-                if (headerCellContent.includes('KOSTENTR')) betrag = feld; // 04
-                if (headerCellContent.includes('Abrechnungstag')) anzahlTage = feld; // 05
-
-                if (headerCellContent.includes('LSATZ')) anzahlStunden = feld; // 07
-                if (headerCellContent.includes('PSATZ')) betrag = feld; // 08
-                if (headerCellContent.includes('ANZTAGE')) anzahlTage = feld; // 09
-                if (headerCellContent.includes('ANZSTD')) anzahlStunden = feld; // 10
-                if (headerCellContent.includes('BETRAG')) betrag = feld; // 11
-
-                allLines += `${firmennummer};` +
-                    `${personalnummer};` +
-                    `${lohnart};` +
-                    `${kostenstelle};` +
-                    `${kostentraeger};` +
-                    `${abrechnungstag};` +
-                    `${abrechnungszeitraum};` +
-                    `${lohnsatz};` +
-                    `${prozentsatz};` +
-                    `${anzahlTage};` +
-                    `${anzahlStunden};` +
-                    `${betrag}` +
-                    '\n';
+            if (cellExists(workSheet[cellCoordinate])) {
+                let headerCellContent = workSheet[getCellCoordinate(col, LOHNART_ROW + 1)].v;
+                let feld = replaceDots(excel.readCell(getCellCoordinate(col, row), 'number'));
+                allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, feld);
             }
         }
     }
-
-    metric.setTimestamp(time.getActualTimeStampYYYYMMDDhhmmss());
-    metric.setCalculationTimeInMs(Timer.endTimer());
-
     timestamp = time.getActualTimeStampYYYYMMDDhhmmss();
+    // TODO: simplify metric
+    metric.setTimestamp(timestamp);
+    metric.setCalculationTimeInMs(Timer.endTimer());
 
     deleteUploadedFiles(excelFile, timestamp);
     writeMetric(metric);
     return writeTxtFile(allLines, timestamp);
 }
+
+function replaceDots(feld) {
+    try { feld = feld.toFixed(2).toString().replace('.', ','); }
+    catch (error) { console.log(error); }
+    return feld;
+}
+
+function getCellCoordinate(col, row) {
+    return xlsx.utils.encode_col(col) + row;
+}
+
+function cellExists(cell) {
+    return cell !== undefined
+}
+
+function createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, feld) {
+    // Folgende Felder werden aktuell nicht einbezogen
+    let kostenstelle = '';
+    let kostentraeger = '';
+    let abrechnungstag = '';
+    let lohnsatz = '';
+    let prozentsatz = '';
+
+    return `${firmennummer};` +
+        `${personalnummer};` +
+        `${felder.readLohnart(headerCellContent)};` + // 02
+
+        `${kostenstelle};` +
+        `${kostentraeger};` +
+        `${abrechnungstag};` +
+
+        `${abrechnungszeitraum};` +
+
+        `${lohnsatz};` +
+        `${prozentsatz};` +
+
+        `${felder.setAnzahlTage(headerCellContent, feld)};` +
+        `${felder.setAnzahlStunden(headerCellContent, feld)};` +
+        `${felder.setBetrag(headerCellContent, feld)}` +
+        '\n'
+}
+
 
 function deleteUploadedFiles() {
     fileHandler.deleteFiles(path.join(__dirname, '../exchange/uploads/'));

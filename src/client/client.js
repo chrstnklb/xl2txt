@@ -113,8 +113,8 @@ function preventFileToOpen(ev) {
 
 function setDownloadElementsAction(id, transformedFilename) {
     const form = document.getElementById(id);
+    // TODO: make it get request
     form.setAttribute('action', "/download" + '?fileName=' + transformedFilename);
-
 }
 
 function displayDownloadButton() {

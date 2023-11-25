@@ -45,6 +45,7 @@ app.post("/upload", initMulterUpload().single('upload'), (req, res) => {
     ErrorList.clearErrors();
 });
 
+// TODO: make it get request
 app.post('/download', function (req, res) {
     logs.logServerRouteDownload('filename', req.query.fileName);
 
