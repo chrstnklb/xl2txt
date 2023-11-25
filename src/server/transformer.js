@@ -6,24 +6,20 @@ const excel = require('./excel.js');
 const felder = require('./felder.js');
 const fileHandler = require('./utils/fileHandler.js');
 const time = require('./utils/time.js');
+const Metric = require('./utils/metric.js');
+const Timer = require('./utils/timer.js');
 
 const TARGET_FILENAME = "Imp_lbw.txt";
 
-const fixedColumns = 2;
-const lohnartRow = 3;
-const dataStartRow = 4;
+const FIXED_COLUMNS = 2;
+const LOHNART_ROW = 3;
+const DATA_START_ROW = 5;
 let timestamp = '';
 
 function transformToCSV(excelFile) {
 
-    let statistics = {
-        'timestamp': '',
-        'colCount': 0,
-        'rowCount': 0,
-        'calculation-time-in-ms': 0,
-    };
-
-    let start = new Date().getTime();
+    let metric = new Metric();
+    Timer.startTimer();
 
     let workSheet = excel.initExcelFile(excelFile);
 
@@ -37,16 +33,19 @@ function transformToCSV(excelFile) {
 
     // iterate over all rows
     let lastDataRow = excel.getNumberOfLastDataRow();
-    statistics.rowCount = lastDataRow;
+
+    metric.setRowCount(lastDataRow-DATA_START_ROW);
     console.log('lastDataRow: ' + lastDataRow);
 
-    for (let row = dataStartRow + 1; row <= lastDataRow; row++) {
-        
+    let counter = 0;
+    for (let row = DATA_START_ROW; row <= lastDataRow; row++) {
+        console.log('counter: ' + counter++);
+
         let personalnummer = felder.readPersonalnummer(cellCoordinate = ('A' + row)); // 01
         let colCount = excel.getColCount();
-        statistics.colCount = colCount;
+        metric.setColCount(colCount);
 
-        for (let col = fixedColumns; col < colCount; col++) {
+        for (let col = FIXED_COLUMNS; col < colCount; col++) {
 
             let lohnart = '';
             let kostenstelle = '';
@@ -62,7 +61,7 @@ function transformToCSV(excelFile) {
 
             if (cell !== undefined) {
 
-                let cellCoordinate = xlsx.utils.encode_col(col) + (lohnartRow + 1);
+                let cellCoordinate = xlsx.utils.encode_col(col) + (LOHNART_ROW + 1);
                 let headerCellContent = workSheet[cellCoordinate].v;
 
                 let feldCoordinate = xlsx.utils.encode_col(col) + (row);
@@ -102,14 +101,13 @@ function transformToCSV(excelFile) {
         }
     }
 
-    statistics.timestamp = time.getActualTimeStampYYYYMMDDhhmmss();
-
-    let end = new Date().getTime();
-    statistics['calculation-time-in-ms'] = end - start;
+    metric.setTimestamp(time.getActualTimeStampYYYYMMDDhhmmss());
+    metric.setCalculationTimeInMs(Timer.endTimer());
 
     timestamp = time.getActualTimeStampYYYYMMDDhhmmss();
+
     deleteUploadedFiles(excelFile, timestamp);
-    writeStatistics(statistics);
+    writeMetric(metric);
     return writeTxtFile(allLines, timestamp);
 }
 
@@ -122,10 +120,10 @@ function writeTxtFile(content, timestamp) {
     return fileHandler.writeToFile(folder, TARGET_FILENAME, content);
 }
 
-function writeStatistics(statistics) {
+function writeMetric(metric) {
     let statFolder = path.join(__dirname, 'statistics/');
-    let statFilename = 'statistic-' + statistics.timestamp + '.json';
-    let statData = JSON.stringify(statistics);
+    let statFilename = 'metric-' + metric.getTimestamp() + '.json';
+    let statData = JSON.stringify(metric);
     fileHandler.writeToFile(statFolder, statFilename, statData);
 }
 
