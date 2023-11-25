@@ -18,9 +18,15 @@ function initPage() {
     dropZone.addEventListener('dragleave', function (event) { dragLeaveHandler(event); });
 
     const stepperButtonSelect = document.getElementById('stepper-button-select');
+
     const stepperButtonConvert = document.getElementById('stepper-button-convert');
+    const stepperFormConvert = document.getElementById('stepper-form-convert');
+
     const stepperButtonSave = document.getElementById('stepper-button-save');
+    const stepperFormSave = document.getElementById('stepper-form-save');
+
     const stepperButtonRestart = document.getElementById('stepper-button-restart');
+    const stepperFormRestart = document.getElementById('stepper-form-restart');
 
     let path = '';
     let file = undefined;
@@ -31,6 +37,9 @@ function initPage() {
             file = this.files[0];
             console.log(path);
         }
+        stepperFormConvert.hidden = false;
+        // stepperButtonSelect.setAttribute("style", "background-color: #14908E");
+        stepperButtonSelect.style.cssText += 'background-color: #198754; color: white';
     });
 
     stepperButtonConvert.addEventListener('click', function () {
@@ -40,13 +49,18 @@ function initPage() {
     });
 
     stepperButtonSave.addEventListener('click', function (event) {
-        alert('Datei wird heruntergeladen')
+        stepperFormRestart.hidden = false;
+        stepperButtonSave.setAttribute("class", "btn btn-danger");
     });
+
 
     stepperButtonRestart.addEventListener('click', function (event) {
         location.reload();
     });
 }
+
+
+
 
 function dragOverHandler(ev) {
     clientLog("file in drop zone", DRAG_OVER_COLOR);

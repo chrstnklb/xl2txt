@@ -81,25 +81,27 @@
                         <label class="form-label" for="formFile">Schritt für Schritt Konverter</label>
                         
                         <form style="display: flex; align-items: center;">
-                            <button class="btn btn-outline-secondary" disabled> 1. </button>
+                            <button class="btn btn-success" disabled> 1 </button>
                             <input class="form-control" id="stepper-button-select" type="file" style="margin-left: 8px;">
                         </form>
 
-                        <form action="/upload" method="post">
-                            <button class="btn btn-outline-secondary" disabled> 2. </button>
-                            <button class="btn btn-outline-secondary" id="stepper-button-convert" type="button">
+                        <form id="stepper-form-convert" action="/upload" hidden method="post">
+                            <button class="btn btn-warning" disabled> 2 </button>
+                            <button class="btn btn-outline-warning" id="stepper-button-convert" type="button">
                                 Konvertieren
-                              </button>
+                            </button>
                         </form>
                         
-                        <form id="stepper-form-save" action="/download" method="post">
-                            <button class="btn btn-outline-secondary" disabled> 3. </button>
-                            <button class="btn btn-outline-secondary" id="stepper-button-save" type="submit"> Speichern </button>
+                        <form id="stepper-form-save" hidden action="/download" method="post">
+                            <button class="btn btn-danger" disabled> 3 </button>
+                            <button class="btn btn-outline-danger" id="stepper-button-save" type="submit">
+                                Speichern
+                            </button>
                         </form>
                         
-                        <form action="/" method="get">
-                            <button class="btn btn-outline-secondary" disabled> 4. </button>
-                            <button class="btn btn-outline-secondary" id="stepper-button-restart" type="submit"> Neustart</button>
+                        <form id="stepper-form-restart" hidden action="/" method="get">
+                            <button class="btn btn-primary" disabled> 4 </button>
+                            <button class="btn btn-primary" id="stepper-button-restart" type="submit"> Neustart</button>
                         </form>
                     </div>
                 </div>
