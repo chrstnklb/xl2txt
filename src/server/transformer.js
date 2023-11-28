@@ -67,55 +67,59 @@ function transformLohnabrechnungToTxt(excelFile) {
 
 function transformKalendariumToTxt(excelFile) {
     metric = new Metric();
-
-    let workSheet = excel.initExcelFile(excelFile, sheetNumber = 1);
-
-    let firmennummer = felder.readFirmennummer(); // 00
-    let abrechnungszeitraum = felder.readAbrechnungsZeitraum(); // 06
-    console.log('firmennummer', firmennummer);
-    console.log('abrechnungszeitraum', abrechnungszeitraum);
-
-    let personalnummerHeader = felder.readPersonalnummer(cellCoordinate = 'A4'); // 01
-
-    console.log('personalnummerHeader', personalnummerHeader);
-
-
+    console.log('Number of sheets', excel.getNumberOfSheets());
     let allLines = "";
+    for (let sheetNumber = 1; sheetNumber < excel.getNumberOfSheets(); sheetNumber++) {
+        // console.log('sheetNumber', sheetNumber);
+        console.log('sheetname', excel.getWorkBook(excelFile).SheetNames[sheetNumber]);
 
-    let lastDataRow = excel.getNumberOfLastDataRow();
+        let workSheet = excel.initExcelFile(excelFile, sheetNumber );
 
-    metric.setRowCount(lastDataRow - DATA_START_ROW);
+        let firmennummer = felder.readFirmennummer(); // 00
+        let abrechnungszeitraum = felder.readAbrechnungsZeitraum(); // 06
+        console.log('firmennummer', firmennummer);
+        console.log('abrechnungszeitraum', abrechnungszeitraum);
 
-    // DELETE THIS
-    // for (let row = DATA_START_ROW; row <= lastDataRow; row++) {
+        let personalnummerHeader = felder.readPersonalnummer(cellCoordinate = 'A4'); // 01
 
-    let row = DATA_START_ROW;
+        console.log('personalnummerHeader', personalnummerHeader);
 
-    let personalnummer = felder.readPersonalnummer(cellCoordinate = ('A' + row)); // 01
-    let colCount = excel.getColCount();
-    metric.setColCount(colCount);
 
-    for (let col = FIXED_COLUMNS + 1; col < colCount; col++) {
-        // if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
-        // console.log('lastDataRow', lastDataRow);
-        // console.log(excel.getCellCoordinate(col, row));
 
-        let cellsWithContentExist = findCellsWithContent(workSheet, DATA_START_ROW, lastDataRow, col);
-        console.log(col + ":" + row + ":::" + cellsWithContentExist);
+        let lastDataRow = excel.getNumberOfLastDataRow();
 
-        let colSum = 0;
-        if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)]) !== undefined) {
-            colSum = getSumOfColumn(workSheet, col, DATA_START_ROW, lastDataRow);
-            console.log(col + ":" + row + ":::" + colSum);
-        }
+        metric.setRowCount(lastDataRow - DATA_START_ROW);
 
-        if (colSum !== "0,00") {
+        // DELETE THIS
+        // for (let row = DATA_START_ROW; row <= lastDataRow; row++) {
 
-            let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
-            allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, colSum);
+        let row = DATA_START_ROW;
+
+        let personalnummer = felder.readPersonalnummer(cellCoordinate = ('A' + row)); // 01
+        let colCount = excel.getColCount();
+        metric.setColCount(colCount);
+
+        for (let col = FIXED_COLUMNS + 1; col < colCount; col++) {
+            // if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
+            // console.log('lastDataRow', lastDataRow);
+            // console.log(excel.getCellCoordinate(col, row));
+
+            let cellsWithContentExist = findCellsWithContent(workSheet, DATA_START_ROW, lastDataRow, col);
+            // console.log(col + ":" + row + ":::" + cellsWithContentExist);
+
+            let colSum = 0;
+            if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)]) !== undefined) {
+                colSum = getSumOfColumn(workSheet, col, DATA_START_ROW, lastDataRow);
+                console.log(col + ":" + row + ":::" + colSum);
+            }
+
+            if (colSum !== "0,00") {
+
+                let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
+                allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, colSum);
+            }
         }
     }
-    // }
     fileHandler.deleteUploadedFiles();
     metric.writeMetric();
     return fileHandler.writeTxtFile(allLines);
@@ -125,7 +129,7 @@ function transformKalendariumToTxt(excelFile) {
 function getSumOfColumn(workSheet, col, startRow, endRow) {
     let sum = 0;
     for (let row = startRow; row <= endRow; row++) {
-        console.log(`cellContent: ${excel.readCell(excel.getCellCoordinate(col, row), 'number')}`)
+        // console.log(`cellContent: ${excel.readCell(excel.getCellCoordinate(col, row), 'number')}`)
 
         if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
             let feld = excel.readCell(excel.getCellCoordinate(col, row), 'number');

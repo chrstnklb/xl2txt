@@ -20,6 +20,10 @@ module.exports = {
         return workBook = xlsx.readFile(path.join(__dirname, "../exchange", excelFile));
     },
 
+    getNumberOfSheets: function () {
+        return workBook.SheetNames.length;
+    },
+
     readCell: (cellCoordinate, targetFormat) => {
         let result = undefined;
         if (workSheet.hasOwnProperty(cellCoordinate)) {
