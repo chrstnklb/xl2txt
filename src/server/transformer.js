@@ -4,6 +4,7 @@ const fileHandler = require('./utils/fileHandler.js');
 const Metric = require('./utils/metric.js');
 
 const FIXED_COLUMNS = 2;
+const KALENDARIUM_FIXED_COLUMNS = 3;
 const LOHNART_ROW = 3;
 const DATA_START_ROW = 5;
 let metric = undefined;
@@ -64,62 +65,36 @@ function transformLohnabrechnungToTxt(excelFile) {
     return fileHandler.writeTxtFile(allLines);
 }
 
-
 function transformKalendariumToTxt(excelFile) {
     metric = new Metric();
-    console.log('Number of sheets', excel.getNumberOfSheets());
     let allLines = "";
-    for (let sheetNumber = 1; sheetNumber < excel.getNumberOfSheets(); sheetNumber++) {
-        // console.log('sheetNumber', sheetNumber);
-        console.log('sheetname', excel.getWorkBook(excelFile).SheetNames[sheetNumber]);
 
+    for (let sheetNumber = 1; sheetNumber < excel.getNumberOfSheets(); sheetNumber++) {
         let workSheet = excel.initExcelFile(excelFile, sheetNumber );
+        
+        let lastDataRow = excel.getNumberOfLastDataRow();
+        let colCount = excel.getColCount();
+        metric.setRowCount(lastDataRow - DATA_START_ROW);
+        metric.setColCount(colCount);
 
         let firmennummer = felder.readFirmennummer(); // 00
         let abrechnungszeitraum = felder.readAbrechnungsZeitraum(); // 06
-        console.log('firmennummer', firmennummer);
-        console.log('abrechnungszeitraum', abrechnungszeitraum);
-
-        let personalnummerHeader = felder.readPersonalnummer(cellCoordinate = 'A4'); // 01
-
-        console.log('personalnummerHeader', personalnummerHeader);
-
-
-
-        let lastDataRow = excel.getNumberOfLastDataRow();
-
-        metric.setRowCount(lastDataRow - DATA_START_ROW);
-
-        // DELETE THIS
-        // for (let row = DATA_START_ROW; row <= lastDataRow; row++) {
-
-        let row = DATA_START_ROW;
-
-        let personalnummer = felder.readPersonalnummer(cellCoordinate = ('A' + row)); // 01
-        let colCount = excel.getColCount();
-        metric.setColCount(colCount);
-
-        for (let col = FIXED_COLUMNS + 1; col < colCount; col++) {
-            // if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
-            // console.log('lastDataRow', lastDataRow);
-            // console.log(excel.getCellCoordinate(col, row));
-
-            let cellsWithContentExist = findCellsWithContent(workSheet, DATA_START_ROW, lastDataRow, col);
-            // console.log(col + ":" + row + ":::" + cellsWithContentExist);
-
+        // Check existance of personalnummer header
+        felder.readPersonalnummer(cellCoordinate = 'A4'); // 01
+        let personalnummer = felder.readPersonalnummer(cellCoordinate = ('A' + DATA_START_ROW)); // 01
+        
+        for (let col = KALENDARIUM_FIXED_COLUMNS; col < colCount; col++) {
             let colSum = 0;
-            if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)]) !== undefined) {
+            if (excel.cellExists(workSheet[excel.getCellCoordinate(col, DATA_START_ROW)]) !== undefined) {
                 colSum = getSumOfColumn(workSheet, col, DATA_START_ROW, lastDataRow);
-                console.log(col + ":" + row + ":::" + colSum);
             }
-
             if (colSum !== "0,00") {
-
                 let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
                 allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, colSum);
             }
         }
     }
+
     fileHandler.deleteUploadedFiles();
     metric.writeMetric();
     return fileHandler.writeTxtFile(allLines);
@@ -129,19 +104,14 @@ function transformKalendariumToTxt(excelFile) {
 function getSumOfColumn(workSheet, col, startRow, endRow) {
     let sum = 0;
     for (let row = startRow; row <= endRow; row++) {
-        // console.log(`cellContent: ${excel.readCell(excel.getCellCoordinate(col, row), 'number')}`)
-
         if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
             let feld = excel.readCell(excel.getCellCoordinate(col, row), 'number');
             sum = sum + feld;
         }
     }
-    // If number is integer or number is from format dd,d always return dd,dd
     if (sum % 1 === 0 || sum.toString().includes('.')) {
         sum = replaceDots(sum);
     }
-
-
     return sum;
 }
 
