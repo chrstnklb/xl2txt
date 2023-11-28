@@ -1,37 +1,46 @@
-const fs = require('fs');
-const path = require('path');
-const xlsx = require('xlsx');
-
 const excel = require('./excel.js');
 const felder = require('./felder.js');
 const fileHandler = require('./utils/fileHandler.js');
-const time = require('./utils/time.js');
 const Metric = require('./utils/metric.js');
-const Timer = require('./utils/timer.js');
-
-const TARGET_FILENAME = "Imp_lbw.txt";
 
 const FIXED_COLUMNS = 2;
 const LOHNART_ROW = 3;
 const DATA_START_ROW = 5;
-let timestamp = '';
 let metric = undefined;
 
 function transformToCSV(excelFile) {
+    console.log('transformToCSV');
 
+    if (hasSeveralSheets(excelFile) === true) {
+        console.log('File IS a Kalendarium Excel file');
+        return transformKalendariumToTxt(excelFile);
+    } else {
+        console.log('File IS NOT a Kalendarium Excel file');
+        return transformLohnabrechnungToTxt(excelFile);
+    }
+}
+
+function hasSeveralSheets(excelFile) {
+    // console.log('excelFileIsKalendarium');
+    const workBook = excel.getWorkBook(excelFile);
+    // console.log('File IS a Kalendarium Excel file');
+    // console.log('workBook.SheetNames.length', workBook.SheetNames.length);
+    return workBook.SheetNames.length > 1;
+}
+
+function transformLohnabrechnungToTxt(excelFile) {
     metric = new Metric();
-    Timer.startTimer();
 
-    let workSheet = excel.initExcelFile(excelFile);
+    let workSheet = excel.initExcelFile(excelFile, sheetNumber = 0);
 
     let firmennummer = felder.readFirmennummer(); // 00
     let abrechnungszeitraum = felder.readAbrechnungsZeitraum(); // 06
+
     /*Check for error in header*/
     felder.readPersonalnummer(cellCoordinate = 'A4'); // 01
 
     let allLines = "";
 
-    // iterate over all rows
     let lastDataRow = excel.getNumberOfLastDataRow();
 
     metric.setRowCount(lastDataRow - DATA_START_ROW);
@@ -43,38 +52,109 @@ function transformToCSV(excelFile) {
         metric.setColCount(colCount);
 
         for (let col = FIXED_COLUMNS; col < colCount; col++) {
-
-            let cellCoordinate = getCellCoordinate(col, row);
-
-            if (cellExists(workSheet[cellCoordinate])) {
-                let headerCellContent = workSheet[getCellCoordinate(col, LOHNART_ROW + 1)].v;
-                let feld = replaceDots(excel.readCell(getCellCoordinate(col, row), 'number'));
+            if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
+                let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
+                let feld = replaceDots(excel.readCell(excel.getCellCoordinate(col, row), 'number'));
                 allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, feld);
             }
         }
     }
-    timestamp = time.getActualTimeStampYYYYMMDDhhmmss();
-    // TODO: simplify metric
-    metric.setTimestamp(timestamp);
-    metric.setCalculationTimeInMs(Timer.endTimer());
-
-    deleteUploadedFiles(excelFile, timestamp);
-    writeMetric(metric);
-    return writeTxtFile(allLines, timestamp);
+    fileHandler.deleteUploadedFiles();
+    metric.writeMetric();
+    return fileHandler.writeTxtFile(allLines);
 }
+
+
+function transformKalendariumToTxt(excelFile) {
+    metric = new Metric();
+
+    let workSheet = excel.initExcelFile(excelFile, sheetNumber = 1);
+
+    let firmennummer = felder.readFirmennummer(); // 00
+    let abrechnungszeitraum = felder.readAbrechnungsZeitraum(); // 06
+    console.log('firmennummer', firmennummer);
+    console.log('abrechnungszeitraum', abrechnungszeitraum);
+
+    let personalnummerHeader = felder.readPersonalnummer(cellCoordinate = 'A4'); // 01
+
+    console.log('personalnummerHeader', personalnummerHeader);
+
+
+    let allLines = "";
+
+    let lastDataRow = excel.getNumberOfLastDataRow();
+
+    metric.setRowCount(lastDataRow - DATA_START_ROW);
+
+    // DELETE THIS
+    // for (let row = DATA_START_ROW; row <= lastDataRow; row++) {
+
+    let row = DATA_START_ROW;
+
+    let personalnummer = felder.readPersonalnummer(cellCoordinate = ('A' + row)); // 01
+    let colCount = excel.getColCount();
+    metric.setColCount(colCount);
+
+    for (let col = FIXED_COLUMNS + 1; col < colCount; col++) {
+        // if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
+        // console.log('lastDataRow', lastDataRow);
+        // console.log(excel.getCellCoordinate(col, row));
+
+        let cellsWithContentExist = findCellsWithContent(workSheet, DATA_START_ROW, lastDataRow, col);
+        console.log(col + ":" + row + ":::" + cellsWithContentExist);
+
+        let colSum = 0;
+        if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)]) !== undefined) {
+            colSum = getSumOfColumn(workSheet, col, DATA_START_ROW, lastDataRow);
+            console.log(col + ":" + row + ":::" + colSum);
+        }
+
+        if (colSum !== "0,00") {
+
+            let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
+            allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, colSum);
+        }
+    }
+    // }
+    fileHandler.deleteUploadedFiles();
+    metric.writeMetric();
+    return fileHandler.writeTxtFile(allLines);
+
+}
+
+function getSumOfColumn(workSheet, col, startRow, endRow) {
+    let sum = 0;
+    for (let row = startRow; row <= endRow; row++) {
+        console.log(`cellContent: ${excel.readCell(excel.getCellCoordinate(col, row), 'number')}`)
+
+        if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
+            let feld = excel.readCell(excel.getCellCoordinate(col, row), 'number');
+            sum = sum + feld;
+        }
+    }
+    // If number is integer or number is from format dd,d always return dd,dd
+    if (sum % 1 === 0 || sum.toString().includes('.')) {
+        sum = replaceDots(sum);
+    }
+
+
+    return sum;
+}
+
+function findCellsWithContent(workSheet, startRow, endRow, col) {
+    for (let row = startRow; row <= endRow; row++) {
+        if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 function replaceDots(feld) {
     try { feld = feld.toFixed(2).toString().replace('.', ','); }
     catch (error) { console.log(error); }
     return feld;
-}
-
-function getCellCoordinate(col, row) {
-    return xlsx.utils.encode_col(col) + row;
-}
-
-function cellExists(cell) {
-    return cell !== undefined
 }
 
 function createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, feld) {
@@ -104,23 +184,5 @@ function createOneLine(firmennummer, abrechnungszeitraum, personalnummer, header
         '\n'
 }
 
-
-function deleteUploadedFiles() {
-    fileHandler.deleteFiles(path.join(__dirname, '../exchange/uploads/'));
-}
-
-function writeTxtFile(content, timestamp) {
-    const folder = path.join(__dirname, '../../src/exchange/downloads/' + timestamp);
-    return fileHandler.writeToFile(folder, TARGET_FILENAME, content);
-}
-
-function writeMetric(metric) {
-    let statFolder = path.join(__dirname, 'statistics/');
-    let statFilename = 'metric-' + metric.getTimestamp() + '.json';
-    let statData = JSON.stringify(metric);
-    fileHandler.writeToFile(statFolder, statFilename, statData);
-}
-
 exports.transformToCSV = transformToCSV;
 exports.timestamp = this.timestamp;
-exports.TARGET_FILENAME = TARGET_FILENAME;

@@ -28,9 +28,13 @@ app.use(express.static(__dirname, {
 app.post("/upload", initMulterUpload().single('upload'), (req, res) => {
     logs.logServerRouteUpload('filename', req.file.filename);
 
+    // log ip address of client
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    logs.logAttribute('ip address', ip);
+
     // start timer
     const start = new Date().getTime();
-    const targetFilename = transformer.transformToCSV("./uploads/" + req.file.filename);
+    const targetFilename = transformer.transformToCSV("../exchange/uploads/" + req.file.filename);
     // end timer
     const end = new Date().getTime();
     const time = end - start;
@@ -38,7 +42,7 @@ app.post("/upload", initMulterUpload().single('upload'), (req, res) => {
     res.json({
         fileName: txtFileName,
         uploadedFileName: req.file.filename,
-        downloadFileName: transformer.TARGET_FILENAME,
+        downloadFileName: fileHandler.TARGET_FILENAME,
         errorList: ErrorList.errors,
         calculationTimeInMs: time
     });

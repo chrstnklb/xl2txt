@@ -1,6 +1,4 @@
-const fs = require('fs');
 const excel = require('./excel.js');
-const logs = require('./utils/logs.js');
 const ErrorList = require('./error.js');
 
 module.exports = {
@@ -181,8 +179,8 @@ module.exports = {
 
     setAnzahlTage: function (headerCellContent, feld) {
         return headerCellContent.includes('Abrechnungstag') // 05
-         || headerCellContent.includes('ANZTAGE') // 09
-          ? feld 
-          : "";
+            || headerCellContent.includes('ANZTAGE') // 09
+            ? feld
+            : "";
     }
 }
