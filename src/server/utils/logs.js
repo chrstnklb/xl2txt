@@ -19,5 +19,13 @@ module.exports = {
 
     logAttribute: function (attribute, value) {
         this.logServer(`attribute:${attribute}:\n\t${value}`);
+    },
+
+    logDeletedFile: function (filename) {
+        console.log(`Deleted file:\n\t${filename}`);
+    },
+
+    logCreatedFile: function (filename) {
+        console.log(`Created file:\n\t${filename}`);
     }
 }

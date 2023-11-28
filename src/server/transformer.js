@@ -10,22 +10,15 @@ const DATA_START_ROW = 5;
 let metric = undefined;
 
 function transformToCSV(excelFile) {
-    console.log('transformToCSV');
-
     if (hasSeveralSheets(excelFile) === true) {
-        console.log('File IS a Kalendarium Excel file');
         return transformKalendariumToTxt(excelFile);
     } else {
-        console.log('File IS NOT a Kalendarium Excel file');
         return transformLohnabrechnungToTxt(excelFile);
     }
 }
 
 function hasSeveralSheets(excelFile) {
-    // console.log('excelFileIsKalendarium');
     const workBook = excel.getWorkBook(excelFile);
-    // console.log('File IS a Kalendarium Excel file');
-    // console.log('workBook.SheetNames.length', workBook.SheetNames.length);
     return workBook.SheetNames.length > 1;
 }
 

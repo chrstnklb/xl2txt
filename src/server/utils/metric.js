@@ -6,7 +6,7 @@ const Timer = require('./timer.js');
 class Metric {
 
     constructor() {
-        this.timestamp = '';
+                this.timestamp = '';
         this.colCount = 0;
         this.rowCount = 0;
         this.calculationTimeInMs = 0;
@@ -16,19 +16,17 @@ class Metric {
     writeMetric() {
         Timer.endTimer()
         this.setCalculationTimeInMs(Timer.endTimer());
-
+        
         let folder = path.join(__dirname, '../../exchange/metrics/');
         let filename = 'metric-' + this.getTimestamp() + '.json';
         let data = JSON.stringify(this.getMetricObject());
 
-        console.log('Writing metric to file: ' + folder + filename);
         fileHandler.writeToFile(folder, filename, data);
-        console.log('Writing metric to file: ' + folder + filename + ' done!');
     }
 
     getMetricObject() {
         return {
-            timestamp: this.getTimestamp(),
+                        timestamp: this.getTimestamp(),
             colCount: this.getColCount(),
             rowCount: this.getRowCount(),
             calculationTimeInMs: this.getCalculationTimeInMs()

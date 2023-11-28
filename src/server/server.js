@@ -12,6 +12,8 @@ const app = express();
 const port = 3000;
 const url = `http://localhost:${port}`
 
+let clientIp = undefined;
+
 const { getType } = require('mime');
 
 app.use(express.static(path.join(__dirname, '../client')))
@@ -31,6 +33,7 @@ app.post("/upload", initMulterUpload().single('upload'), (req, res) => {
     // log ip address of client
     const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     logs.logAttribute('ip address', ip);
+    clientIp = ip;
 
     // start timer
     const start = new Date().getTime();
@@ -51,16 +54,9 @@ app.post("/upload", initMulterUpload().single('upload'), (req, res) => {
 
 // TODO: make it get request
 app.post('/download', function (req, res) {
-    logs.logServerRouteDownload('filename', req.query.fileName);
-
     const file = req.query.fileName;
-
     res.download(file);
-    res.on('finish', () => {
-        fileHandler.deleteDirectoryOfFile(path.dirname(file));
-    });
-
-    logs.logServerRouteDownload('file', file);
+    res.on('finish', () => { fileHandler.deleteDirectoryOfFile(path.dirname(file)); });
 });
 
 app.listen(port, () => {
@@ -83,4 +79,8 @@ function initMulterUpload() {
             }
         })
     });
+}
+
+module.exports = {
+    clientIp: clientIp
 }

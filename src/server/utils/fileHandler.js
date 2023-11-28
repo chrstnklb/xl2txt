@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-const transformer = require('../transformer.js');
 const time = require('./time.js');
+const logs = require('./logs.js');
 
 const TARGET_FILENAME = "Imp_lbw.txt";
 
@@ -12,6 +12,7 @@ module.exports = {
         let filepath = path.join(folder, filename);
         fs.writeFile(filepath, data, function (err) {
             if (err) throw err;
+            else logs.logCreatedFile(filepath);
         });
         return filepath;
     },
@@ -23,6 +24,7 @@ module.exports = {
     deleteFile: async function (filename) {
         await fs.unlink(filename, (err) => {
             if (err) throw err;
+            else logs.logDeletedFile(filename);
         });
     },
 
@@ -35,7 +37,6 @@ module.exports = {
     deleteFiles: async function (folder) {
         fs.readdir(folder, (err, files) => {
             if (err) throw err;
-
             for (const file of files) {
                 this.deleteFile(path.join(folder, file));
             }
