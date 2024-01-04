@@ -46,10 +46,14 @@ function transformLohnabrechnungToTxt(excelFile) {
         metric.setColCount(colCount);
 
         for (let col = FIXED_COLUMNS; col < colCount; col++) {
+            // Wenn Zelle nicht leer ist
             if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
-                let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
-                let feld = replaceDots(excel.readCell(excel.getCellCoordinate(col, row), 'number'));
-                allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, feld);
+                // Wenn Lohnart Zelle nicht leer ist
+                if (workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)] !== undefined) {
+                    let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
+                    let feld = replaceDots(excel.readCell(excel.getCellCoordinate(col, row), 'number'));
+                    allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, feld);
+                }
             }
         }
     }
@@ -63,8 +67,8 @@ function transformKalendariumToTxt(excelFile) {
     let allLines = "";
 
     for (let sheetNumber = 1; sheetNumber < excel.getNumberOfSheets(); sheetNumber++) {
-        let workSheet = excel.initExcelFile(excelFile, sheetNumber );
-        
+        let workSheet = excel.initExcelFile(excelFile, sheetNumber);
+
         let lastDataRow = excel.getNumberOfLastDataRow();
         let colCount = excel.getColCount();
         metric.setRowCount(lastDataRow - DATA_START_ROW);
@@ -75,7 +79,7 @@ function transformKalendariumToTxt(excelFile) {
         // Check existance of personalnummer header
         felder.readPersonalnummer(cellCoordinate = 'A4'); // 01
         let personalnummer = felder.readPersonalnummer(cellCoordinate = ('A' + DATA_START_ROW)); // 01
-        
+
         for (let col = KALENDARIUM_FIXED_COLUMNS; col < colCount; col++) {
             let colSum = 0;
             if (excel.cellExists(workSheet[excel.getCellCoordinate(col, DATA_START_ROW)]) !== undefined) {
