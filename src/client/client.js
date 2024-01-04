@@ -1,10 +1,68 @@
 const DRAG_OVER_COLOR = '#14908E';
 const DRAG_LEAVE_COLOR = 'yellow';
-const DRAG_OVER_OPACITY = 0.5;
 
+document.addEventListener('DOMContentLoaded', function () {
+    initPage();
+});
+
+function initPage() {
+    clientLog("client loaded");
+
+    const dropZone = document.getElementById('drop-zone');
+    dropZone.addEventListener('dragover', function (event) { dragOverHandler(event); });
+    dropZone.addEventListener('drop', function (event) { dropHandler(event); });
+    dropZone.addEventListener('dragleave', function (event) { dragLeaveHandler(event); });
+
+    const stepperButtonSelect = document.getElementById('stepper-button-select');
+
+    const stepperButtonConvert = document.getElementById('stepper-button-convert');
+    const stepperFormConvert = document.getElementById('stepper-form-convert');
+
+    const stepperButtonSave = document.getElementById('stepper-button-save');
+
+    const stepperButtonRestart = document.getElementById('stepper-button-restart');
+    const stepperFormRestart = document.getElementById('stepper-form-restart');
+
+    let path = '';
+    let file = undefined;
+
+    stepperButtonSelect.addEventListener('change', function () {
+        if (this.files.length > 0) {
+            path = this.files[0].name;
+            file = this.files[0];
+            console.log(path);
+        }
+        stepperFormConvert.hidden = false;
+        // stepperButtonSelect.setAttribute("style", "background-color: #14908E");
+        stepperButtonSelect.style.cssText += 'background-color: #198754; color: white';
+    });
+
+    stepperButtonConvert.addEventListener('click', function () {
+        const formData = new FormData();
+        formData.append('upload', file);
+        fetchUploadStepper(formData);
+    });
+
+    stepperButtonSave.addEventListener('click', function (event) {
+        stepperFormRestart.hidden = false;
+        stepperButtonSave.setAttribute("class", "btn btn-danger");
+    });
+
+
+    stepperButtonRestart.addEventListener('click', function (event) {
+        location.reload();
+    });
+}
+
+function dragOverHandler(ev) {
+    clientLog("file in drop zone", DRAG_OVER_COLOR);
+    preventFileToOpen(ev);
+    setBackGroundColor(ev, DRAG_OVER_COLOR);
+    setBackGroundColorOpacity(ev, 1);
+    setDropAreaText('Verarbeitet!');
+}
 
 function dropHandler(ev) {
-    let transformedFilename = '';
     clientLog("file dropped");
 
     preventFileToOpen(ev);
@@ -13,52 +71,16 @@ function dropHandler(ev) {
     const formData = new FormData();
     formData.append('upload', files[0]);
 
-    fetch('/upload', { method: 'POST', body: formData })
-        .then(response => response.json())
-        .then(result => {
-            transformedFilename = result.fileName;
-            console.log('Upload date:', result);
-            if (result.errorList.length > 0) {
-                let alertMessage = 'Es sind Fehler aufgetreten: \n\n';
-                result.errorList.forEach(error => {
-                    alertMessage += error.description + "\n\n";
-                });
-                alert(alertMessage);
-                console.log(alertMessage);
-                console.log(result.calculationTimeInMs);
-            } else {
-                prepareDownload(transformedFilename);
-                displayDownloadButton()
-                displayRestartButton();
-            }
-        })
-        //     setDropAreaText(
-        //         'Hochgeladene Datei ' + result.uploadedFileName + 
-        //         ' wurde transformiert zu ' + result.downloadFileName);
-
-        // })
-        // .then(() => { setDropAreaText('🎉 Prima 🎉'); })
-        // .then(() => {  })
-        // .then(() => { displayDownloadButton(); })
-        // .then(() => { displayRestartButton(); })
-        // read the response body and console.log it
-        .catch(error => { console.error('Error:', error); });
+    // use fetchUpload from fetch.js
+    fetchUpload(formData);
 }
 
 function deactivateUpluadArea() {
     const dropArea = document.getElementById('drop-zone');
     dropArea.style.pointerEvents = 'none';
     dropArea.style.opacity = 0.5;
-
 }
 
-function dragOverHandler(ev) {
-    clientLog("file in drop zone", DRAG_OVER_COLOR);
-    preventFileToOpen(ev);
-    setBackGroundColor(ev, DRAG_OVER_COLOR);
-    setBackGroundColorOpacity(ev, 1);
-    setDropAreaText('Lass los!');
-}
 
 function setDropAreaText(text) {
     const dropZoneText = document.getElementById('drop-zone-text');
@@ -91,10 +113,8 @@ function preventFileToOpen(ev) {
 
 function setDownloadElementsAction(id, transformedFilename) {
     const form = document.getElementById(id);
-    let action = "";
-
+    // TODO: make it get request
     form.setAttribute('action', "/download" + '?fileName=' + transformedFilename);
-
 }
 
 function displayDownloadButton() {
@@ -114,12 +134,4 @@ function setBackGroundColor(ev, color) {
 function jumpTo(target) {
     var kontaktHeader = document.getElementById(target)
     kontaktHeader.scrollIntoView({ behavior: 'smooth' })
-}
-
-
-/**************************/
-/*  LOGGING FUNCTIONS     */
-/**************************/
-function clientLog(message, textColor = 'white') {
-    console.log('%c client :: ' + message, 'color: ' + textColor);
 }

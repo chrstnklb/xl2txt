@@ -9,11 +9,19 @@ let workSheet = undefined;
 
 module.exports = {
 
-    initExcelFile: function (excelFile) {
-        const workBook = xlsx.readFile(path.join(__dirname, "../exchange", excelFile));
-        let actualFirstSheetName = workBook.SheetNames[0];
+    initExcelFile: function (excelFile, sheetNumber = 0) {
+        const workBook = this.getWorkBook(excelFile);
+        let actualFirstSheetName = workBook.SheetNames[sheetNumber];
         workSheet = workBook.Sheets[actualFirstSheetName];
         return workSheet;
+    },
+
+    getWorkBook: function (excelFile) {
+        return workBook = xlsx.readFile(path.join(__dirname, "../exchange", excelFile));
+    },
+
+    getNumberOfSheets: function () {
+        return workBook.SheetNames.length;
     },
 
     readCell: (cellCoordinate, targetFormat) => {
@@ -64,5 +72,13 @@ module.exports = {
             let cell = workSheet['A' + i];
         }
     },
+
+    getCellCoordinate: function (col, row) {
+        return xlsx.utils.encode_col(col) + row;
+    },
+
+    cellExists: function (cell) {
+        return cell !== undefined
+    }
 
 }

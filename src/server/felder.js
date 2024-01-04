@@ -1,6 +1,4 @@
-const fs = require('fs');
 const excel = require('./excel.js');
-const logs = require('./utils/logs.js');
 const ErrorList = require('./error.js');
 
 module.exports = {
@@ -162,4 +160,27 @@ module.exports = {
     // MAX_LENGTH:      8(2)
     // Muss-Feld:       Nein
     // Excel-Zelle:     ???
+
+    setAnzahlStunden: function (headerCellContent, feld) {
+        return headerCellContent.includes('KOSTENST') // 03
+            || headerCellContent.includes('LSATZ') // 07
+            || headerCellContent.includes('ANZSTD') // 10
+            ? feld
+            : "";
+    },
+
+    setBetrag: function (headerCellContent, feld) {
+        return headerCellContent.includes('KOSTENTR') // 04
+            || headerCellContent.includes('PSATZ') // 08
+            || headerCellContent.includes('BETRAG') // 11
+            ? feld
+            : "";
+    },
+
+    setAnzahlTage: function (headerCellContent, feld) {
+        return headerCellContent.includes('Abrechnungstag') // 05
+            || headerCellContent.includes('ANZTAGE') // 09
+            ? feld
+            : "";
+    }
 }

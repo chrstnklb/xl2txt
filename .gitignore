@@ -3,4 +3,5 @@ coverage/
 uploads/
 downloads/
 statistics/
-```
+src/exchange/metrics/
+docs/Test/

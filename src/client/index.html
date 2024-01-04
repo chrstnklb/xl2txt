@@ -6,77 +6,236 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="icon" href="logo-black-small.png">
-    <link rel="stylesheet" type="text/css" href="./style.css">
-    <link rel="stylesheet" type="text/css" href="./navigation.css">
-
-    <script src="./client.js"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="logo-black-small.png" rel="icon">
+    <link type="text/css" href="./style.css" rel="stylesheet">
     <title>Relog Lohn Konverter</title>
 </head>
 
 <body>
 
-    <h1 id="start" style="background-color: #14908E;"></h1>
-    <div style="background-color: #14908E;" class="grid-container">
-        <div class="grid-item" style="background-color: #14908E;"></div>
-        <div class="grid-item" style="background-color: #14908E;">
+    <!---------------------------------------- Navigation ---------------------------------------->
+
+        <div class="btn-group-vertical" id="navigation-group-button" role="group">
+
+            <button class="btn btn-outline-light" onclick="jumpTo('start')">Start</button>
+            <button class="btn btn-outline-light" onclick="jumpTo('roadmap')">Roadmap</button>
+            <button class="btn btn-outline-light" onclick="jumpTo('kontakt')">Kontakt</button>
+
+        </div>
+
+    <!-------------------------------------------------- Start -------------------------------------------------->
+
+    <h1 id="start"></h1>
+    <div class="grid-container" id="start-container">
+        <div class="grid-item"></div>
+        <div class="grid-item">
             <div class="container" id="logo-container">
                 <div class="logo">
                     <img src="logo-black-small.png" alt="relog logo">
                 </div>
                 <div>
-                    <p></p>
                     <h2>Relog Lohn Konverter</h2>
                 </div>
             </div>
         </div>
-        <div class="grid-item" style="background-color: #14908E;"></div>
-        <div class="grid-item" style="background-color: #14908E;"></div>
-        <div class="grid-item" style="background-color: #14908E;">
-            <div id="main-content-start"></div>
-        </div>
-        <!-- <div class="grid-item" style="background-color: #14908E;">
-            <div class="container" id="options-container">
-
-                <div class="file-handler-container">
-                    <div class="grid-item file-handler" id="download-container">
-                        <h2 class="upload-title">
-                            Ziel:
-                        </h2>
-                        <div class="upload-button">
-                            <button id="upload-button" onclick="document.getElementById('sourceFile').click()">📂
-                                Wähle Verzeichnis</button>
-                            <input type="file" id="sourceFile" style="display: none;" onchange="saveFilePath(this)" />
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item">
+            <div class="area" id="area-start">
+                                
+                <div class="container" id="dnd-container"> 
+                    <div>
+                        <div class="drag-area" id="drop-zone">
+                            <h2 id="drop-zone-text">Drag and Drop</h2>
+                        </div>
+                        <div class="buttons-container">
+                            <form id="restartForm" action="/" hidden method="get">
+                                <button class="btn btn-primary" id="dnd-button-restart" type="submit"> Neustart</button>
+                            </form>
+                            
+                            <!-- TODO: make it get request -->
+                            <form id="downloadForm" action="/download" hidden method="post">
+                                <button class="btn btn-primary" id="dnd-button-save" type="submit"> Speichern</button>
+                            </form>
                         </div>
                     </div>
                 </div>
 
+
+                
+
             </div>
+        </div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item">
+            <div class="container position-relative" id="stepper-container">
+                <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
+                    Neu
+                  </span>
 
-        </div> -->
+                  <h2>Schritt für Schritt</h2>
 
+                <div class="btn-group-vertical">
+
+                    <form id="stepper-form-select">
+                        <button class="btn btn-success" disabled> 1 </button>
+                        <input class="form-control" id="stepper-button-select" type="file">
+                    </form>
+
+                    <form id="stepper-form-convert" action="/upload" hidden method="post">
+                        <button class="btn btn-warning" disabled> 2 </button>
+                        <button class="btn btn-outline-warning" id="stepper-button-convert" type="button">
+                            Konvertieren
+                        </button>
+                    </form>
+                    
+                    <!-- TODO: make it get request -->
+                    <form id="stepper-form-save" hidden action="/download" method="post">
+                        <button class="btn btn-danger" disabled> 3 </button>
+                        <button class="btn btn-outline-danger" id="stepper-button-save" type="submit">
+                            Speichern
+                        </button>
+                    </form>
+                    
+                    <form id="stepper-form-restart" hidden action="/" method="get">
+                        <button class="btn btn-primary" disabled> 4 </button>
+                        <button class="btn btn-primary" id="stepper-button-restart" type="submit"> Neustart</button>
+                    </form>
+                </div>
+            </div>
+        </div>    
+        <div class="grid-item"></div>
     </div>
 
-    <div id="header-content-navigation"></div>
+    <!-------------------------------------------------- Roadmap -------------------------------------------------->
 
-    <!-- <div id="main-content-start"></div> -->
-    <div id="main-content-roadmap"></div>
-    <div id="main-content-contact"></div>
-    <!-- <div id="main-content-feedback"></div> -->
-    <!-- < div id = "main-content-impressum" ></ > -->
+    <div class="area" id="area-roadmap">
+        <div class="text-center">
+            <br>
+            <h1 id="roadmap">Roadmap</h1>
+
+            <h3>2023-11-28</h3>
+            <br>
+            <ul>
+                <li> ⭐ Kalendarium in erster Version veröffentlicht.</li>
+            </ul>
+            <br>
+
+            <h3>2023-11-25</h3>
+            <br>
+            <ul>
+                <li> ⚒️ Refactoring in Hinsicht auf Kalendarium Funktionern.</li>
+            </ul>
+            <br>
+
+            <h3> 2023-11-24 </h3>
+            <br>
+            <ul>
+                <li> ⭐ Roadmap schlichter gestaltet.</li>
+                <li> ⭐ Neue Upload-Funktion hinzugefügt.</li>
+                <li> ⭐ Menuband korrigiert und schlichter gestaltet.</li>
+                <li> ⚒️ Strukturen im html und css vereinfacht.</li>
+            </ul>
+            <br>
+
+            <h3> 2023-11-22 </h3>
+            <br>
+            <ul>
+                <li> 🐞 Bugfix: Einige Fehlerbehandlungen wurden entschärft.</li>
+                <li> 🐞 Bugfix: Anhäufungen von Fehlermeldungen von verschiedenen Uploads behoben.</li>
+                <li>
+                    ⚒️ Dauer der Verarbeitung wird an Client gesendent, Vorbereitung zur Anzeige der Information.
+                </li>
+                <li> ⭐ Kontakt-Adress zum Entwickler geändert.</li>
+            </ul>
+            <br>
+
+            <h3> 2023-11-16 </h3>
+            <br>
+            <ul>
+                <li> 🐞 Bugfix: Hintergrundfarbe des Start Bereichs wure nicht korrekt dargestellt.</li>
+                <li> ⭐ Behandle Fehler 1 "Datum ist falsch" abfangen (IST: August Soll: 01.08.203)</li>
+                <li> ⭐ Behandle Fehler 2 "Fehlende Personalnummer" abfangen ( Neue Mitarbeiter ohne Personalnummer)
+                </li>
+                <li> ⭐ Behandle Fehler 3 "Mandantennummer fehlt" abfangen (Mandantennummer fehlt)</li>
+                <li> ⭐ Behandle Fehler 4 "Format der Zahlen-Zellen prüfen" abfangen (Text im Feld wo nur zahlen
+                    reinkommen)
+                </li>
+                <li> ⭐ Behandle Fehler 5 "Soll: Personalnummer Ist: Mitarbeiternummer" abfangen (Soll:
+                    Personalnummer
+                    Ist:
+                    Mitarbeiternummer)</li>
+                <br>
+                <li> ⭐ Erstes Feedback vom Server in Upload-Fläche als Text dargestellt.</li>
+                <li> ⭐ Umbenennung des des Website Titels: "Wandel die Excel …" zu "Relog Lohn Konverter"</li>
+                <li> ⭐ Umbenennung unter dem Logo: "Wandel die Excel …" zu "Relog Lohn Konverter"</li>
+                <li> ⭐ Umbenennung: "Ziehe die Datei…." zu " Drag and Drop"</li>
+            </ul>
+            <br>
+
+            <h3>2023-11-15</h3>
+            <br>
+            <ul>
+                <li> 🐞 Bugfix: "Mehrfaches 'Hovern' über die Upload-Fläche führte zu Darstellungsproblemen."</li>
+                <li> 🐞 Bugfix: "Mehrfaches Hochladen hintereinander ohne Aktualisierung der Seite führte zu
+                    Fehlermeldung."
+                </li>
+                <li> ⭐ Roadmap-Ansicht übersichtlicher gestaltet.</li>
+                <li> ⭐ Schärfere Darstellung des relog Logos.</li>
+                <li> ⭐ Favicon mit relog Logo eingebunden.</li>
+                <li> ⚒️ Website-Bereiche werden nun dynamisch geladen und sind als einzelne Komponenten
+                    implementiert.
+                </li>
+            </ul>
+            <br>
+
+            <h3> 2023-11-11 </h3>
+            <ul>
+                <li>
+                    ⭐ Binde Logo und Unternehmensfarben ein.
+                </li>
+            </ul>
+            <br>
+
+            
+        </div>
+    </div>
+
+    <!-------------------------------------------------- Contact -------------------------------------------------->
+
+    <div class="area" id="area-contact">
+
+        <div class="text-center">
+            <br>
+            <h1 id="kontakt">Kontakt</h1>
+            <br>
+            <br>
+            <br>
+
+            <div>
+                <h1 class="h1">✒️</h1>
+                <h2 class="h2">Autor</h2>
+                <h3 class="h3"> Christian Kliebe<br></h3>
+
+                <br><br>
+
+                <h1 class="h1">✉️</h1>
+                <h2 class="h2">Mail</h2>
+                <h3 class="h3"><a href="mailto:christian.kliebe@outlook.com">christian.kliebe@outlook.com</a><br></h3>
 
 
-    < !--JavaScript to Load Components-->
-        <script src="./main.js"></script>
+            </div>
+        </div>
+    </div>
 
-        <!-- Bootstrap Bundle with Popper -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"></script>
-
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="./client.js"></script>
+    <script src="./dom.js"></script>
+    <script src="./fetch.js"></script>
+    <script src="./logs.js"></script>
 </body>
 
 </html>
