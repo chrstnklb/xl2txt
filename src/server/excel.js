@@ -29,7 +29,18 @@ module.exports = {
         if (workSheet.hasOwnProperty(cellCoordinate)) {
             const data = workSheet[cellCoordinate].v;
             if (targetFormat === 'number') {
-                if (/^[0-9,.]+$/.test(data)) {
+                // Erlaube folgende Formate: 123, 123.45, -123, -123.45
+                // -123456 - Eine einfache negative ganze Zahl.
+                // 987654 - Eine einfache positive ganze Zahl.
+                // -12.34 - Eine negative Dezimalzahl mit einem Punkt.
+                // 1234,56 - Eine positive Dezimalzahl mit einem Komma.
+                // 0 - Null als ganze Zahl.
+                // -9999999 - Eine große negative ganze Zahl.
+                // 0.1234 - Eine kleine positive Dezimalzahl mit einem Punkt.
+                // -123 - Eine kurze negative ganze Zahl.
+                // 456 - Eine kurze positive ganze Zahl.
+                // -7890.123 - Eine negative Dezimalzahl mit einem Punkt.
+                if (/^-?[0-9]+([,.][0-9]+)?$/.test(data)) {
                     result = data;
                 } else {
                     ErrorList.addError(
