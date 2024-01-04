@@ -10,6 +10,8 @@ h2 {
   font-weight: 700;
 }
 
+
+
 ul {
   list-style-type: none;
 }
@@ -112,6 +114,11 @@ ul {
 
 #area-contact {
   background-color: #B7AA67;
+  height: 1000px;
+}
+
+#area-dsgvo {
+  background-color: #B2735B;
   height: 1000px;
 }
 

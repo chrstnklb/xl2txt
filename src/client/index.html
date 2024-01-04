@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="logo-black-small.png" rel="icon">
     <link type="text/css" href="./style.css" rel="stylesheet">
     <title>Relog Lohn Konverter</title>
@@ -16,13 +17,14 @@
 
     <!---------------------------------------- Navigation ---------------------------------------->
 
-        <div class="btn-group-vertical" id="navigation-group-button" role="group">
+    <div class="btn-group-vertical" id="navigation-group-button" role="group">
 
-            <button class="btn btn-outline-light" onclick="jumpTo('start')">Start</button>
-            <button class="btn btn-outline-light" onclick="jumpTo('roadmap')">Roadmap</button>
-            <button class="btn btn-outline-light" onclick="jumpTo('kontakt')">Kontakt</button>
+        <button class="btn btn-outline-light" onclick="jumpTo('start')">Start</button>
+        <button class="btn btn-outline-light" onclick="jumpTo('roadmap')">Roadmap</button>
+        <button class="btn btn-outline-light" onclick="jumpTo('kontakt')">Kontakt</button>
+        <button class="btn btn-outline-light" onclick="jumpTo('dsgvo')">DSGVO</button>
 
-        </div>
+    </div>
 
     <!-------------------------------------------------- Start -------------------------------------------------->
 
@@ -43,8 +45,8 @@
         <div class="grid-item"></div>
         <div class="grid-item">
             <div class="area" id="area-start">
-                                
-                <div class="container" id="dnd-container"> 
+
+                <div class="container" id="dnd-container">
                     <div>
                         <div class="drag-area" id="drop-zone">
                             <h2 id="drop-zone-text">Drag and Drop</h2>
@@ -53,7 +55,7 @@
                             <form id="restartForm" action="/" hidden method="get">
                                 <button class="btn btn-primary" id="dnd-button-restart" type="submit"> Neustart</button>
                             </form>
-                            
+
                             <!-- TODO: make it get request -->
                             <form id="downloadForm" action="/download" hidden method="post">
                                 <button class="btn btn-primary" id="dnd-button-save" type="submit"> Speichern</button>
@@ -63,7 +65,7 @@
                 </div>
 
 
-                
+
 
             </div>
         </div>
@@ -73,9 +75,9 @@
             <div class="container position-relative" id="stepper-container">
                 <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
                     Neu
-                  </span>
+                </span>
 
-                  <h2>Schritt für Schritt</h2>
+                <h2>Schritt für Schritt</h2>
 
                 <div class="btn-group-vertical">
 
@@ -90,7 +92,7 @@
                             Konvertieren
                         </button>
                     </form>
-                    
+
                     <!-- TODO: make it get request -->
                     <form id="stepper-form-save" hidden action="/download" method="post">
                         <button class="btn btn-danger" disabled> 3 </button>
@@ -98,14 +100,14 @@
                             Speichern
                         </button>
                     </form>
-                    
+
                     <form id="stepper-form-restart" hidden action="/" method="get">
                         <button class="btn btn-primary" disabled> 4 </button>
                         <button class="btn btn-primary" id="stepper-button-restart" type="submit"> Neustart</button>
                     </form>
                 </div>
             </div>
-        </div>    
+        </div>
         <div class="grid-item"></div>
     </div>
 
@@ -115,11 +117,15 @@
         <div class="text-center">
             <br>
             <h1 id="roadmap">Roadmap</h1>
+            <br>
+            <br>
+            <br>
 
-            <h3>2024-01-04</h3>
+            <h3>2024-01-04 🎇 Frohes Neues Jahr</h3>
             <br>
             <ul>
                 <li> ⭐ Erlaube auch negative Zahlen.</li>
+                <li> ⭐ DSGVO Hinweise hinzugefügt.</li>
             </ul>
             <br>
 
@@ -206,7 +212,7 @@
             </ul>
             <br>
 
-            
+
         </div>
     </div>
 
@@ -237,8 +243,57 @@
         </div>
     </div>
 
+    <!-------------------------------------------------- DSGVO -------------------------------------------------->
+
+    <div class="area" id="area-dsgvo">
+
+        <div class="text-center">
+            <br>
+            <h1 id="dsgvo">DSGVO - Hinweis</h1>
+
+            <br>
+            <br>
+            <br>
+            <h2> Funktionsweise der Website</h2>
+            <br>
+            Zu <b>KEINEM</b> Zeitpunkt wird die hochgeladene Datei auf dem Server gespeichert. <br>
+            Für die Verarbeitung der Datei wird die Datei in den (flüchtigen) Arbeitsspeicher geladen. <br>
+            Während der Verarbeitung werden die Spalten "Vorname" und "Nachname" <b>NICHT</b> gelesen. <br>
+            Nach der Verarbeitung wird die Datei aus dem Arbeitsspeicher gelöscht. <br>
+            <br>
+            Nach dem Download der Ziel-Datei wird die Datei vom Server gelöscht.<br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <h2>Metriken</h2>
+            <br>
+            Um die Nutzung der Website zu verbessern, werden <b>aktuell</b> folgende Daten erhoben. <br>
+            <br>
+                Zeitpunkt der Nutzung ("timestamp")<br>
+                Anzahl der Spalten ("colCount")<br>
+                Anzahl der Zeilen ("rowCount")<br>
+                Dauer der Verarbeitung ("calculationTimeInMs")<br><br>
+            
+            <b> Beispiel:</b>
+            {
+            "timestamp":"2024-01-04-03-36-48",
+            "colCount":11,
+            "rowCount":2,
+            "calculationTimeInMs":6
+            } <br>
+            <br>
+            Diese Daten dienen aktuell zur Beurteilung der Performance und der Nutzung der Website. <br>
+
+        </div>
+    </div>
+    </div>
+
     <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
     <script src="./client.js"></script>
     <script src="./dom.js"></script>
     <script src="./fetch.js"></script>
