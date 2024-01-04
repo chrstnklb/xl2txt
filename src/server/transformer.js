@@ -10,11 +10,11 @@ const DATA_START_ROW = 5;
 let metric = undefined;
 
 function transformToCSV(excelFile) {
-    if (hasSeveralSheets(excelFile) === true) {
-        return transformKalendariumToTxt(excelFile);
-    } else {
-        return transformLohnabrechnungToTxt(excelFile);
-    }
+    // if (hasSeveralSheets(excelFile) === true) {
+    //     return transformKalendariumToTxt(excelFile);
+    // } else {
+    return transformLohnabrechnungToTxt(excelFile);
+    // }
 }
 
 function hasSeveralSheets(excelFile) {
@@ -66,11 +66,11 @@ function transformLohnabrechnungToTxt(excelFile) {
 function lohnArtIsInvalid(workSheet, col, row) {
     let cell = workSheet[excel.getCellCoordinate(col, row)];
     console.log("cell:" + JSON.stringify(cell));
- 
+
     if (!excel.cellExists(cell)) {
         return false;
     }
- 
+
     if (cell.v === undefined) {
         return false;
     }
