@@ -43,6 +43,13 @@ module.exports = {
         });
     },
 
+    directoryExists: function (path) {
+        if (fs.existsSync(path)) {
+            return true;
+        }
+        return false;
+    },
+
     writeTxtFile: function (content) {
         const timestamp = time.getActualTimeStampYYYYMMDDhhmmss();
         const folder = path.join(__dirname, '../../exchange/downloads/' + timestamp);
