@@ -31,9 +31,9 @@ ul {
   text-align: center;
 }
 
-.badge {
+/* .badge {
   transform: rotate(10deg);
-}
+} */
 
 .buttons-container {
   display: flex;

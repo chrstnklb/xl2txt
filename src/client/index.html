@@ -19,10 +19,12 @@
 
     <div class="btn-group-vertical" id="navigation-group-button" role="group">
 
-        <button class="btn btn-outline-light" onclick="jumpTo('start')">Start</button>
-        <button class="btn btn-outline-light" onclick="jumpTo('roadmap')">Roadmap</button>
-        <button class="btn btn-outline-light" onclick="jumpTo('kontakt')">Kontakt</button>
-        <button class="btn btn-outline-light" onclick="jumpTo('dsgvo')">DSGVO</button>
+        <button class="btn btn-outline-light" onclick="jumpTo('start')">Start </button>
+        <button class="btn btn-outline-light" onclick="jumpTo('roadmap')">Roadmap </button>
+        <button class="btn btn-outline-light" onclick="jumpTo('kontakt')">Kontakt </button>
+        <button class="btn btn-outline-light" onclick="jumpTo('dsgvo')">DSGVO
+            <span class="badge text-bg-danger">Neu</span>
+        </button>
 
     </div>
 
@@ -73,9 +75,6 @@
         <div class="grid-item"></div>
         <div class="grid-item">
             <div class="container position-relative" id="stepper-container">
-                <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
-                    Neu
-                </span>
 
                 <h2>Schritt für Schritt</h2>
 
@@ -271,11 +270,11 @@
             <br>
             Um die Nutzung der Website zu verbessern, werden <b>aktuell</b> folgende Daten erhoben. <br>
             <br>
-                Zeitpunkt der Nutzung ("timestamp")<br>
-                Anzahl der Spalten ("colCount")<br>
-                Anzahl der Zeilen ("rowCount")<br>
-                Dauer der Verarbeitung ("calculationTimeInMs")<br><br>
-            
+            Zeitpunkt der Nutzung ("timestamp")<br>
+            Anzahl der Spalten ("colCount")<br>
+            Anzahl der Zeilen ("rowCount")<br>
+            Dauer der Verarbeitung ("calculationTimeInMs")<br><br>
+
             <b> Beispiel:</b>
             {
             "timestamp":"2024-01-04-03-36-48",
