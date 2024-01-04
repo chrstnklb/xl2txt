@@ -49,7 +49,8 @@ function transformLohnabrechnungToTxt(excelFile) {
             // Wenn Zelle nicht leer ist
             if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
                 // Wenn Lohnart Zelle nicht leer ist
-                if (workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)] !== undefined) {
+                // if (workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)] !== undefined) {
+                if (lohnArtIsInvalid(workSheet, col, LOHNART_ROW + 1)) {
                     let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
                     let feld = replaceDots(excel.readCell(excel.getCellCoordinate(col, row), 'number'));
                     allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, feld);
@@ -60,6 +61,36 @@ function transformLohnabrechnungToTxt(excelFile) {
     fileHandler.deleteUploadedFiles();
     metric.writeMetric();
     return fileHandler.writeTxtFile(allLines);
+}
+
+function lohnArtIsInvalid(workSheet, col, row) {
+    let cell = workSheet[excel.getCellCoordinate(col, row)];
+    console.log("cell:" + JSON.stringify(cell));
+ 
+    if (!excel.cellExists(cell)) {
+        return false;
+    }
+ 
+    if (cell.v === undefined) {
+        return false;
+    }
+
+    if (
+        !cell.v.includes('KOSTENST')
+        && !cell.v.includes('LSATZ')
+        && !cell.v.includes('ANZSTD')
+        && !cell.v.includes('KOSTENTR')
+        && !cell.v.includes('PSATZ')
+        && !cell.v.includes('BETRAG')
+        && !cell.v.includes('Abrechnungstag')
+        && !cell.v.includes('ANZTAGE')
+    ) {
+        console.log("ups" + cell.v);
+        return false;
+    }
+
+    return true;
+
 }
 
 function transformKalendariumToTxt(excelFile) {
