@@ -2,8 +2,8 @@ Create a folder structure
 - application / src
     - client
     - exchange
-        - uploads
-        - downloads
+        - upload
+        - download
     - server
         - logs
         - statistics

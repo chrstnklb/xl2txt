@@ -50,9 +50,11 @@ function transformLohnabrechnungToTxt(excelFile) {
             if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
                 // Wenn Lohnart Zelle nicht leer ist
                 // if (workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)] !== undefined) {
+
                 if (lohnArtIsInvalid(workSheet, col, LOHNART_ROW + 1)) {
                     let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
                     let feld = replaceDots(excel.readCell(excel.getCellCoordinate(col, row), 'number'));
+                    feld = checkForZero(feld);
                     allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, feld);
                 }
             }
@@ -61,6 +63,13 @@ function transformLohnabrechnungToTxt(excelFile) {
     fileHandler.deleteUploadedFiles();
     metric.writeMetric();
     return fileHandler.writeTxtFile(allLines);
+}
+
+function checkForZero(feld) {
+    if (feld === "0,00") {
+        return "";
+    }
+    return feld;
 }
 
 function lohnArtIsInvalid(workSheet, col, row) {

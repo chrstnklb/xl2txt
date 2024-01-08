@@ -5,7 +5,7 @@ const transformer = require('./transformer.js');
 const fileHandler = require('./utils/fileHandler.js');
 const logs = require('./utils/logs.js');
 
-const UPLOAD_FOLDER = '../exchange/uploads/';
+const UPLOAD_FOLDER = '../exchange/upload/';
 
 const ErrorList = require('./error.js');
 
