@@ -10,11 +10,11 @@ const DATA_START_ROW = 5;
 let metric = undefined;
 
 function transformToCSV(excelFile) {
-    if (hasSeveralSheets(excelFile) === true) {
-        return transformKalendariumToTxt(excelFile);
-    } else {
-        return transformLohnabrechnungToTxt(excelFile);
-    }
+    // if (hasSeveralSheets(excelFile) === true) {
+    //     return transformKalendariumToTxt(excelFile);
+    // } else {
+    return transformLohnabrechnungToTxt(excelFile);
+    // }
 }
 
 function hasSeveralSheets(excelFile) {
@@ -46,10 +46,17 @@ function transformLohnabrechnungToTxt(excelFile) {
         metric.setColCount(colCount);
 
         for (let col = FIXED_COLUMNS; col < colCount; col++) {
+            // Wenn Zelle nicht leer ist
             if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
-                let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
-                let feld = replaceDots(excel.readCell(excel.getCellCoordinate(col, row), 'number'));
-                allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, feld);
+                // Wenn Lohnart Zelle nicht leer ist
+                // if (workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)] !== undefined) {
+
+                if (lohnArtIsInvalid(workSheet, col, LOHNART_ROW + 1)) {
+                    let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
+                    let feld = replaceDots(excel.readCell(excel.getCellCoordinate(col, row), 'number'));
+                    feld = checkForZero(feld);
+                    allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, feld);
+                }
             }
         }
     }
@@ -58,13 +65,50 @@ function transformLohnabrechnungToTxt(excelFile) {
     return fileHandler.writeTxtFile(allLines);
 }
 
+function checkForZero(feld) {
+    if (feld === "0,00") {
+        return "";
+    }
+    return feld;
+}
+
+function lohnArtIsInvalid(workSheet, col, row) {
+    let cell = workSheet[excel.getCellCoordinate(col, row)];
+    console.log("cell:" + JSON.stringify(cell));
+
+    if (!excel.cellExists(cell)) {
+        return false;
+    }
+
+    if (cell.v === undefined) {
+        return false;
+    }
+
+    if (
+        !cell.v.includes('KOSTENST')
+        && !cell.v.includes('LSATZ')
+        && !cell.v.includes('ANZSTD')
+        && !cell.v.includes('KOSTENTR')
+        && !cell.v.includes('PSATZ')
+        && !cell.v.includes('BETRAG')
+        && !cell.v.includes('Abrechnungstag')
+        && !cell.v.includes('ANZTAGE')
+    ) {
+        console.log("ups" + cell.v);
+        return false;
+    }
+
+    return true;
+
+}
+
 function transformKalendariumToTxt(excelFile) {
     metric = new Metric();
     let allLines = "";
 
     for (let sheetNumber = 1; sheetNumber < excel.getNumberOfSheets(); sheetNumber++) {
-        let workSheet = excel.initExcelFile(excelFile, sheetNumber );
-        
+        let workSheet = excel.initExcelFile(excelFile, sheetNumber);
+
         let lastDataRow = excel.getNumberOfLastDataRow();
         let colCount = excel.getColCount();
         metric.setRowCount(lastDataRow - DATA_START_ROW);
@@ -75,7 +119,7 @@ function transformKalendariumToTxt(excelFile) {
         // Check existance of personalnummer header
         felder.readPersonalnummer(cellCoordinate = 'A4'); // 01
         let personalnummer = felder.readPersonalnummer(cellCoordinate = ('A' + DATA_START_ROW)); // 01
-        
+
         for (let col = KALENDARIUM_FIXED_COLUMNS; col < colCount; col++) {
             let colSum = 0;
             if (excel.cellExists(workSheet[excel.getCellCoordinate(col, DATA_START_ROW)]) !== undefined) {

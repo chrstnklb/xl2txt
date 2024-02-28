@@ -5,6 +5,8 @@ const transformer = require('./transformer.js');
 const fileHandler = require('./utils/fileHandler.js');
 const logs = require('./utils/logs.js');
 
+const UPLOAD_FOLDER = '../exchange/upload/';
+
 const ErrorList = require('./error.js');
 
 const app = express();
@@ -37,7 +39,7 @@ app.post("/upload", initMulterUpload().single('upload'), (req, res) => {
 
     // start timer
     const start = new Date().getTime();
-    const targetFilename = transformer.transformToCSV("../exchange/uploads/" + req.file.filename);
+    const targetFilename = transformer.transformToCSV(UPLOAD_FOLDER + req.file.filename);
     // end timer
     const end = new Date().getTime();
     const time = end - start;
@@ -72,7 +74,12 @@ function initMulterUpload() {
     return multer({
         storage: multer.diskStorage({
             destination: function (req, file, cb) {
-                cb(null, path.join(__dirname, '../exchange/uploads/'));
+
+                // if folder does not exist, create it
+                if (!fileHandler.directoryExists(path.join(__dirname, UPLOAD_FOLDER))) {
+                    fileHandler.writeDirectory(path.join(__dirname, UPLOAD_FOLDER));
+                }
+                cb(null, path.join(__dirname, UPLOAD_FOLDER));
             },
             filename: function (req, file, cb) {
                 cb(null, file.fieldname + '.xlsx')

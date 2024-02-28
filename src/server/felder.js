@@ -1,6 +1,15 @@
 const excel = require('./excel.js');
 const ErrorList = require('./error.js');
 
+const KOSTEN_ST = 'KOSTENST';
+const L_SATZ = 'LSATZ';
+const ANZ_STD = 'ANZSTD';
+const KOSTEN_TR = 'KOSTENTR';
+const P_SATZ = 'PSATZ';
+const BETRAG = 'BETRAG';
+const ABRECHNUNGSTAG = 'Abrechnungstag';
+const ANZ_TAGE = 'ANZTAGE';
+
 module.exports = {
 
     // Nr.:             0
@@ -162,24 +171,24 @@ module.exports = {
     // Excel-Zelle:     ???
 
     setAnzahlStunden: function (headerCellContent, feld) {
-        return headerCellContent.includes('KOSTENST') // 03
-            || headerCellContent.includes('LSATZ') // 07
-            || headerCellContent.includes('ANZSTD') // 10
+        return headerCellContent.includes(KOSTEN_ST) // 03
+            || headerCellContent.includes(L_SATZ) // 07
+            || headerCellContent.includes(ANZ_STD) // 10
             ? feld
             : "";
     },
 
     setBetrag: function (headerCellContent, feld) {
-        return headerCellContent.includes('KOSTENTR') // 04
-            || headerCellContent.includes('PSATZ') // 08
-            || headerCellContent.includes('BETRAG') // 11
+        return headerCellContent.includes(KOSTEN_TR) // 04
+            || headerCellContent.includes(P_SATZ) // 08
+            || headerCellContent.includes(BETRAG) // 11
             ? feld
             : "";
     },
 
     setAnzahlTage: function (headerCellContent, feld) {
-        return headerCellContent.includes('Abrechnungstag') // 05
-            || headerCellContent.includes('ANZTAGE') // 09
+        return headerCellContent.includes(ABRECHNUNGSTAG) // 05
+            || headerCellContent.includes(ANZ_TAGE) // 09
             ? feld
             : "";
     }

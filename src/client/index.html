@@ -19,9 +19,12 @@
 
     <div class="btn-group-vertical" id="navigation-group-button" role="group">
 
-        <button class="btn btn-outline-light" onclick="jumpTo('start')">Start</button>
-        <button class="btn btn-outline-light" onclick="jumpTo('roadmap')">Roadmap</button>
-        <button class="btn btn-outline-light" onclick="jumpTo('kontakt')">Kontakt</button>
+        <button class="btn btn-outline-light" onclick="jumpTo('start')">Start </button>
+        <button class="btn btn-outline-light" onclick="jumpTo('roadmap')">Roadmap </button>
+        <button class="btn btn-outline-light" onclick="jumpTo('kontakt')">Kontakt </button>
+        <button class="btn btn-outline-light" onclick="jumpTo('dsgvo')">DSGVO
+            <span class="badge text-bg-danger">Neu</span>
+        </button>
 
     </div>
 
@@ -131,6 +134,26 @@
         <div class="text-center">
             <br>
             <h1 id="roadmap">Roadmap</h1>
+            <br>
+            <br>
+            <br>
+
+            <h3>2024-01-08</h3>
+            <br>
+            <ul>
+                <li> ⭐ 0 in Excel Zelle wird nicht mehr in txt-Datei geschrieben.</li>
+            </ul>
+            <br>
+
+            <h3>2024-01-04 🎇 Frohes Neues Jahr</h3>
+            <br>
+            <ul>
+                <li> ⭐ Erlaube auch negative Zahlen.</li>
+                <li> ⭐ DSGVO Hinweise hinzugefügt.</li>
+                <li> ⭐ Einträge ignorieren deren Lohnart nicht konform ist.</li>
+                <li> 🪚 Kalendarium Funktion deaktiviert.</li>
+            </ul>
+            <br>
 
             <h3>2023-11-28</h3>
             <br>
@@ -244,6 +267,53 @@
 
             </div>
         </div>
+    </div>
+
+    <!-------------------------------------------------- DSGVO -------------------------------------------------->
+
+    <div class="area" id="area-dsgvo">
+
+        <div class="text-center">
+            <br>
+            <h1 id="dsgvo">DSGVO - Hinweis</h1>
+
+            <br>
+            <br>
+            <br>
+            <h2> Funktionsweise der Website</h2>
+            <br>
+            Zu <b>KEINEM</b> Zeitpunkt wird die hochgeladene Datei auf dem Server gespeichert. <br>
+            Für die Verarbeitung der Datei wird die Datei in den (flüchtigen) Arbeitsspeicher geladen. <br>
+            Während der Verarbeitung werden die Spalten "Vorname" und "Nachname" <b>NICHT</b> gelesen. <br>
+            Nach der Verarbeitung wird die Datei aus dem Arbeitsspeicher gelöscht. <br>
+            <br>
+            Nach dem Download der Ziel-Datei wird die Datei vom Server gelöscht.<br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <h2>Metriken</h2>
+            <br>
+            Um die Nutzung der Website zu verbessern, werden <b>aktuell</b> folgende Daten erhoben. <br>
+            <br>
+            Zeitpunkt der Nutzung ("timestamp")<br>
+            Anzahl der Spalten ("colCount")<br>
+            Anzahl der Zeilen ("rowCount")<br>
+            Dauer der Verarbeitung ("calculationTimeInMs")<br><br>
+
+            <b> Beispiel:</b>
+            {
+            "timestamp":"2024-01-04-03-36-48",
+            "colCount":11,
+            "rowCount":2,
+            "calculationTimeInMs":6
+            } <br>
+            <br>
+            Diese Daten dienen aktuell zur Beurteilung der Performance und der Nutzung der Website. <br>
+
+        </div>
+    </div>
     </div>
 
     <!-- Bootstrap Bundle with Popper -->

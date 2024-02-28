@@ -43,14 +43,21 @@ module.exports = {
         });
     },
 
+    directoryExists: function (path) {
+        if (fs.existsSync(path)) {
+            return true;
+        }
+        return false;
+    },
+
     writeTxtFile: function (content) {
         const timestamp = time.getActualTimeStampYYYYMMDDhhmmss();
-        const folder = path.join(__dirname, '../../exchange/downloads/' + timestamp);
+        const folder = path.join(__dirname, '../../exchange/download/' + timestamp);
         return this.writeToFile(folder, TARGET_FILENAME, content);
     },
 
     deleteUploadedFiles: function () {
-        this.deleteFiles(path.join(__dirname, '../../exchange/uploads/'));
+        this.deleteFiles(path.join(__dirname, '../../exchange/upload/'));
     }
 
 }
