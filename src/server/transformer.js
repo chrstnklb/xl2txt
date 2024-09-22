@@ -27,7 +27,7 @@ function transformLohnabrechnungToTxt(excelFile) {
 
     let workSheet = excel.initExcelFile(excelFile, sheetNumber = 0);
 
-    let firmennummer = felder.readFirmennummer(); // 00
+    let mandantennummer = felder.readMandantennummer(); // 00
     let abrechnungszeitraum = felder.readAbrechnungsZeitraum(); // 06
 
     /*Check for error in header*/
@@ -55,11 +55,12 @@ function transformLohnabrechnungToTxt(excelFile) {
                     let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
                     let feld = replaceDots(excel.readCell(excel.getCellCoordinate(col, row), 'number'));
                     feld = checkForZero(feld);
-                    allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, feld);
+                    allLines += createOneLine(mandantennummer, personalnummer, headerCellContent, abrechnungszeitraum, feld, feldIsSum = false);
                 }
             }
         }
     }
+
     fileHandler.deleteUploadedFiles();
     metric.writeMetric();
     return fileHandler.writeTxtFile(allLines);
@@ -114,7 +115,7 @@ function transformKalendariumToTxt(excelFile) {
         metric.setRowCount(lastDataRow - DATA_START_ROW);
         metric.setColCount(colCount);
 
-        let firmennummer = felder.readFirmennummer(); // 00
+        let firmennummer = felder.readMandantennummer(); // 00
         let abrechnungszeitraum = felder.readAbrechnungsZeitraum(); // 06
         // Check existance of personalnummer header
         felder.readPersonalnummer(cellCoordinate = 'A4'); // 01
@@ -127,7 +128,7 @@ function transformKalendariumToTxt(excelFile) {
             }
             if (colSum !== "0,00") {
                 let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
-                allLines += createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, colSum);
+                allLines += createOneLine(mandantennummer, personalnummer, headerCellContent, abrechnungszeitraum, colSum);
             }
         }
     }
@@ -168,7 +169,7 @@ function replaceDots(feld) {
     return feld;
 }
 
-function createOneLine(firmennummer, abrechnungszeitraum, personalnummer, headerCellContent, feld) {
+function createOneLine(mandantennummer, personalnummer, headerCellContent, abrechnungszeitraum, feld) {
     // Folgende Felder werden aktuell nicht einbezogen
     let kostenstelle = '';
     let kostentraeger = '';
@@ -176,7 +177,7 @@ function createOneLine(firmennummer, abrechnungszeitraum, personalnummer, header
     let lohnsatz = '';
     let prozentsatz = '';
 
-    return `${firmennummer};` +
+    return `${mandantennummer};` +
         `${personalnummer};` +
         `${felder.readLohnart(headerCellContent)};` + // 02
 
@@ -189,6 +190,7 @@ function createOneLine(firmennummer, abrechnungszeitraum, personalnummer, header
         `${lohnsatz};` +
         `${prozentsatz};` +
 
+        // wenn feldIsSum = true, dann direkt feld übernehmen
         `${felder.setAnzahlTage(headerCellContent, feld)};` +
         `${felder.setAnzahlStunden(headerCellContent, feld)};` +
         `${felder.setBetrag(headerCellContent, feld)}` +
