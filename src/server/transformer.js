@@ -61,9 +61,99 @@ function transformLohnabrechnungToTxt(excelFile) {
         }
     }
 
+    // find duplicated lines, except for the last 4 columns
+    let uniLines =  deduplicateLines(allLines);
+
+    
+    let fileData = '';
+    for (let i = 0; i < uniLines.length; i++) {
+        // console.log("uniLines[i]:" + uniLines[i]);
+        let columns = uniLines[i].split(';');
+        // console.log("columns:" + columns);
+        fileData += createOneLineWithConcreteData(
+            columns[0], columns[1], columns[2],
+            columns[3], columns[4], columns[5],
+            columns[6], columns[7], columns[8],
+            columns[9], columns[10], columns[11]
+        );
+    }
+
+    // console.log("uniLines:######" + fileData);
+        
+
     fileHandler.deleteUploadedFiles();
     metric.writeMetric();
-    return fileHandler.writeTxtFile(allLines);
+    return fileHandler.writeTxtFile(fileData);
+}
+
+function deduplicateLines(allLines) {
+    console.log("allLines:" +"\n" + allLines);
+
+    let lines = allLines.split('\n');
+    lines.pop();
+
+    let uniqueLines = [];
+    for (let i = 0; i < lines.length; i++) {
+        let columns = lines[i].split(';');
+
+        let hasSameKostentraeger = true;
+        for (let j = i + 1; j < lines.length; j++) {
+
+            let potentialduplicatedColumns = lines[j].split(';');
+
+            hasSameKostentraeger = isSameKostentraeger(columns, potentialduplicatedColumns);
+
+            if (hasSameKostentraeger) {
+
+                columns[columns.length - 3] = sumUp(columns, potentialduplicatedColumns, 3);
+                columns[columns.length - 2] = sumUp(columns, potentialduplicatedColumns, 2);
+                columns[columns.length - 1] = sumUp(columns, potentialduplicatedColumns, 1);
+
+                let mergedLine = columns.join(';');
+
+               lines.splice(j, 1); // remove the duplicate line
+               lines.splice(j-1, 1); // remove the original line
+                uniqueLines.push(mergedLine); // add the merged line
+
+                console.log("uniqueLines: \n" + uniqueLines);
+
+            }
+        }
+
+        // End of loop, if no duplicate Kostenstelle found
+        if(!hasSameKostentraeger || i === lines.length - 1) {
+            uniqueLines.push(lines[i]);
+        }
+
+    }
+    console.log("uniqueLines:" + uniqueLines);
+    return uniqueLines;
+}
+
+function sumUp(columns, potentialduplicatedColumns, endDistance) {
+
+    
+    let firstValue = parseFloat(columns[columns.length - endDistance].replace(',', '.'));
+    firstValue = isNaN(firstValue) ? '' : firstValue;
+    
+    let secondValue = parseFloat(potentialduplicatedColumns[potentialduplicatedColumns.length - endDistance].replace(',', '.'));
+    secondValue = isNaN(secondValue) ? '' : secondValue;
+    
+    let result = firstValue + secondValue;
+    if (result!=='') {
+        result = result.toFixed(2).toString().replace('.', ',');
+    }
+    // format reult to format 3,00 by also adding zeros
+    return result;
+}
+
+function isSameKostentraeger(columns, potentialduplicatedColumns) {
+    for (let k = 0; k < 4; k++) {
+        if (columns[k] !== potentialduplicatedColumns[k]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function checkForZero(feld) {
@@ -75,7 +165,7 @@ function checkForZero(feld) {
 
 function lohnArtIsInvalid(workSheet, col, row) {
     let cell = workSheet[excel.getCellCoordinate(col, row)];
-    console.log("cell:" + JSON.stringify(cell));
+    // console.log("cell:" + JSON.stringify(cell));
 
     if (!excel.cellExists(cell)) {
         return false;
@@ -177,23 +267,54 @@ function createOneLine(mandantennummer, personalnummer, headerCellContent, abrec
     let lohnsatz = '';
     let prozentsatz = '';
 
+    return createOneLineWithConcreteData(
+        mandantennummer,
+        personalnummer,
+        felder.readLohnart(headerCellContent),
+
+        kostenstelle,
+        kostentraeger,
+        abrechnungstag,
+        abrechnungszeitraum,
+        lohnsatz,
+        prozentsatz,
+
+        felder.setAnzahlTage(headerCellContent, feld),
+        felder.setAnzahlStunden(headerCellContent, feld),
+        felder.setBetrag(headerCellContent, feld)
+    )
+
+}
+
+function createOneLineWithConcreteData(
+    mandantennummer,
+    personalnummer,
+    lohnart,
+
+    kostenstelle,
+    kostentraeger,
+    abrechnungstag,
+    abrechnungszeitraum,
+    lohnsatz,
+    prozentsatz,
+
+    anzahlTage,
+    anzahlStunden,
+    betrag) {
     return `${mandantennummer};` +
         `${personalnummer};` +
-        `${felder.readLohnart(headerCellContent)};` + // 02
+        `${lohnart};` +
 
         `${kostenstelle};` +
         `${kostentraeger};` +
         `${abrechnungstag};` +
-
         `${abrechnungszeitraum};` +
-
         `${lohnsatz};` +
         `${prozentsatz};` +
 
-        // wenn feldIsSum = true, dann direkt feld übernehmen
-        `${felder.setAnzahlTage(headerCellContent, feld)};` +
-        `${felder.setAnzahlStunden(headerCellContent, feld)};` +
-        `${felder.setBetrag(headerCellContent, feld)}` +
+        `${anzahlTage};` +
+        `${anzahlStunden};` +
+        `${betrag}` +
         '\n'
 }
 
