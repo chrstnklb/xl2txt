@@ -9,6 +9,11 @@ let workSheet = undefined;
 
 module.exports = {
 
+    hasSeveralSheets: function(excelFile) {
+        const workBook = excel.getWorkBook(excelFile);
+        return workBook.SheetNames.length > 1;
+    },
+
     initExcelFile: function (excelFile, sheetNumber = 0) {
         const workBook = this.getWorkBook(excelFile);
         let actualFirstSheetName = workBook.SheetNames[sheetNumber];
