@@ -5,11 +5,13 @@ const ErrorList = require('./error.js');
 const HEADER_ROW = 3;
 const ROW_OF_FIRST_PERSONALNUMMER = 5;
 
+const COLUMN_OF_PERSONALNUMMER = 'A';
+
 let workSheet = undefined;
 
 module.exports = {
 
-    hasSeveralSheets: function(excelFile) {
+    hasSeveralSheets: function (excelFile) {
         const workBook = excel.getWorkBook(excelFile);
         return workBook.SheetNames.length > 1;
     },
@@ -69,10 +71,43 @@ module.exports = {
     getNumberOfLastDataRow: function () {
         let rowCountStart = ROW_OF_FIRST_PERSONALNUMMER;
         let actualRow = rowCountStart;
-        while (workSheet['A' + actualRow] !== undefined) {
+
+        while (workSheet[COLUMN_OF_PERSONALNUMMER + actualRow] !== undefined) {
+            // check that the cell value is a number
+            if (isNaN(workSheet[COLUMN_OF_PERSONALNUMMER + actualRow].v)) {
+                ErrorList.addError(`Die Personalnummer in der Zelle ${COLUMN_OF_PERSONALNUMMER}${actualRow} ist inkorrekt (nicht numerisch)`);
+            }
             actualRow++;
         }
+
+        // check if there are still rows with data after the first empty cell
+        this.checkForEmptyPersonalnummer(actualRow);
+
         return actualRow - 1;
+    },
+
+    checkForEmptyPersonalnummer: function (actualRow) {
+        let row = actualRow;
+        
+        // Check for empty cells in the personalnummer column after the first empty cell found to ensure no more data is present
+        let threshold = 10; // arbitrary number to prevent infinite loop
+        let emptyCellCount = 0;
+        while (workSheet[COLUMN_OF_PERSONALNUMMER + row] === undefined) {
+            console.log('row: ' + row);
+            console.log('actualRow: ' + actualRow);
+            row++;
+            emptyCellCount++;
+            if (emptyCellCount > threshold) {
+                return;
+            }
+        }
+        // END Check for empty cells in the personalnummer column after the first empty cell found to ensure no more data is present
+
+        if (row > actualRow) {
+            ErrorList.addError(`Die Personalnummer in der Zelle ${COLUMN_OF_PERSONALNUMMER}${actualRow} ist inkorrekt (leer)`);
+        }
+
+
     },
 
     iterateColumns: function () {
@@ -85,7 +120,7 @@ module.exports = {
     iterateRows: function () {
         let rows = this.getNumberOfLastDataRow();
         for (let i = HEADER_ROW; i < rows; i++) {
-            let cell = workSheet['A' + i];
+            let cell = workSheet[COLUMN_OF_PERSONALNUMMER + i];
         }
     },
 
