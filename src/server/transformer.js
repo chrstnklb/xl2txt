@@ -62,9 +62,9 @@ function transformLohnabrechnungToTxt(excelFile) {
                         kostenstelle = '',
                         kostentraeger = '',
                         abrechnungstag = '',
+                        abrechnungszeitraum,
                         lohnsatz = '',
                         prozentsatz = '',
-                        abrechnungszeitraum,
                         anzahlTage = felder.setAnzahlTage(headerCellContent, feld),
                         anzahlStunden = felder.setAnzahlStunden(headerCellContent, feld),
                         betrag = felder.setBetrag(headerCellContent, feld)
