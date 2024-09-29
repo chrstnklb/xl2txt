@@ -7,6 +7,7 @@
 3. Restart pm2 using
     - ```pm2 restart 0```
 4. OR: Setup new pm2 instance, if server path or name was changed (See chapter pm2)
+5. Check Instance: http://18.157.51.67:3000/
 
 # pm2
 After installing everything on an AWS EC2 instance for example, use the following to autostart the server, everytime the instance is started:
