@@ -93,8 +93,6 @@ module.exports = {
         let threshold = 10; // arbitrary number to prevent infinite loop
         let emptyCellCount = 0;
         while (workSheet[COLUMN_OF_PERSONALNUMMER + row] === undefined) {
-            console.log('row: ' + row);
-            console.log('actualRow: ' + actualRow);
             row++;
             emptyCellCount++;
             if (emptyCellCount > threshold) {

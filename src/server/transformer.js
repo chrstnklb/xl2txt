@@ -23,22 +23,35 @@ function transformToCSV(excelFile) {
 }
 
 function transformLohnabrechnungToTxt(excelFile) {
-    metric = new Metric();
 
+    // read excel file and get last data row as well as mandantennummer and abrechnungszeitraum
     let workSheet = excel.initExcelFile(excelFile, sheetNumber = 0);
-
-    let mandantennummer = felder.readMandantennummer(); // 00
+    let lastDataRow = excel.getNumberOfLastDataRow();
+    let mandantennummer = felder.readFirmennummer(); // 00
     let abrechnungszeitraum = felder.readAbrechnungsZeitraum(); // 06
 
-    /*Check for error in header*/
-    felder.readPersonalnummer(cellCoordinate = 'A4'); // 01
+    // felder.readPersonalnummer(cellCoordinate = 'A4'); // 01
+    
+    // generate lines, deduplicate and convert to string
+    let alleZeilen = identifyLinesFromCells(workSheet, lastDataRow, mandantennummer, abrechnungszeitraum);
+    let uniqueZeilen = deduplicateLines(alleZeilen);
+    let fileData = linesToString(uniqueZeilen);
+    
+    // clean up
+    fileHandler.deleteUploadedFiles();
 
-    let alleZeilen = "";
-
-    let lastDataRow = excel.getNumberOfLastDataRow();
-
+    // write metric
+    metric = new Metric();
     metric.setRowCount(lastDataRow - DATA_START_ROW);
+    metric.writeMetric();
 
+    // write to file
+    return fileHandler.writeTxtFile(fileData);
+}
+
+function identifyLinesFromCells(workSheet, lastDataRow, mandantennummer, abrechnungszeitraum) {
+    let alleZeilen = "";
+    
     for (let row = DATA_START_ROW; row <= lastDataRow; row++) {
 
         let personalnummer = felder.readPersonalnummer(cellCoordinate = ('A' + row)); // 01
@@ -50,7 +63,6 @@ function transformLohnabrechnungToTxt(excelFile) {
             if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
                 // Wenn Lohnart Zelle nicht leer ist
                 // if (workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)] !== undefined) {
-
                 if (lohnArtIsInvalid(workSheet, col, LOHNART_ROW + 1)) {
                     let headerCellContent = workSheet[excel.getCellCoordinate(col, LOHNART_ROW + 1)].v;
                     let feld = replaceDots(excel.readCell(excel.getCellCoordinate(col, row), 'number'));
@@ -73,14 +85,7 @@ function transformLohnabrechnungToTxt(excelFile) {
             }
         }
     }
-
-    // find duplicated lines, except for the last 4 columns
-    let uniqueZeilen = deduplicateLines(alleZeilen);
-    let fileData = linesToString(uniqueZeilen);
-
-    fileHandler.deleteUploadedFiles();
-    metric.writeMetric();
-    return fileHandler.writeTxtFile(fileData);
+    return alleZeilen;
 }
 
 function linesToString(lines) {
@@ -100,6 +105,9 @@ function convertLinesStringToArray(lines) {
     return lines.split('\n');
 }
 
+/**
+ * find duplicated lines, except for the last 4 columns
+ */
 function deduplicateLines(alleZeilen) {
 
     let zeilen = convertLinesStringToArray(alleZeilen);

@@ -19,7 +19,7 @@ module.exports = {
     // MAX_LENGTH:      7
     // Muss-Feld:       Ja
     // Excel-Zelle:     B2
-    readMandantennummer: function (cellCoordinate = 'B2') {
+    readFirmennummer: function (cellCoordinate = 'B2') {
         let firmennummer = excel.readCell(cellCoordinate, 'number');
         if (firmennummer === undefined) {
             ErrorList.addError(
