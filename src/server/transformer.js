@@ -24,6 +24,8 @@ function transformToCSV(excelFile) {
 
 function transformLohnabrechnungToTxt(excelFile) {
 
+    metric = new Metric();
+
     // read excel file and get last data row as well as mandantennummer and abrechnungszeitraum
     let workSheet = excel.initExcelFile(excelFile, sheetNumber = 0);
     let lastDataRow = excel.getNumberOfLastDataRow();
@@ -41,7 +43,6 @@ function transformLohnabrechnungToTxt(excelFile) {
     fileHandler.deleteUploadedFiles();
 
     // write metric
-    metric = new Metric();
     metric.setRowCount(lastDataRow - DATA_START_ROW);
     metric.writeMetric();
 
