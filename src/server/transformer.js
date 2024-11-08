@@ -152,18 +152,10 @@ function deduplicateLines(alleZeilen) {
 }
 
 function sumUp(columns, potentialduplicatedColumns, endDistance) {
+    let firstValue = parseFloat(columns[columns.length - endDistance].replace(',', '.')) || 0;
+    let secondValue = parseFloat(potentialduplicatedColumns[potentialduplicatedColumns.length - endDistance].replace(',', '.')) || 0;
 
-    let firstValue = parseFloat(columns[columns.length - endDistance].replace(',', '.'));
-    firstValue = isNaN(firstValue) ? '' : firstValue;
-
-    let secondValue = parseFloat(potentialduplicatedColumns[potentialduplicatedColumns.length - endDistance].replace(',', '.'));
-    secondValue = isNaN(secondValue) ? '' : secondValue;
-
-    let result = firstValue + secondValue;
-    if (result !== '') {
-        result = result.toFixed(2).toString().replace('.', ',');
-    }
-    // format reult to format 3,00 by also adding zeros
+    let result = (firstValue + secondValue).toFixed(2).toString().replace('.', ',');
     return result;
 }
 
