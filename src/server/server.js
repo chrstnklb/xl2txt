@@ -11,8 +11,10 @@ const ErrorList = require('./error.js');
 
 const app = express();
 
-const port = 3000;
-const url = `http://localhost:${port}`
+// Korrigierte Version:
+const PORT = process.env.PORT || 3000; // Heroku setzt process.env.PORT
+
+const url = `http://localhost:${PORT}`
 
 let clientIp = undefined;
 
@@ -61,8 +63,9 @@ app.post('/download', function (req, res) {
     res.on('finish', () => { fileHandler.deleteDirectoryOfFile(path.dirname(file)); });
 });
 
-app.listen(port, () => {
+app.listen(PORT, () => {
     logs.logAttribute('listening at', url);
+    console.log(`Server läuft auf Port ${PORT}`);
 });
 
 /**************************/
