@@ -3,7 +3,7 @@ export interface TransformResult {
   message: string;
 }
 
-export async function transformData(data: unknown): Promise<TransformResult> {
+export async function transformData(data?: unknown): Promise<TransformResult> {
   // TODO: Implement transformer logic
-  return { message: 'Transformer not implemented yet' };
+  return { message: 'Transformer not implemented yet' + (data ? ` with data: ${JSON.stringify(data)}` : '') };
 }

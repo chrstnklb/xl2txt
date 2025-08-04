@@ -1,10 +1,9 @@
-import xlsx from 'xlsx';
 import path from 'path';
-import { ErrorList } from './error';
+import xlsx from 'xlsx';
 
-const HEADER_ROW = 3;
-const ROW_OF_FIRST_PERSONALNUMMER = 5;
-const COLUMN_OF_PERSONALNUMMER = 'A';
+// const HEADER_ROW = 3;
+// const ROW_OF_FIRST_PERSONALNUMMER = 5;
+// const COLUMN_OF_PERSONALNUMMER = 'A';
 
 let workSheet: xlsx.WorkSheet | undefined;
 let workBook: xlsx.WorkBook | undefined;
@@ -42,7 +41,7 @@ export function getColCount(): number {
   return range.e.c + 1;
 }
 
-export function cellExists(cell: any): boolean {
+export function cellExists(cell: string): boolean {
   if (!workSheet) return false;
   return !!workSheet[cell];
 }
@@ -51,7 +50,7 @@ export function getCellCoordinate(col: number, row: number): string {
   return `${xlsx.utils.encode_col(col)}${row}`;
 }
 
-export function readCell(cell: string, type: string): any {
+export function readCell(cell: string, type: string): string | number | boolean | null {
   if (!workSheet) return null;
   const cellObj = workSheet[cell];
   if (!cellObj) return null;
@@ -67,7 +66,7 @@ export function readCell(cell: string, type: string): any {
   }
 }
 
-export async function handleExcelUpload(formData: FormData): Promise<any> {
+export async function handleExcelUpload(formData: FormData): Promise<{ error: string } | { message: string; sheetNames: string[] }> {
   const file = formData.get('file') as File;
   if (!file) {
     return { error: 'No file provided' };

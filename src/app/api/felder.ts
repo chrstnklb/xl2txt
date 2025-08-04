@@ -1,9 +1,9 @@
 // Next.js API route for field (Felder) logic
-import { NextRequest, NextResponse } from 'next/server';
-import { getFelder } from '../../lib/felder';
+import { NextResponse } from 'next/server';
+import { getFelder } from '@/lib/felder';
 
-export async function GET(req: NextRequest) {
-  // Example: return field definitions
-  const felder = getFelder();
+export async function GET() {
+  // Provide the required argument, e.g., 'Sheet1'
+  const felder = getFelder('Sheet1');
   return NextResponse.json({ felder });
 }

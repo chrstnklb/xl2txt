@@ -9,7 +9,7 @@ export class CustomError {
 
 export class ErrorList {
     private static instance: ErrorList;
-    private errors: any[] = [];
+    private errors: CustomError[] = [];
 
     private constructor() {}
 
@@ -20,7 +20,7 @@ export class ErrorList {
         return ErrorList.instance;
     }
 
-    public getAll(): any[] {
+    public getAll(): CustomError[] {
         return this.errors;
     }
 

@@ -1,8 +1,8 @@
 // Next.js API route for statistics
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getStatistics } from '../../lib/statistics';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   // Example: return statistics (implementation needed in lib/statistics)
   const stats = await getStatistics();
   return NextResponse.json({ stats });

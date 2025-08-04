@@ -3,6 +3,7 @@ import { Metric } from './metric';
 import * as excel from './excel';
 import * as felder from './felder';
 import * as fileHandler from './fileHandler';
+import type { WorkSheet } from 'xlsx';
 
 export function transformKalendariumToTxt(excelFile: string): string {
     const metric = new Metric();
@@ -33,7 +34,7 @@ export function transformKalendariumToTxt(excelFile: string): string {
     return fileHandler.writeTxtFile(allLines);
 }
 
-export function getSumOfColumn(workSheet: any, col: number, startRow: number, endRow: number): number {
+export function getSumOfColumn(workSheet: WorkSheet, col: number, startRow: number, endRow: number): number {
     let sum = 0;
     for (let row = startRow; row <= endRow; row++) {
         const cellCoord = excel.getCellCoordinate(col, row);
@@ -51,7 +52,7 @@ export function getSumOfColumn(workSheet: any, col: number, startRow: number, en
     return sum;
 }
 
-export function findCellsWithContent(workSheet: any, startRow: number, endRow: number, col: number): boolean {
+export function findCellsWithContent(workSheet: WorkSheet, startRow: number, endRow: number, col: number): boolean {
     for (let row = startRow; row <= endRow; row++) {
         if (excel.cellExists(workSheet[excel.getCellCoordinate(col, row)])) {
             return true;
@@ -60,7 +61,11 @@ export function findCellsWithContent(workSheet: any, startRow: number, endRow: n
     return false;
 }
 
-export async function processKalendarium(data: any): Promise<any> {
+interface KalendariumData {
+    excelFile: string;
+}
+
+export async function processKalendarium(data: KalendariumData): Promise<{ txtContent: string }> {
     if (!data || !data.excelFile) {
         throw new Error('No Excel file provided');
     }
@@ -89,7 +94,7 @@ export function createOneLine(
     ].join(';') + '\n';
 }
 
-export function replaceDots(val: any): any {
+export function replaceDots(val: number | string): string {
     if (typeof val === 'number') {
         // Convert to string with 2 decimals and replace dot with comma
         return val.toFixed(2).replace('.', ',');
@@ -97,5 +102,5 @@ export function replaceDots(val: any): any {
     if (typeof val === 'string') {
         return val.replace('.', ',');
     }
-    return val;
+    return '';
 }

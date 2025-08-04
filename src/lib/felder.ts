@@ -11,21 +11,22 @@ export const ABRECHNUNGSTAG = 'Abrechnungstag';
 export const ANZ_TAGE = 'ANZTAGE';
 
 export function readFirmennummer(cellCoordinate = 'B2'): number | undefined {
-    const firmennummer = excel.readCell(cellCoordinate, 'number');
-    if (firmennummer === undefined) {
+    const value = excel.readCell(cellCoordinate, 'number');
+    if (typeof value !== 'number') {
         ErrorList.getInstance().addError(
-            `Die Mandantennummer wurde erwartet. Doch die Zelle '${cellCoordinate}' ist leer!`
+            `Die Mandantennummer wurde erwartet. Doch die Zelle '${cellCoordinate}' ist leer oder kein gültiger Wert!`
         );
+        return undefined;
     }
-    return firmennummer;
+    return value;
 }
-
 export function readPersonalnummer(cellCoordinate: string): string | undefined {
     const personalnummer = excel.readCell(cellCoordinate, 'string');
-    if (personalnummer === undefined) {
+    if (typeof personalnummer !== 'string') {
         ErrorList.getInstance().addError(
             `Die Personalnummer wurde erwartet. Doch die Zelle '${cellCoordinate}' ist leer!`
         );
+        return undefined;
     }
     return personalnummer;
 }
@@ -34,19 +35,33 @@ export function readPersonalnummer(cellCoordinate: string): string | undefined {
  * Returns an object with all relevant fields extracted from the Excel sheet.
  * You may want to adjust the cell coordinates and logic as needed.
  */
-export function getFelder(sheetName = 'Sheet1'): Record<string, any> {
+export interface Felder {
+    firmennummer: number | undefined;
+    personalnummer: string | undefined;
+    abrechnungsZeitraum: string;
+    kostenstelle: string | null;
+    lSatz: number | null;
+    anzStd: number | null;
+    kostenTr: string | null;
+    pSatz: number | null;
+    betrag: number | null;
+    abrechnungstag: string | null;
+    anzTage: number | null;
+}
+
+export function getFelder(sheetName: string | undefined): Felder {
     return {
         firmennummer: readFirmennummer('B2'),
         personalnummer: readPersonalnummer('B3'),
         abrechnungsZeitraum: readAbrechnungsZeitraum(sheetName),
-        kostenstelle: excel.readCell('C2', 'string'),
-        lSatz: excel.readCell('D2', 'number'),
-        anzStd: excel.readCell('E2', 'number'),
-        kostenTr: excel.readCell('F2', 'string'),
-        pSatz: excel.readCell('G2', 'number'),
-        betrag: excel.readCell('H2', 'number'),
-        abrechnungstag: excel.readCell('I2', 'string'),
-        anzTage: excel.readCell('J2', 'number'),
+        kostenstelle: typeof excel.readCell('C2', 'string') === 'string' ? excel.readCell('C2', 'string') as string : null,
+        lSatz: typeof excel.readCell('D2', 'number') === 'number' ? excel.readCell('D2', 'number') as number : null,
+        anzStd: typeof excel.readCell('E2', 'number') === 'number' ? excel.readCell('E2', 'number') as number : null,
+        kostenTr: typeof excel.readCell('F2', 'string') === 'string' ? excel.readCell('F2', 'string') as string : null,
+        pSatz: typeof excel.readCell('G2', 'number') === 'number' ? excel.readCell('G2', 'number') as number : null,
+        betrag: typeof excel.readCell('H2', 'number') === 'number' ? excel.readCell('H2', 'number') as number : null,
+        abrechnungstag: typeof excel.readCell('I2', 'string') === 'string' ? excel.readCell('I2', 'string') as string : null,
+        anzTage: typeof excel.readCell('J2', 'number') === 'number' ? excel.readCell('J2', 'number') as number : null,
     };
 }
 
@@ -55,19 +70,19 @@ export function getFelder(sheetName = 'Sheet1'): Record<string, any> {
  */
 export function readMandantennummer(cellCoordinate = 'B2'): string {
     const value = excel.readCell(cellCoordinate, 'string');
-    if (!value) {
+    if (typeof value !== 'string' || !value) {
         ErrorList.getInstance().addError(
             `Die Mandantennummer wurde erwartet. Doch die Zelle '${cellCoordinate}' ist leer!`
         );
         return '';
     }
-    return value;
+    return String(value);
 }
 
 /**
  * Reads the AbrechnungsZeitraum (billing period) from a default cell or sheet.
  */
-export function readAbrechnungsZeitraum(sheetName = 'Sheet1', cellCoordinate = 'C1'): string {
+export function readAbrechnungsZeitraum(cellCoordinate = 'C1'): string {
     const value = excel.readCell(cellCoordinate, 'string');
     if (!value) {
         ErrorList.getInstance().addError(
@@ -75,7 +90,7 @@ export function readAbrechnungsZeitraum(sheetName = 'Sheet1', cellCoordinate = '
         );
         return '';
     }
-    return value;
+    return typeof value === 'number' ? String(value) : '';
 }
 
 /**
@@ -83,13 +98,14 @@ export function readAbrechnungsZeitraum(sheetName = 'Sheet1', cellCoordinate = '
  */
 export function readKostenstelle(cellCoordinate = 'C2'): string {
     const value = excel.readCell(cellCoordinate, 'string');
-    if (!value) {
+    if (value === null || value === undefined || value === '') {
         ErrorList.getInstance().addError(
             `Die Kostenstelle wurde erwartet. Doch die Zelle '${cellCoordinate}' ist leer!`
         );
         return '';
     }
-    return value;
+    // Always return a string, regardless of the type
+    return String(value);
 }
 
 /**
@@ -102,7 +118,7 @@ export function readLSatz(cellCoordinate = 'D2'): number | undefined {
             `Der Lohnsatz wurde erwartet. Doch die Zelle '${cellCoordinate}' ist leer!`
         );
     }
-    return value;
+    return typeof value === 'number' ? value : undefined;
 }
 
 /**
@@ -115,7 +131,8 @@ export function readAnzStd(cellCoordinate = 'E2'): number | undefined {
             `Die Anzahl Stunden wurde erwartet. Doch die Zelle '${cellCoordinate}' ist leer!`
         );
     }
-    return value;
+    return typeof value === 'number' ? value : undefined;
+    
 }
 
 /**
@@ -129,7 +146,7 @@ export function readKostenTr(cellCoordinate = 'F2'): string {
         );
         return '';
     }
-    return value;
+    return typeof value === 'string' ? value : value ? String(value) : '';
 }
 
 /**
@@ -142,7 +159,7 @@ export function readPSatz(cellCoordinate = 'G2'): number | undefined {
             `Der Prozentsatz wurde erwartet. Doch die Zelle '${cellCoordinate}' ist leer!`
         );
     }
-    return value;
+    return typeof value === 'number' ? value : undefined;
 }
 
 /**
@@ -155,7 +172,7 @@ export function readBetrag(cellCoordinate = 'H2'): number | undefined {
             `Der Betrag wurde erwartet. Doch die Zelle '${cellCoordinate}' ist leer!`
         );
     }
-    return value;
+    return typeof value === 'number' ? value : undefined;
 }
 
 /**
@@ -169,7 +186,7 @@ export function readAbrechnungstag(cellCoordinate = 'I2'): string {
         );
         return '';
     }
-    return value;
+    return typeof value === 'string' ? value : value ? String(value) : '';
 }
 
 /**
@@ -182,5 +199,6 @@ export function readAnzTage(cellCoordinate = 'J2'): number | undefined {
             `Die Anzahl Tage wurde erwartet. Doch die Zelle '${cellCoordinate}' ist leer!`
         );
     }
-    return value;
+    return typeof value === 'number' ? value : undefined;
+
 }
